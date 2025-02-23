@@ -1,8 +1,33 @@
 import Image from "next/image";
+import './globals.css'
+import {auth0} from '@/lib/auth0'
 
-export default function Home() {
+
+export default async function Home() {
+  const session = await auth0.getSession();
+
+  if(!session){
+    return(
+      <main>
+        <a href="/auth/login?screen_hint=signup">
+          <button>Sign up</button>
+        </a>
+        <a href="/auth/login">
+          <button>Log in</button>
+        </a>
+      </main>
+    );
+  }
   return (
-    <div className="grid grid-rows-2 grid-cols-1 min-h-screen m-8 mb-20 p-8 font-[family-name:var(--font-karantina)]">
+    <main>
+      <h1>Welcome, {session.user.name}!</h1>
+      <p>
+        <a href="/auth/logout">
+          <button>Log out</button>
+        </a>
+      </p>
+    </main>
+    /*<div className="grid grid-rows-2 grid-cols-1 min-h-screen m-8 mb-20 p-8 font-[family-name:var(--font-karantina)]">
       <main className="grid grid-cols-3 gap-4 content-evenly flex-col row-start-1 items-center sm:items-start">
         <div className = "flex flex-auto items-center col-start-2 row-start-1">
           <Image
@@ -24,6 +49,6 @@ export default function Home() {
           Decklist
         </div>
       </main>
-    </div>
+    </div>*/
   );
 }
