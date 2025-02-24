@@ -7,21 +7,19 @@ import "./globals.css";
 import { Auth0Provider } from "@auth0/nextjs-auth0"; //allows child pages to access user object via useUser() hook
 import { auth0 } from "@/lib/auth0";
 //components
-import Header from '@/components/header'
-
-
+import Header from "@/components/header";
 
 const karantinaLight = Karantina({
   variable: "--font-karantina-light",
   subsets: ["latin"],
-  weight: '300',
+  weight: "300",
 });
 
 const karantinaNormal = Karantina({
   variable: "--font-karantina",
   subsets: ["latin"],
-  weight: '400',
-})
+  weight: "400",
+});
 
 export const metadata = {
   title: "Mystic Tuner",
@@ -33,11 +31,9 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className='font-karantina'>
-        <Header/>
-        <Auth0Provider user={session?.user}>
-        {children}
-        </Auth0Provider>
+      <body className="font-karantina">
+        <Header />
+        <Auth0Provider user={session?.user}>{children}</Auth0Provider>
       </body>
     </html>
   );
