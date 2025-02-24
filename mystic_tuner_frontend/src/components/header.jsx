@@ -15,7 +15,6 @@ export default async function Header(){
                         <button className='rounded-md bg-blue hover:bg-sky-blue text-dark-grey m-2 p-2 w-20'> 
                             Log in</button>
                     </a>
-                    
                 </div>
             </main>
           );
