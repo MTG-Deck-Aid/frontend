@@ -1,3 +1,5 @@
+import { Karantina } from 'next/font/google';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily:{
+        'karantina': ['Karantina']
+      },
       colors: {
         'dark-grey': '#3C3C3C',
         'blue':'#63ADF2',

@@ -3,33 +3,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Karantina } from "next/font/google";
 import "./globals.css";
 //auth0
+//the auth0Provider is responsible for giving the program the authentication details
 import { Auth0Provider } from "@auth0/nextjs-auth0"; //allows child pages to access user object via useUser() hook
 import { auth0 } from "@/lib/auth0";
 //components
 import Header from '@/components/header'
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const karantinaLight = Karantina({
-  variable: "--font-karantina-light",
-  subsets: ["latin"],
-  weight: '300',
-});
-
-const karantinaNormal = Karantina({
-  variable: "--font-karantina",
-  subsets: ["latin"],
-  weight: '400',
-})
 
 export const metadata = {
   title: "Create Next App",
@@ -41,7 +21,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${karantinaNormal.variable} ${karantinaNormal.variable} antialiased`}>
+      <body className='font-karantina'> 
         <Header/>
         <Auth0Provider user={session?.user}>
         {children}
