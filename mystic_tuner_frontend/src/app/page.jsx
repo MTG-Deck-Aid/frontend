@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import './globals.css';
 
 
@@ -20,7 +21,7 @@ export default async function Home() {
           after:border-t-8 after:border-gray-200 after:ms-12">Mystic Tuner
         </div>
         <div className="flex felx-auto items-center justify-center col-start-2">
-          <p className="">Button to Be</p>
+          <Link href="/decklist">DeckList</Link>
         </div>
         <div className="flex col-span-3">
           Decklist
