@@ -1,24 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+1. Create the ./mystic_tuner_frontend/.env file. The file should contain:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```env
+   AUTH0_SECRET=''
+   APP_BASE_URL='http://localhost:3000'
+   AUTH0_DOMAIN=''
+   AUTH0_CLIENT_ID=''
+   AUTH0_CLIENT_SECRET=''
+   ```
+
+2. Run the development server from the mystic_tuner_frontend directory:
+
+   ```bash
+   npm run dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
@@ -29,32 +27,31 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
 ## Project Structure
+
 As per guidelines from the next.js documentation, we will follow the following structure conventions:
+
+```plaintext
 |mystic_tuner_frontend
 |
 |---public (static assets to be served)
-|   |   exampleImage.png
+| | exampleImage.png
 |
 |---src (application source folder)
-|   |
-|   |---app (app router)
-|   |   | 
-|   |   |---examplePage (page router)
-|   |       |   layout.js (shared layout)
-|   |       |   template.js
-|   |       |   error.js (React error boundary)
-|   |       |   loading.js (React suspense boundary)
-|   |       |   not-found.js (React error boundary)
-|   |       |   page.js (Actual page code)
-|   |       |   route.js (Used for API endpoints)
-|   |           (Note that not all of these are need. It only requires page.js)
-|   |
-|   |---components (components to be used in pages)
-|   |   |   exampleButton.js
+| |
+| |---app (app router)
+| | |
+| | |---examplePage (page router)
+| | | layout.js (shared layout)
+| | | template.js
+| | | error.js (React error boundary)
+| | | loading.js (React suspense boundary)
+| | | not-found.js (React error boundary)
+| | | page.js (Actual page code)
+| | | route.js (Used for API endpoints)
+| | (Note that not all of these are need. It only requires page.js)
+| |
+| |---components (components to be used in pages)
+| | | exampleButton.js
+
+```
