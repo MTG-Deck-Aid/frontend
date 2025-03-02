@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        'karantina': ['Karantina']
+        body: ['Karantina']
       },
       colors: {
         'dark-grey': '#3C3C3C',
