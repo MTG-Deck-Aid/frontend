@@ -17,13 +17,16 @@ export default async function Home() {
           />
         </div>
         <div className="flex col-span-3 auto-rows-min items-center text-[64px] 
-        text-gray-800 before:flex-1 before:border-t-8 before:border-gray-200 before:me-12 after:flex-1 
-          after:border-t-8 after:border-gray-200 after:ms-12">Mystic Tuner
+       text-white before:flex-1 before:border-t-8 before:border-gray-200 before:me-12 after:flex-1 
+          after:border-t-8 after:border-gray-200 after:ms-12">
+            Deck Upgrade Assistant
         </div>
         <div className="flex felx-auto items-center justify-center col-start-2">
-          <Link href="/decklist" className="flex rounded-md bg-blue hover:bg-sky-blue text-dark-grey m-2 p-2 w-20 justify-center">DeckList</Link>
+          <Link href="/decklist" className="flex rounded-md bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center text-5xl">
+            New Deck
+          </Link>
         </div>
-        <div className="flex col-span-3">
+        <div className="flex col-span-3 flex-wrap ">
           Decklist
         </div>
       </main>
