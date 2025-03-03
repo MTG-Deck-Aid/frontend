@@ -4,6 +4,7 @@ import './globals.css';
 import UserDecks from "@/components/userDecks";
 import CustomLine from "@/components/customLine";
 import { Button } from "@heroui/button";
+import Decklist from "./decklist/page";
 
 export default async function Home() {
   return (
@@ -23,12 +24,12 @@ export default async function Home() {
         </div>
         <div className="flex felx-auto items-center justify-center col-start-2">
           <Link href="/decklist" className="flex rounded-md bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
-          text-5xl font-body">
+          text-5xl font-body no-underline">
             New Deck
           </Link>
         </div>
         <div className="flex col-span-3 flex-wrap">
-          
+          <UserDecks/>
         </div>
       </main>
     </div>
