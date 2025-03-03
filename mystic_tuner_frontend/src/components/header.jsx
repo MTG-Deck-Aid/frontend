@@ -1,9 +1,18 @@
 import {auth0} from '@/lib/auth0.js';
+import LoginDropdown from './loginDropdown';
+
 
 export default async function Header(){
     const session = await auth0.getSession();
 
-    if(!session){
+    const iconHeight = 50;
+    const iconWidth = 50;
+
+    return(
+        <div className='flex flex-[1-1-0] justify-end items-center'>
+            <LoginDropdown/>
+        </div>
+    /*if(!session){
         return(
             <main>
                 <div className='flex flex-[1-1-0] justify-end items-center'>   
@@ -28,6 +37,6 @@ export default async function Header(){
                 Log out</button>
             </a>
         </div>
-    </main>
+    </main>*/
     );
 }
