@@ -11,7 +11,7 @@ export default function LoginDropdown(props){
     session ? [
         {key:"username", label:"Hello, " + session.user.name, type:"name"},
         {key:"pageLink", label:"Your Decks", type:"link"},
-        {key:"signout",label:"Sign Out",type:"link"}
+        {key:"logout",label:"Sign Out",type:"link"}
     ] : [
         {key:"guest",label:"Guest",type:"text"},
         {key:"login",label:"Login",type:"link"},
