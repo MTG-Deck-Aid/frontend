@@ -3,6 +3,7 @@ import Link from "next/link";
 import './globals.css';
 import UserDecks from "@/components/userDecks";
 import CustomLine from "@/components/customLine";
+import { Button } from "@heroui/button";
 
 export default async function Home() {
   return (
@@ -27,7 +28,7 @@ export default async function Home() {
           </Link>
         </div>
         <div className="flex col-span-3 flex-wrap">
-          <UserDecks></UserDecks>
+          
         </div>
       </main>
     </div>
