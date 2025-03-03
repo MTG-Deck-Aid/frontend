@@ -9,8 +9,8 @@ export default async function Header(){
     const iconWidth = 50;
 
     return(
-        <div className='flex flex-[1-1-0] justify-end items-center'>
-            <LoginDropdown/>
+        <div className='flex flex-[1-1-0] justify-end items-center m-5'>
+            <LoginDropdown session={session}/>
         </div>
     /*if(!session){
         return(
