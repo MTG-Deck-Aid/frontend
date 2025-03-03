@@ -24,7 +24,7 @@ export default async function Home() {
           <CustomLine text="Deck Upgrade Assistant"></CustomLine>
         </div>
         <div className="flex flex-auto items-center justify-center col-start-2">
-          <Link href="/decklist" className="flex rounded-3xl bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
+          <Link href="/import-new-deck" className="flex rounded-3xl bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
           text-5xl font-body no-underline">
             New Deck
           </Link>
