@@ -23,7 +23,7 @@ export default async function Home() {
         <div className="col-span-3 m-3">
           <CustomLine text="Deck Upgrade Assistant"></CustomLine>
         </div>
-        <div className="flex felx-auto items-center justify-center col-start-2">
+        <div className="flex flex-auto items-center justify-center col-start-2">
           <Link href="/decklist" className="flex rounded-3xl bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
           text-5xl font-body no-underline">
             New Deck
@@ -36,9 +36,3 @@ export default async function Home() {
     </div>
   );
 }
-
-<div className="flex col-span-3 auto-rows-min items-center text-[64px] 
-       text-white before:flex-1 before:border-t-8 before:border-gray-200 before:me-12 after:flex-1 
-          after:border-t-8 after:border-gray-200 after:ms-12 font-body font-semibold">
-            Deck Upgrade Assistant
-</div>

@@ -16,7 +16,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
    return (
     <html lang="en" className="dark">
-      <body className="font-karantina">
+      <body>
         <Header />
         <Providers>
           {children}

@@ -1,6 +1,6 @@
 const {heroui} = require("@heroui/theme");
 
-export default {
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -24,6 +24,16 @@ export default {
   },
   darkMode: "class",
   plugins: [
-    heroui({}),
+    heroui({
+      themes:{
+        dark:{
+          default:"#FFFFFF"
+        },
+        light:{
+          default:"#F0F0F0"
+        },
+      },
+    }),
   ],
 };
+export default config;

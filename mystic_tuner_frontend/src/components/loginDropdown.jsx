@@ -19,18 +19,18 @@ export default function LoginDropdown(props){
     ]
 
     return(
-        <Dropdown>
+        <Dropdown className="p-0">
             <DropdownTrigger>
                 <Button radius="full" isIconOnly disableRipple variant="bordered" className="w-[50] h-[50] border-0 p-0 m-0">
                     <Image className="m-0 p-0" src='userIconLight.svg' width={iconWidth} height={iconHeight} alt='Light User Icon'/>
                 </Button>
             </DropdownTrigger>
-            <DropdownMenu items={dropdownItems} onAction ={(key) => handleClick(key)}>
+            <DropdownMenu aria-label="Dynamic Menu" classNames={{list:"w-200 list-none m-2 p-2"}} variant="faded" items={dropdownItems} onAction ={(key) => handleClick(key)}>
                 {(item) => (
                     <DropdownItem
                        key={item.key}
-                       className = {item.type === "link" ? "text-blue underline" : "text-black"}
-                       color = "danger"
+                       className = {"font-sans "+ (item.type === "link" ? "text-blue underline" : "text-black")}
+                       color = "primary"
                     >{item.label}
                     </DropdownItem>
                 )}
