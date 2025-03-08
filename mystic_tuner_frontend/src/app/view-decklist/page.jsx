@@ -1,4 +1,4 @@
-export default function ViewUserDecks(){
+export default function ViewDeckList(){
     return(
         <div></div>
     );
