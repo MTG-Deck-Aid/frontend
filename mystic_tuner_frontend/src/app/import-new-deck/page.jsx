@@ -38,7 +38,7 @@ export default function ImportNewDeck(){
                     <Textarea 
                         classNames={{
                             base:"w-max-full h-[120vh] p-4 border rounded-lg",
-                            inputWrapper:"m-0 w-[calc(100%"}} 
+                            inputWrapper:"m-0 w-[calc(100%]"}} 
                         placeholder="Paste your deck list here"/>
                 </div>
             </div>
