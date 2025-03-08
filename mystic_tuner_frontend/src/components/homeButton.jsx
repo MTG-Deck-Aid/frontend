@@ -1,0 +1,27 @@
+import Image from "next/image";
+import { Button, Link } from "@heroui/react";
+
+export default function HomeButton(){
+    const iconWidth = 100;
+    const iconHeight = iconWidth;
+
+    return(
+        <div className="flex justify-start items-center">
+            <Button 
+                radius="full" 
+                isIconOnly 
+                variant="bordered" 
+                className="w-[50] h-[50] border-0 p-0 m-0"
+                as={Link}
+                href="/"
+                >
+                        <Image 
+                            src='logo-small-icon.svg' 
+                            width={iconWidth} 
+                            height={iconHeight} 
+                            alt='Mystic Tuner Logo'
+                        />
+            </Button>
+        </div>
+    );
+}
