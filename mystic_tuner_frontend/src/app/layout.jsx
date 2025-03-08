@@ -2,7 +2,6 @@
 import "./globals.css";
 
 //providers
-
 import { Providers } from "./providers";
 //components
 import Header from "@/components/header";
@@ -14,11 +13,14 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+  /**
+   * Root layout will wrap all other pages in the app
+   */
    return (
     <html lang="en" className="dark">
       <body>
-        <Header />
         <Providers>
+        <Header />
           {children}
         </Providers>
       </body>

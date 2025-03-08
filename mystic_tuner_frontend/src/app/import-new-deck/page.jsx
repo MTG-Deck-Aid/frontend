@@ -2,7 +2,9 @@ import { Textarea, Button, Input } from "@heroui/react";
 import Image from "next/image";
 
 export default function ImportNewDeck(){
-
+    /**
+     * ImportNewDeck is the page in which the user can insert their decklist via a formatted string and have it saved to their profile
+     */
     const emptyImageHeight = 350;
     const emptyImageWidth = 250;
 

@@ -2,9 +2,12 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export default function CustomLine(props){
+export default function CustomLine(){
+    /**
+     * Custom line is simply a component which creates two lines with text in between them
+     */
     const titles = {
-        "/": "Home",
+        "/": "Deck Tuning Assistant",
         "/decklist": "My Decks",
         "/import-new-deck": "Import New Deck",
         "/view-decklist": "View Deck",
