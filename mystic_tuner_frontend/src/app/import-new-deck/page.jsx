@@ -1,4 +1,4 @@
-import { Textarea, Button } from "@heroui/react";
+import { Textarea, Button, Input } from "@heroui/react";
 import Image from "next/image";
 
 export default function ImportNewDeck(){
@@ -7,19 +7,21 @@ export default function ImportNewDeck(){
     const emptyImageWidth = 250;
 
     return(
-            <div className="flex flex-col items-center justify-center w-full min-h-screen gap-8 p-4">
+            <div className="flex flex-col items-center justify-center max-w-screen min-h-screen gap-8 p-4">
                 {/* First row: Deck Name and Submit Button */}
-                <div className="flex w-full justify-start items-center gap-8">
-                    <Textarea 
+                <div className="flex w-full justify-between items-center">
+                    <div className="w-80">
+                    <Input 
                         label="Deck Name"
-                        disableAutosize 
+                        type="text"
+                        placeholder="Example Deck Name"
+                        color="primary"
                         classNames={{
-                            base:"m-10",
-                            inputWrapper:"max-w-[calc(100%)] m-0 min-h-40px"
+                            label: "relative"
                         }}
-                        color="secondary"
-                        placeholder="Import Deck Name Here" />
-                    <Button fullWidth color="primary">Import Deck</Button>
+                        />
+                    </div>
+                    <Button color="primary">Import Deck</Button>
                 </div>
                 {/* Second Row: Commander Selection */}
                 <div className="relative flex justify-center items-center w-full max-w-md">
