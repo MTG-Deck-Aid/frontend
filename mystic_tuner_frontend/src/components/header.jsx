@@ -9,7 +9,7 @@ export default async function Header(){
     return(
         <div className='flex justify-between'>
             <HomeButton/>
-            <CustomLine text={"Deck Upgrade Assistant"}/>
+            <CustomLine/>
             <LoginDropdown session={session}/>
         </div>
     );

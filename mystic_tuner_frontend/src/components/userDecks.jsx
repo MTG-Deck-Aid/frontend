@@ -27,7 +27,10 @@ export default async function UserDecks(){
                   * endpoint in which we get the decklist from the backend.
                   * Optionally, we could also do some caching and just have all of the user's deck information cached in our frontend.
                   */}
-                <Link className="flex" href={`/view-decklist/${card.name}`}>
+                <Link className="flex" href={{
+                    pathname: `/view-decklist/${card.name}`,
+                    query:  {title:`${card.name}`},
+                }}>
                     <Image
                         alt={card.name}
                         height={cardHeight}
