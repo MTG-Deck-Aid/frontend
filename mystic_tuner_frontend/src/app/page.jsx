@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import './globals.css';
 import UserDecks from "@/components/userDecks";
-import CustomLine from "@/components/customLine";
+import pageLogo from '/public/logo-dark.png';
 
 export default async function Home() {
   const logoWidth = 350;
@@ -13,7 +13,7 @@ export default async function Home() {
       <main className="grid grid-cols-3 gap-4 content-evenly flex-col row-start-1 items-center sm:items-start">
         <div className = "flex justify-center items-center col-start-2 row-start-1">
           <Image
-           src="/logo-dark.png"
+           src={pageLogo}
            width={logoWidth}
            height={logoHeight}
            alt="Mystic Tuner logo"

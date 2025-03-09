@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Button, Link } from "@heroui/react";
+import smallLogo from '/public/logo-small-icon.svg'; //This makes the image STATICALLY imported
+
 
 export default function HomeButton(){
     /**
@@ -19,7 +21,7 @@ export default function HomeButton(){
                 href="/"
                 >
                         <Image 
-                            src='logo-small-icon.svg' 
+                            src={smallLogo} 
                             width={iconWidth} 
                             height={iconHeight} 
                             alt='Mystic Tuner Logo'

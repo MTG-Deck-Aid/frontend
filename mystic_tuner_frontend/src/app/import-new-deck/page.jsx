@@ -1,5 +1,6 @@
 import { Textarea, Button, Input } from "@heroui/react";
 import Image from "next/image";
+import emptyCommanderFrame from "/public/emptyCommander.svg"
 
 export default function ImportNewDeck(){
     /**
@@ -28,7 +29,7 @@ export default function ImportNewDeck(){
                 {/* Second Row: Commander Selection */}
                 <div className="relative flex justify-center items-center w-full max-w-md">
                     <Image
-                        src="emptyCommander.svg"
+                        src={emptyCommanderFrame}
                         width={emptyImageWidth}
                         height={emptyImageHeight}
                         alt="Empty Commander Frame"

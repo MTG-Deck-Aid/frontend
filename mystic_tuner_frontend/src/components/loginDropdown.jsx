@@ -1,6 +1,7 @@
 "use client"; //Must be a client component due to its necessity to be reloaded
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Button } from "@heroui/react";
 import Image from "next/image";
+import lightUserIcon from '/public/userIconLight.svg'
 
 export default function LoginDropdown(props){
     /**
@@ -33,7 +34,7 @@ export default function LoginDropdown(props){
             <Dropdown className="p-0">
                 <DropdownTrigger>
                     <Button radius="full" isIconOnly disableRipple variant="bordered" className="w-[50] h-[50] border-0 p-0 m-0">
-                        <Image className="m-0 p-0" src='userIconLight.svg' width={iconWidth} height={iconHeight} alt='Light User Icon'/>
+                        <Image className="m-0 p-0" src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon'/>
                     </Button>
                 </DropdownTrigger>
                 <DropdownMenu /**Dropdown menu will be populated dynamically depending on the contents of dropdownItems */
