@@ -1,16 +1,16 @@
-import { Karantina } from 'next/font/google';
+const {heroui} = require("@heroui/theme");
 
-/** @type {import('tailwindcss').Config} */
-export default {
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       fontFamily:{
-        'karantina': ['Karantina']
+        body: ['Karantina']
       },
       colors: {
         'dark-grey': '#3C3C3C',
@@ -22,5 +22,18 @@ export default {
       },
     },
   },
-  plugins: [],
+  darkMode: "class",
+  plugins: [
+    heroui({
+      themes:{
+        dark:{
+          default:"#FFFFFF"
+        },
+        light:{
+          default:"#F0F0F0"
+        },
+      },
+    }),
+  ],
 };
+export default config;
