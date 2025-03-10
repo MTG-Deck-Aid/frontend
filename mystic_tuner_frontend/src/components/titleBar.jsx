@@ -1,24 +1,15 @@
-"use client";
 import Image from "next/image";
-import { usePathname, useSearchParams } from "next/navigation";
+import TitleText from "./pageTitle.jsx"
 import leftLine from "/public/line-one.svg";
 import rightLine from "/public/line-two.svg";
 
-export default function CustomLine(){
+export default function TitleBar(){
     /**
      * Custom line is simply a component which creates two lines with text in between them
      */
-    const searchParams = useSearchParams();
-    const pathName = usePathname();
-
-    const titles = {
-        "/": "Deck Tuning Assistant",
-        "/decklist": "My Decks",
-        "/import-new-deck": "Import New Deck",
-        "/view-user-decks": "My Decks"
-    };
     
-    const pageTitle = (titles[pathName] ? titles[pathName] : searchParams.get('title'));
+    
+    
     //If the pageTitle is not in our pre-defined list, use the search parameter
     const lineWidth = 520;
     const lineHeight = 70;
@@ -30,9 +21,7 @@ export default function CustomLine(){
             height={lineHeight}
             alt="Impact Line One"
         />
-        <p className="font-body font-semibold text-5xl">
-            {pageTitle}
-        </p>
+        <TitleText />
         <Image
             src={rightLine}
             width={lineWidth}

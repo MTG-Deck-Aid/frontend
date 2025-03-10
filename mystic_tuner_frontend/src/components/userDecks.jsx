@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
-
 export default async function UserDecks(){
+    /**
+     * UserDecks() will contain a collection of card images that can be clicked on the go to a dynamic link
+     */
     /**
      * This will need to be a get request to receive whatever the user's decks are.
      */
