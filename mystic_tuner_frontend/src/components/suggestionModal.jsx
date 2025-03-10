@@ -1,5 +1,4 @@
 "use client";
-
 import {
     Modal,
     ModalContent,
@@ -12,7 +11,10 @@ import {
 import Image from "next/image";
 
 
-  export default function SuggestionModal(props){
+export default function SuggestionModal(props){
+    /**
+     * SuggestionModal is a window that pops up with generated suggestions for certain cards.
+     */
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const cardHeight = 375;
     const cardWidth = 275;
