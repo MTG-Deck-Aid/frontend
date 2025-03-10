@@ -21,10 +21,10 @@ export default async function Page({params}){
     const cardHeight = 375;
     const cardWidth = 275;
     return(
-        <div className="grid grid-rows-3 grid-cols-1 auto-rows-min">
+        <div className="grid auto-rows-min gap-5">
             <div className="grid grid-cols-4">
                 <div className="flex flex-col justify-center items-center gap-4 font-body">
-                    <div className="flex text-8xl">
+                    <div className="flex text-6xl">
                         Cards to Add:
                     </div>
                     <div className="flex text-2xl">
@@ -44,7 +44,7 @@ export default async function Page({params}){
             </div>
             <div className="grid grid-cols-4">
                 <div className="flex flex-col justify-center items-center gap-4 font-body">
-                    <div className="flex text-8xl">
+                    <div className="flex text-6xl">
                         Cards to Remove:
                     </div>
                     <div className="flex text-2xl">
