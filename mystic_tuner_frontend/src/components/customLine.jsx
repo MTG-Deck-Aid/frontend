@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
+import leftLine from "/public/line-one.svg";
+import rightLine from "/public/line-two.svg";
 
 export default function CustomLine(){
     /**
@@ -13,18 +15,17 @@ export default function CustomLine(){
         "/": "Deck Tuning Assistant",
         "/decklist": "My Decks",
         "/import-new-deck": "Import New Deck",
-        "/view-decklist/[slug]": "View Deck",
         "/view-user-decks": "My Decks"
     };
     
     const pageTitle = (titles[pathName] ? titles[pathName] : searchParams.get('title'));
-
+    //If the pageTitle is not in our pre-defined list, use the search parameter
     const lineWidth = 520;
     const lineHeight = 70;
     return(
         <div className="flex flex-nowrap justify-between items-center w-full mx-8">
         <Image
-            src={"line-one.svg"}
+            src={leftLine}
             width={lineWidth}
             height={lineHeight}
             alt="Impact Line One"
@@ -33,7 +34,7 @@ export default function CustomLine(){
             {pageTitle}
         </p>
         <Image
-            src={"line-two.svg"}
+            src={rightLine}
             width={lineWidth}
             height={lineHeight}
             alt="Impact Line Two"

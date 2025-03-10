@@ -21,7 +21,7 @@ export default async function Page({params}){
     const cardHeight = 375;
     const cardWidth = 275;
     return(
-        <div className="grid grid-rows-3 grid-cols-1">
+        <div className="grid grid-rows-3 grid-cols-1 auto-rows-min">
             <div className="grid grid-cols-4">
                 <div className="flex flex-col justify-center items-center gap-4 font-body">
                     <div className="flex text-8xl">
@@ -39,24 +39,26 @@ export default async function Page({params}){
                 ))}
                 </div>
             </div>
-            <Divider />
-            <div className="flex">
-                <div className="">
-
+            <div className="max-h-fit">
+                <Divider/>
+            </div>
+            <div className="grid grid-cols-4">
+                <div className="flex flex-col justify-center items-center gap-4 font-body">
+                    <div className="flex text-8xl">
+                        Cards to Remove:
+                    </div>
+                    <div className="flex text-2xl">
+                        Click to see suggested reasoning
+                    </div>
                 </div>
-                <div className="">
-
+                <div className="flex justify-start gap-10 col-span-3">
+                {cardsToAdd.map((card) => (
+                    <div className="" key={card.id}>
+                    <SuggestionModal card={card} />
+                    </div>
+                ))}
                 </div>
             </div>
-        </div>
-    )
-}
-
-const generateCardButton = (card) => {
-
-    return(
-        <div key={card.id}>
-            
         </div>
     )
 }
