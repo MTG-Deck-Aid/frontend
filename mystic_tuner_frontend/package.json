@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.0.3",
+    "@auth0/nextjs-auth0": "^4.0.2",
     "@heroui/accordion": "^2.2.12",
     "@heroui/autocomplete": "^2.3.16",
     "@heroui/avatar": "^2.2.11",
