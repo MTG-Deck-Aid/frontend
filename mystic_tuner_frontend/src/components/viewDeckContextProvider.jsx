@@ -8,6 +8,7 @@ export function ViewDeckContextProvider({ children }){
     /**
      * This context provider will allow components wrapped by it to access the page's context.
      * The context will be two states: either edit or view
+     * This context can be updated via the function toggleIsEditMode
      */
     const [isEditMode, setIsEditMode] = useState(true);
 
