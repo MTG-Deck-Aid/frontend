@@ -10,7 +10,6 @@ import Header from "@/components/header";
 export const metadata = {
   title: "Mystic Tuner",
   description: "GPT Aided Deck Tuner",
-  viewport: "width=device-width, initial_scale=1",
 };
 
 export default async function RootLayout({ children }) {
