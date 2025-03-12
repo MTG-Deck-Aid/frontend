@@ -5,11 +5,9 @@ import rightLine from "/public/line-two.svg";
 
 export default function TitleBar(){
     /**
-     * Custom line is simply a component which creates two lines with text in between them
+     * TitleBar is simply a component which creates two lines with text in between them
      */
-    
-    
-    
+
     //If the pageTitle is not in our pre-defined list, use the search parameter
     const lineWidth = 520;
     const lineHeight = 70;

@@ -1,7 +1,5 @@
 import SuggestionModal from "@/components/suggestionModal";
 import { Divider } from "@heroui/react";
-import Image from "next/image";
-
 
 export default async function Page({params}){
     const {slug} = await params;

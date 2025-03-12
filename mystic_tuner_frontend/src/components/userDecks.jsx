@@ -25,12 +25,10 @@ export default async function UserDecks(){
       <div className="flex flex-wrap gap-8">
         {exampleCards.map((card) => (
             <div className="flex" key={card.id}>
-                 {/**OPTIONS: We need something to designate a specific deck list. This could be the deck name. If we use the deck name, we could then create an API
-                  * endpoint in which we get the decklist from the backend.
-                  * Optionally, we could also do some caching and just have all of the user's deck information cached in our frontend.
+                 {/**IMPORTANT: we need to swap all of this card.{var} with deck information. That will include commander image and deck name
                   */}
                 <Link className="flex" href={{
-                    pathname: `/view-decklist/${card.name}`,
+                    pathname: `/view-import-deck/${card.name}`,
                     query:  {title:`${card.name}`},
                 }}>
                     <Image
