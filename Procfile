@@ -1,1 +1,1 @@
-web: cd mystic_tuner_frontend && npm run start
+web: npm run start
