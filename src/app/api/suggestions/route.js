@@ -17,33 +17,31 @@ import { authenticateUser } from "@/utils";
  */
 export async function POST(request) {
   try {
-    const { suggestionParams } = request.json();
-    const response = await deckSuggestions(suggestionParams);
+    const requestBody = await request.json();
+    console.log("Request body:", requestBody);
+    console.log(process.env.BACKEND_BASE_URL);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 30 seconds timeout
+
+    const response = await fetch(
+      `${process.env.BACKEND_BASE_URL}/restapis/suggestions/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+        signal: controller.signal,
+      }
+    );
+    clearTimeout(timeoutId);
+    console.log("Response:", response);
     return NextResponse.json(response);
   } catch (error) {
-    console.error("Error getting AI deck suggestions:", error);
+    console.error("Error getting AI deck suggestions:" + error);
     return NextResponse.json({
       status: 500,
-      message: "Error getting AI deck suggestions",
+      message: "Error getting AI deck suggestions" + error,
     });
-  }
-}
-
-export async function deckSuggestions(suggestionParams) {
-  try {
-    const response = await fetch("http://localhost:8000/api/suggestion/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(suggestionParams),
-    });
-
-    const data = await response.json();
-    console.log("Suggestion response:", data);
-    return data; // { authenticated: true/false, message: "..." }
-  } catch (error) {
-    console.error("Error authenticating user:", error);
-    return { authenticated: false, message: "Error during authentication" };
   }
 }
