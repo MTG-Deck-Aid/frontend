@@ -31,7 +31,7 @@ export async function POST(request) {
 
 export async function deckSuggestions(suggestionParams) {
   try {
-    const response = await fetch("http://localhost:8000/api/suggestion/", {
+    const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/suggestion/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
