@@ -16,13 +16,18 @@ export async function PATCH(request) {
 
 export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
 	try {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
 		const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/decks/${deckId}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ auth0Token, cardsAdded, cardsRemoved }),
+			signal: controller.signal,
 		});
+		clearTimeout(timeoutId);
 
 		const data = await response.json();
 		console.log("Deck update response:", data);
@@ -49,13 +54,18 @@ export async function GET(request) {
 
 export async function getDeck(deckId, auth0Token) {
 	try {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second
+
 		const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/decks/${deckId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ auth0Token }),
+			signal: controller.signal,
 		});
+		clearTimeout(timeoutId);
 
 		const data = await response.json();
 		console.log("Deck response:", data);

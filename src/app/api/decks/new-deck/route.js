@@ -16,13 +16,18 @@ export async function POST(request) {
 
 export async function createDeck(auth0Token, deckName, commander, cards) {
 	try {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
 		const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/decks/new-deck/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ auth0Token, deckName, commander, cards }),
+			signal: controller.signal,
 		});
+		clearTimeout(timeoutId);
 
 		const data = await response.json();
 		console.log("Deck creation response:", data);

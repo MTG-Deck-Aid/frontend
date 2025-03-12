@@ -16,13 +16,18 @@ export async function POST(request) {
 
 export async function verifyCards(cards) {
 	try {
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
 		const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/verify-cards/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ cards }),
+			signal: controller.signal,
 		});
+		clearTimeout(timeoutId);
 
 		const data = await response.json();
 		console.log("Verification response:", data);
