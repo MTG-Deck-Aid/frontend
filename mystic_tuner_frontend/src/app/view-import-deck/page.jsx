@@ -1,30 +1,26 @@
 import { Textarea, Button, Input } from "@heroui/react";
 import Image from "next/image";
 import emptyCommanderFrame from "/public/emptyCommander.svg"
+import { ViewDeckContextProvider } from "@/components/viewDeckContextProvider";
+import {CommanderImage, DeckInput, DeckNameInput, ViewButtonGroup} from "@/components/view-edit-deck";
 
-export default function ImportNewDeck(){
+
+export default function ViewImportDeck(){
     /**
-     * ImportNewDeck is the page in which the user can insert their decklist via a formatted string and have it saved to their profile
+     * ViewImportDeck is a page that has two modes.
+     * Edit Mode: allows a user to edit and import the cards that are present in their deck. This is the default path if the user clicks NewDeck.
+     * View Mode: Allows a user to view their cards and move onto suggestions
      */
     const emptyImageHeight = 350;
     const emptyImageWidth = 250;
 
     return(
+        <ViewDeckContextProvider>
             <div className="flex flex-col items-center justify-center max-w-screen min-h-screen gap-8 p-4">
                 {/* First row: Deck Name and Submit Button */}
                 <div className="flex w-full justify-between items-center">
-                    <div className="w-80">
-                    <Input 
-                        label="Deck Name"
-                        type="text"
-                        placeholder="Example Deck Name"
-                        color="primary"
-                        classNames={{
-                            label: "relative"
-                        }}
-                        />
-                    </div>
-                    <Button color="primary">Import Deck</Button>
+                    <DeckNameInput />
+                    <ViewButtonGroup />
                 </div>
                 {/* Second Row: Commander Selection */}
                 <div className="relative flex justify-center items-center w-full max-w-md">
@@ -45,5 +41,6 @@ export default function ImportNewDeck(){
                         placeholder="Paste your deck list here"/>
                 </div>
             </div>
+        </ViewDeckContextProvider>
     );
 }
