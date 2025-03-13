@@ -1,7 +1,7 @@
 import SuggestionModal from "@/components/suggestionModal";
 import { Divider } from "@heroui/react";
 
-export default async function Page({params}){
+export default async function CardSuggestions({params}){
     const {slug} = await params;
     const cardsToAdd = 
         [

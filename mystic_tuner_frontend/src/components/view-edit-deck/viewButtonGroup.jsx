@@ -1,46 +1,45 @@
 'use client';
 import { useViewDeckContext } from "../viewDeckContextProvider";
 import { Select, SelectItem} from "@heroui/select";
-  import{ Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@heroui/modal";
-  import { Button } from "@heroui/button";
-import { listbox } from "@heroui/theme";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@heroui/modal";
+import { Button } from "@heroui/button";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 
 export default function ViewButtonGroup(){
     const{isEditMode, toggleIsEditMode} = useViewDeckContext();
     const{isOpen, onOpen, onOpenChange} = useDisclosure();
+    const searchParams = useSearchParams();
 
     return(
             isEditMode?(
                 <div className="flex">
-                    <Button
-                        onPress={toggleIsEditMode}>   
-                    Save
-                    </Button>
+                    {createPageButton("Save Deck", toggleIsEditMode)}
                 </div>
             ):(
                 <div className="flex flex-col gap-2">
                     <>
-                    <Button
-                        onPress={onOpen}
-                        size="md"
-                        > Get Suggestions 
-                    </Button>
-                    <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange} size="sm">
+                    {createPageButton("Get Suggestions", onOpen)}
+                    <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
                         <ModalContent>
                             {(onClose) => (
                                 <>
-                                <ModalHeader className="flex flex-col gap-1">Ready to Submit?</ModalHeader>
-                                <ModalBody className="flex flex-col">
+                                <ModalHeader className="flex flex-col p-2 m-2">Ready to Submit?</ModalHeader>
+                                <ModalBody className="flex flex-col m-2 py-0">
                                     {createSelect("Number of cards to add")}
                                     {createSelect("Number of cards to remove")}
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" variant="flat" onPress={onClose}>
-                                    Let me Back!
+                                    <Button color="danger" variant="flat" onPress={onClose} >
+                                        Not yet!
                                     </Button>
-                                    <Button color="primary" onPress={onClose}>
-                                    Okay!
+                                    <Button color="primary" as={Link}  className="no-underline"
+                                    href={{
+                                        pathname: `../card-suggestions/${searchParams.get("title")}`,
+                                        query: {title:searchParams.get("title")},
+                                    }}>
+                                        Okay!
                                     </Button>
                                 </ModalFooter>
                                 </>
@@ -48,12 +47,24 @@ export default function ViewButtonGroup(){
                         </ModalContent>
                     </Modal>
                     </>
-                    <Button
-                        size="md"
-                        onPress={toggleIsEditMode}
-                    >Edit Deck</Button>
+                    {createPageButton("Edit Deck", toggleIsEditMode)}
                 </div>
             )
+    )
+}
+
+const createPageButton = (label, onPressEvent) => {
+    /**
+     * Helper function to standardize buttons on this page
+     */
+    return(
+        <Button
+            size={"md"}
+            onPress={onPressEvent}
+            color={"primary"}
+            variant={"faded"}
+        >{label}
+        </Button>
     )
 }
 
@@ -61,12 +72,19 @@ const createSelect = (label) => {
     const maxCards = 5;
     const numberArray = arrayFromRange(1, maxCards, 1);
 
-
     return(
         <div>
-            <Select label={label} classNames={{base:"max-w-[inherit]", innerWrapper:"max-w-[inherit]", popoverContent: "max-w-[inherit] relative", listbox:"max-w-[inherit]"}}>
+            <Select label={label}  classNames={{
+                innerWrapper:"group-data-[has-label=true]:pt-0",
+                label:"text-xs my-0 relative",
+                popoverContent:"p-4 py-1"
+                }} 
+                listboxProps={{
+                    classNames:{base:"w-full", list:"ps-0 w-max-fit"}
+                }}
+                labelPlacement={"inside"}>
                 {numberArray.map((item, index) =>{ return(
-                    <SelectItem key={index}>{item}</SelectItem>
+                    <SelectItem key={index} textValue={item}>{item}</SelectItem>
                 )})}
             </Select>
         </div>
