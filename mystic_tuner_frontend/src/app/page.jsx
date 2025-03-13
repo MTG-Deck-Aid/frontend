@@ -25,7 +25,7 @@ export default async function Home() {
             href={{
               pathname: "/view-import-deck/new-deck",
               query: {title: "New Deck"}, 
-            }} 
+            }}
             className="flex rounded-3xl bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
           text-5xl font-body no-underline">
             New Deck
