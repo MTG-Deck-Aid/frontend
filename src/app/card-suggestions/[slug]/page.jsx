@@ -7,10 +7,9 @@ export default async function CardSuggestions({params}){
         <div className="grid auto-rows-min gap-5">
             <SuggestionGrid add={true} />
             <div>
-                <Divider/>
+                <Divider />
             </div>
             <SuggestionGrid add={false} />
         </div>
     )
 }
-

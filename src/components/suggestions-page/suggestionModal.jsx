@@ -15,12 +15,13 @@ export default function SuggestionModal(props){
     return(
         <div>
         <>
-        <Button onPress={onOpen} className="min-w-fit min-h-fit">
+        <Button onPress={onOpen} className="min-w-fit min-h-fit" variant="shadow">
             <Image 
                 alt={card.name}
                 height={cardHeight}
                 width={cardWidth}
                 src={card.image_uris.normal}
+                className="rounded-2xl"
             />
         </Button>
         <Modal isOpen={isOpen} placement="top-center" size="lg" backdrop="opaque" onOpenChange={onOpenChange}>
