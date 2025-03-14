@@ -2,6 +2,7 @@
 import { useViewDeckContext } from "../viewDeckContextProvider";
 import Image from "next/image";
 import {Button} from "@heroui/react";
+import { Autocomplete, AutocompleteItem, AutocompleteSection, Input } from "@heroui/react";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
 
 export default function CommanderImage(props){
@@ -10,6 +11,8 @@ export default function CommanderImage(props){
     //Page constants
     const imageHeight = 350;
     const imageWidth = 250;
+
+
 
     return(
         isEditMode?( 
@@ -20,7 +23,19 @@ export default function CommanderImage(props){
                     height={imageHeight}
                     alt="Empty Commander Frame"
                 />
-                <Button className="absolute w-[300px] h-[60px]">Select Commander</Button>
+                <Autocomplete
+                    label="Select Commander"
+                    placeholder="Search a commander"
+                    classNames={{
+                        base: "max-w-xs absolute w-[300px] h-[80px]",
+                        selectorButton: "hidden"
+                    }}
+                    inputProps={{
+                        classNames:{label:"my-0 relative"}
+                    }}
+                    onInputChange={searchCommander}
+                >
+                </Autocomplete>
             </div>
         ):(
             <div className="flex flex-col justify-center items-center w-full max-w-md">
@@ -34,4 +49,8 @@ export default function CommanderImage(props){
             </div>
         )
     );
+}
+
+const searchCommander = () => {
+
 }
