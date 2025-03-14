@@ -1,4 +1,4 @@
-import SuggestionModal from "@/components/suggestionModal";
+import SuggestionModal from "@/components/suggestions-page/suggestionModal";
 import { Divider } from "@heroui/react";
 
 export default async function CardSuggestions({params}){
@@ -47,10 +47,8 @@ export default async function CardSuggestions({params}){
                     </div>
                 </div>
                 <div className="flex justify-start gap-10 col-span-3">
-                {cardsToAdd.map((card) => (
-                    <div className="" key={card.id}>
-                    <SuggestionModal card={card} />
-                    </div>
+                {cardsToAdd.map((card, index) => (
+                    <SuggestionModal card={card} key={index}/>
                 ))}
                 </div>
             </div>
