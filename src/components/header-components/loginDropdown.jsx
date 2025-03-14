@@ -1,4 +1,4 @@
-"use client"; //Must be a client component due to its necessity to be reloaded
+"use client"; //Since we are only passing the session as a prop, this page can be done with CSR
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Button } from "@heroui/react";
 import Image from "next/image";
 import lightUserIcon from '/public/userIconLight.svg'
@@ -37,12 +37,13 @@ export default function LoginDropdown(props){
                         <Image className="m-0 p-0" src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon'/>
                     </Button>
                 </DropdownTrigger>
-                <DropdownMenu /**Dropdown menu will be populated dynamically depending on the contents of dropdownItems */
+                {/**Dropdown menu will be populated dynamically depending on the contents of dropdownItems*/}
+                <DropdownMenu
                     aria-label="Dynamic Menu" 
                     classNames={{
                         list:"w-200 list-none m-2 p-2"
                     }} 
-                    variant="faded" 
+                    variant="light" 
                     items={dropdownItems} 
                 >{(item) => buildDropdownItem(item)}
                 </DropdownMenu>
@@ -59,7 +60,7 @@ const buildDropdownItem = (item) =>{
         <DropdownItem
             showDivider = {item.type == "label" ? true : false}
             key={item.key}
-            className = {"font-sans "+ (item.type === "link" ? "text-blue underline" : "text-black")}
+            className = {"font-sans "+ (item.type === "link" ? "text-blue underline" : "text-white")}
             color="primary"
             href = {item.link} //this will be null if the item does not contain a link
         >{item.label}
