@@ -4,7 +4,7 @@ import "./globals.css";
 //providers
 import { Providers } from "./providers";
 //components
-import Header from "@/components/header";
+import Header from "@/components/header-components/header";
 
 
 export const metadata = {
