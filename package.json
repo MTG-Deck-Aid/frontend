@@ -1,5 +1,9 @@
 {
   "name": "mystic_tuner_frontend",
+  "engines": {
+    "node": "20.17.0",
+    "npm": "11.1.0"
+  },
   "version": "0.1.0",
   "private": true,
   "type": "module",
