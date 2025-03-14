@@ -46,11 +46,7 @@ Response JSON:
 Payload JSON:
 ```json
 {
-	"cards": [
-	{ "quantity": 1, "cardName": "abro" },
-	{ "quantity": 1, "cardName": "Ambush Viper" },
-	{ "quantity": 1, "cardName": "ar Sigt" }
-	]
+	"names": ["Sol Ring", "Arcane Signet"]
 }
 ```
 Response JSON:
@@ -231,10 +227,15 @@ Response JSON:
 {
 	"status": 200,
 	"message": "Success",
-	"cards": [
-		{ "quantity": 1, "cardName": "Abrade" },
-		{ "quantity": 1, "cardName": "Ambush Viper" },
-		{ "quantity": 1, "cardName": "Arcane Signet" }
+	"cardsToAdd": [
+		{ "cardName": "Abrade", "image": "http://example.image", "reason": "This is why." },
+		{ "cardName": "Ambush Viper", "image": "http://example.image", "reason": "This is why." },
+		{ "cardName": "Arcane Signet", "image": "http://example.image", "reason": "This is why." }
+	]
+    "cardsToRemove": [
+		{ "cardName": "Abrade", "image": "http://example.image", "reason": "This is why." },
+		{ "cardName": "Ambush Viper", "image": "http://example.image", "reason": "This is why." },
+		{ "cardName": "Arcane Signet", "image": "http://example.image", "reason": "This is why." }
 	]
 }
 ```

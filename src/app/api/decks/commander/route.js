@@ -19,7 +19,7 @@ export async function processCommander(commander) {
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-		const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/commander/`, {
+		const response = await fetch(`${process.env.BACKEND_BASE_URL}/apis/decks/commander/`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

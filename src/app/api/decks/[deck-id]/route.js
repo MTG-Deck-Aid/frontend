@@ -19,7 +19,7 @@ export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-		const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/decks/${deckId}`, {
+		const response = await fetch(`${process.env.BACKEND_BASE_URL}/apis/decks/${deckId}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
@@ -57,7 +57,7 @@ export async function getDeck(deckId, auth0Token) {
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second
 
-		const response = await fetch(`${process.env.BACKEND_BASE_URL}/restapis/decks/${deckId}`, {
+		const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/${deckId}`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
