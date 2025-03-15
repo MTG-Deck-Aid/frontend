@@ -46,7 +46,7 @@ Response JSON:
 Payload JSON:
 ```json
 {
-	"names": ["Sol Ring", "Arcane Signet"]
+	"names": ["Sol", "Arcane Signet"]
 }
 ```
 Response JSON:
@@ -54,10 +54,7 @@ Response JSON:
 {
 	"status": 442,
 	"message": "Invalid",
-	"invalidCards": [
-	{ "quantity": 1, "cardName": "abro" },
-	{ "quantity": 1, "cardName": "ar Sigt" }
-	]
+	"invalidCards": [ "Sol" ]
 }
 ```
 
