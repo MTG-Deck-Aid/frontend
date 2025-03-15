@@ -31,7 +31,7 @@ export default async function Home() {
             New Deck
           </Link>
         </div>
-        <div className="flex col-span-3 flex-wrap">
+        <div className="flex justify-center mt-10 col-span-3">
           <UserDecks/>
         </div>
       </main>
