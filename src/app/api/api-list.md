@@ -24,10 +24,10 @@ Response JSON:
 	"message": "Success",
 	"decks": [
 		{"deckName": "Gluntch the Destroyer",
-		"deckID": "abcd1234",
+		"deckID": 123,
 		"commanderImage": "https://example.com/path-to-image.jp" },
 		{"deckName": "Sachin the Machine",
-		"deckID": "1234abcd",
+		"deckID": 1234,
 		"commanderImage": "https://example.com/path-to-image.jp" }
 	]
 }
@@ -118,7 +118,7 @@ Response JSON:
 {
   "status": 200,
   "message": "Success",
-  "deckID": "123456789abcdef"
+  "deckID": 123
 }
 ```
 
@@ -140,6 +140,7 @@ Payload JSON:
 ```json
 {
 	"auth0Token": "AUTH0_USER_TOKEN_HERE",
+    "deckID": 123,
 	"cardsAdded": [
 		{ "quantity": 1, "cardName": "Abrade" },
 		{ "quantity": 1, "cardName": "Ambush Viper" },
