@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { config } from "dotenv";
 
 export async function POST(request) {
 	try {

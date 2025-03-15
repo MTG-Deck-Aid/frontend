@@ -71,16 +71,21 @@ Response JSON:
 Payload JSON: (small mispell of "Minsc")
 ```json
 {
-	"commander": "Minc & Boo, Timeless Heros"
+	{
+    "commander": "Yarok, the Desecrated"
+    }
 }
 ```
 Response JSON:
 ```json
 {
-	"status": 200,
-	"message": "Success",
-	"commander": "Minsc & Boo, Timeless Heros",
-	"commanderImage": "https://example.com/path-to-image.jpg"
+    "commander": "Yarok, the Desecrated",
+    "images": {
+        "small": "https://cards.scryfall.io/small/front/a/1/a1001d43-e11b-4e5e-acd4-4a50ef89977f.jpg?1722108823",
+        "normal": "https://cards.scryfall.io/normal/front/a/1/a1001d43-e11b-4e5e-acd4-4a50ef89977f.jpg?1722108823",
+        "large": "https://cards.scryfall.io/large/front/a/1/a1001d43-e11b-4e5e-acd4-4a50ef89977f.jpg?1722108823",
+        "art_crop": "https://cards.scryfall.io/art_crop/front/a/1/a1001d43-e11b-4e5e-acd4-4a50ef89977f.jpg?1722108823"
+    }
 }
 ```
 
