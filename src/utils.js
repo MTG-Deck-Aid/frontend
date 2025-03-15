@@ -1,21 +1,23 @@
-export async function authenticateUser(token) {
-  try {
-    const response = await fetch(
-      "http://localhost:8000/restapis/authenticate/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Send token in Authorization header
-        },
-      }
-    );
+import { auth0 } from "@/lib/auth0";
 
-    const data = await response.json();
-    console.log("Authentication response:", data);
-    return data; // { authenticated: true/false, message: "..." }
-  } catch (error) {
-    console.error("Error authenticating user:", error);
-    return { authenticated: false, message: "Error during authentication" };
-  }
+/**
+ * Gets the current user token from the Auth0 client.
+ * This is a server-side function and should be used when communicating with the backend.
+ * @author: @b-smiley
+ * @returns: The Authorization header with the Bearer token.
+ * @example:
+ *    ```javascript
+ *    const authorization_field = await getAuthorizationHeader();
+ *    const response = await fetch("http://localhost:8000/api/test/get-user-id/", {
+ *     method: "GET",
+ *    headers: {
+ *     "Content-Type": "application/json",
+ *     ...authorization_field
+ *    }
+ *    });
+ *    ```
+ */
+export async function getAuthorizationHeader() {
+  const session = await auth0.getSession();
+  return { Authorization: `Bearer ${session.tokenSet.accessToken}` };
 }
