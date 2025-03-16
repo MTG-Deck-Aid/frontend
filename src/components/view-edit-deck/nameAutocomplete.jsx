@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function NameAutocomplete(){
     const{isOpen, onOpen, onOpenChange} = useDisclosure();
-    const [commander, selectCommander] = useState("temp");
+    const [commander, selectCommander] = useState("temp"); //TODO: put in default commander value
     let list = useAsyncList({
         async load({filterText}){
             
@@ -52,7 +52,7 @@ export default function NameAutocomplete(){
                         </Autocomplete>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="success" variant="flat" onPress={onClose} >
+                        <Button color="success" variant="flat" onPress={onClose} > {/**This is where the commander api will be sent*/}
                             Commander Found!
                         </Button>
                     </ModalFooter>
