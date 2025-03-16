@@ -16,16 +16,17 @@ export default function NameAutocomplete(){
     return(
         <Autocomplete
             label="Select Commander"
-            placeholder="Search a commander"
-            classNames={{
+            placeholder="Type to search..."
+            /**classNames={{
                 base: "max-w-xs absolute w-[300px] h-[80px]",
             }}
             inputProps={{
                 classNames:{label:"my-0 relative"}
-            }}
-            
+            }}*/
+            items={list.items}
+            inputValue={list.filterText}
             isLoading = {list.isLoading}
-            onInputChange={debounceInput(list.setFilterText, 100)} //ineherently sets filter text to current input
+            onInputChange={list.setFilterText}
         >
             {list.items.map((item, index) => {return (
                 <AutocompleteItem className="" key={index}>
@@ -35,19 +36,4 @@ export default function NameAutocomplete(){
 
         </Autocomplete>
     )
-}
-
-const debounceInput = (func, delay) => {
-    /**
-     * This function will delay the API request until after the user stops typing (hopefully)
-     */
-    let timeoutId;
-    return function() {
-        const context = this;
-        const args = arguments;
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(function() {
-            func.apply(context, args); //func.apply calls the inputted function with the current context and arguments
-        }, delay)
-    }
 }
