@@ -1,8 +1,6 @@
 "use client";
 import { useViewDeckContext } from "../viewDeckContextProvider";
 import Image from "next/image";
-
-import {autocomplete} from "./actions.jsx";
 import NameAutocomplete from "./nameAutocomplete";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
 
