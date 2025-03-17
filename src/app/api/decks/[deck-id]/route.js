@@ -21,6 +21,7 @@ export async function PATCH(request) {
 }
 
 export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
+<<<<<<< HEAD
 	try {
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
@@ -38,6 +39,25 @@ export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
 			}
 		);
 		clearTimeout(timeoutId);
+=======
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const authorizationHeaders = getAuthorizationHeader();
+    const response = await fetch(
+      `${process.env.BACKEND_BASE_URL}/apis/decks/${deckId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorizationHeaders,
+        },
+        body: JSON.stringify({ auth0Token, cardsAdded, cardsRemoved }),
+        signal: controller.signal,
+      }
+    );
+    clearTimeout(timeoutId);
+>>>>>>> f3333b11f6c50a7039572755eed08d8842a510af
 
 		const data = await response.json();
 		console.log("Deck update response:", data);
