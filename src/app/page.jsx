@@ -10,7 +10,7 @@ export default async function Home() {
 	const logoHeight = logoWidth;
 
 	return (
-		<main className="m-8 mb-20 p-8">
+		<main className="m-2 mb-10 p-2 sm:m-8 sm:mb-20 sm:p-8">
 			<div className="flex basis-full flex-col gap-4">
 				<div className="flex justify-center">
 					<Image
@@ -18,13 +18,13 @@ export default async function Home() {
 						width={logoWidth}
 						height={logoHeight}
 						alt="Mystic Tuner logo"
-						className="self-center"
+						className="self-center w-full max-w-[350px] h-full max-h-[350px]"
 					/>
 				</div>
 				<div className="flex justify-center">
 					<Button
 						size="lg"
-            variant='shadow'
+						variant="shadow"
 						color="primary"
 						as={Link}
 						href={{
@@ -36,7 +36,7 @@ export default async function Home() {
 						Make a Deck!
 					</Button>
 				</div>
-				<div className="mt-10">
+				<div className="mt-10 w-full">
 					<UserDecks />
 				</div>
 			</div>
