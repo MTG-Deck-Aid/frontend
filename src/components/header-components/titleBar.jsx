@@ -12,20 +12,26 @@ export default function TitleBar(){
     const lineWidth = 520;
     const lineHeight = 70;
     return(
-        <div className="flex flex-nowrap justify-between items-center w-full mx-8">
-        <Image
-            src={leftLine}
-            width={lineWidth}
-            height={lineHeight}
-            alt="Impact Line One"
-        />
-        <TitleText />
-        <Image
-            src={rightLine}
-            width={lineWidth}
-            height={lineHeight}
-            alt="Impact Line Two"
-        />
-        </div>  
+        <div className="flex items-center gap-4 mx-8">
+            <div>
+                <Image
+                    src={leftLine}
+                    width={lineWidth}
+                    height={lineHeight}
+                    alt="Impact Line One"
+                    className="w-full h-full"
+                />
+            </div>
+            <TitleText />
+            <div>
+                <Image
+                    src={rightLine}
+                    width={lineWidth}
+                    height={lineHeight}
+                    alt="Impact Line Two"
+                    className="w-full h-full"
+                />
+            </div> 
+        </div> 
     );
 }
