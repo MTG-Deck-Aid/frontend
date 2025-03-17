@@ -9,7 +9,6 @@ export default function NameAutocomplete(){
     const [commander, selectCommander] = useState("temp"); //TODO: put in default commander value
     let list = useAsyncList({
         async load({filterText}){
-            
             let cards = await getCards(filterText);
             return{
                 items: cards
