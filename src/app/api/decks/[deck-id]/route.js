@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import { getAuthorizationHeader } from "@/utils";
 export async function PATCH(request) {
   try {
     const { auth0Token, cardsAdded, cardsRemoved } = request.json();
@@ -23,13 +23,14 @@ export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
+    const authorizationHeaders = getAuthorizationHeader(auth0Token);
     const response = await fetch(
-      `${process.env.BACKEND_BASE_URL}/apis/decks/${deckId}/`,
+      `${process.env.BACKEND_BASE_URL}/apis/decks/${deckId}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorizationHeaders,
         },
         body: JSON.stringify({ auth0Token, cardsAdded, cardsRemoved }),
         signal: controller.signal,

@@ -9,13 +9,13 @@ export async function POST(request) {
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
     const response = await fetch(
-      `${process.env.BACKEND_BASE_URL}/api/decks/commander/`,
+      `${process.env.BACKEND_BASE_URL}/api/decks/commander`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ commander: commander }),
+        body: JSON.stringify({ commander }),
         signal: controller.signal,
       }
     );

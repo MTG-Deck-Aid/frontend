@@ -10,7 +10,7 @@ export async function POST(request) {
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
     const response = await fetch(
-      `${process.env.BACKEND_BASE_URL}/api/decks/verify-cards/`,
+      `${process.env.BACKEND_BASE_URL}/api/decks/verify-cards`,
       {
         method: "POST",
         headers: {
