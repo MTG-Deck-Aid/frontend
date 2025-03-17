@@ -23,7 +23,7 @@ export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-    const authorizationHeaders = getAuthorizationHeader(auth0Token);
+    const authorizationHeaders = getAuthorizationHeader();
     const response = await fetch(
       `${process.env.BACKEND_BASE_URL}/apis/decks/${deckId}`,
       {
