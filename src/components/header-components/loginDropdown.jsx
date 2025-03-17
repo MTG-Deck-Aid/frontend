@@ -32,7 +32,7 @@ export default function LoginDropdown(props){
     ]
 
     return(
-        <div className='flex flex-shrink justify-end items-center m-5'>
+        <div className='flex flex-shrink justify-end items-center p-2'>
             <Dropdown className="p-0">
                 <DropdownTrigger>
                     <Button radius="full" isIconOnly variant="bordered" 

@@ -12,7 +12,7 @@ export default function TitleBar(){
     const lineWidth = 520;
     const lineHeight = 70;
     return(
-        <div className="flex items-center gap-4 mx-8">
+        <div className="flex items-center gap-4 mx-2 md:mx-8">
             <div>
                 <Image
                     src={leftLine}

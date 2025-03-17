@@ -22,28 +22,30 @@ export default async function UserDecks(){
     
 
     return(
-      <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 auto-cols-max gap-2 md:gap-8">
         {exampleCards.map((card) => (   
-            <div className="flex flex-col" key={card.id}>
-                <div className="text-2xl italic text-wrap">
+            <div className="flex flex-col justify-between m-2" key={card.id}>
+                <div className="text-l md:text-2xl italic text-wrap">
                         {card.name}
                 </div>
                  {/**IMPORTANT: we need to swap all of this card.{var} with deck information. That will include commander image and deck name
                   */}
-                <Link className="flex" href={{
-                    pathname: `/view-import-deck/${card.name}`, //this will be the slug to the edit deck page
-                    query:  {title:`${card.name}`}, //title: will be the next page's title (need to find solution such that we can update this from edit deck)
-                    //possible TODO: denote whether page should start in edit or view mode
-                }}>
-                    <Image
-                    //This is the image for displaying the deck. Will need to be replaced with deck info
-                        alt={card.name}
-                        height={cardHeight}
-                        width={cardWidth}
-                        src={card.image_uris.art_crop}
-                        className="rounded-xl"
-                    />
-                </Link>
+                  <div className="m-2">
+                    <Link href={{
+                        pathname: `/view-import-deck/${card.name}`, //this will be the slug to the edit deck page
+                        query:  {title:`${card.name}`}, //title: will be the next page's title (need to find solution such that we can update this from edit deck)
+                        //possible TODO: denote whether page should start in edit or view mode
+                    }}>
+                        <Image
+                        //This is the image for displaying the deck. Will need to be replaced with deck info
+                            alt={card.name}
+                            height={cardHeight}
+                            width={cardWidth}
+                            src={card.image_uris.art_crop}
+                            className="rounded-xl w-full h-full"
+                        />
+                    </Link>
+                </div>
             </div>
         ))}
       </div>  
