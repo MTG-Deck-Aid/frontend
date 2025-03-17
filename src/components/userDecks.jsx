@@ -6,7 +6,7 @@ export default async function UserDecks(){
      * UserDecks() will contain a collection of card images that can be clicked on the go to a dynamic link
      */
     /**
-     * This will need to be a get request to receive whatever the user's decks are.
+     * This component mainly needs to be integrated to use deck information instead of card information
      */
     const exampleCards = 
     [
@@ -31,10 +31,12 @@ export default async function UserDecks(){
                  {/**IMPORTANT: we need to swap all of this card.{var} with deck information. That will include commander image and deck name
                   */}
                 <Link className="flex" href={{
-                    pathname: `/view-import-deck/${card.name}`,
-                    query:  {title:`${card.name}`},
+                    pathname: `/view-import-deck/${card.name}`, //this will be the slug to the edit deck page
+                    query:  {title:`${card.name}`}, //title: will be the next page's title (need to find solution such that we can update this from edit deck)
+                    //possible TODO: denote whether page should start in edit or view mode
                 }}>
                     <Image
+                    //This is the image for displaying the deck. Will need to be replaced with deck info
                         alt={card.name}
                         height={cardHeight}
                         width={cardWidth}

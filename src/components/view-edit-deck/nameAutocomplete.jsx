@@ -5,17 +5,23 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { useState } from "react";
 
 export default function NameAutocomplete(){
-    const{isOpen, onOpen, onOpenChange} = useDisclosure();
+    const{isOpen, onOpen, onOpenChange} = useDisclosure(); //disclosure handles the state of the modal
     const [commander, selectCommander] = useState("temp"); //TODO: put in default commander value
     let list = useAsyncList({
+        //useAsyncList allows for a dynamic list to be updated whenever we change the filtertext
+        //ref: https://react-spectrum.adobe.com/react-stately/useAsyncList.html
         async load({filterText}){
-            
+            {/**This func is called whenever filterText is changed */}
             let cards = await getCards(filterText);
             return{
                 items: cards
             };
         }
     });
+    const onSuccess = () => {
+        console.log(commander);
+        onOpenChange(); //closes modal
+    }
     return(
         <>
         <Button
@@ -42,17 +48,18 @@ export default function NameAutocomplete(){
                         inputValue={list.filterText}
                         isLoading = {list.isLoading}
                         onInputChange={list.setFilterText}
-                        onSelectionChange={selectCommander}
+                        onSelectionChange={selectCommander} //will call specified method with selected item's key (in this case key=item= commanders name)
                         >
-                        {list.items.map((item, index) => {return (
-                            <AutocompleteItem className="" key={index}>
+                        {list.items.map((item) => {return (
+                            <AutocompleteItem className="" key={item}>
                                 {item}
                             </AutocompleteItem>
                         )})}
                         </Autocomplete>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="success" variant="flat" onPress={onClose} > {/**This is where the commander api will be sent*/}
+                        <Button color="success" variant="flat" onPress={onSuccess} > {/** Make sure whatever func this calls also
+                         *  calls onOpenChange in order to close the modal */}
                             Commander Found!
                         </Button>
                     </ModalFooter>

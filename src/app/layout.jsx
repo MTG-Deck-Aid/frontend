@@ -9,12 +9,12 @@ import Header from "@/components/header-components/header";
 
 export const metadata = {
   title: "Mystic Tuner",
-  description: "GPT Aided Deck Tuner",
+  description: "Gemini Aided Deck Tuner",
 };
 
 export default async function RootLayout({ children }) {
   /**
-   * Root layout will wrap all other pages in the app
+   * Root layout will wrap all other pages in the app. Is statically created and will not be reloaded
    */
    return (
     <html lang="en" className="dark">

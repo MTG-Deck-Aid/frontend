@@ -7,6 +7,7 @@ export default function LoginDropdown(props){
     /**
      * The login dropdown is a dropdown menu that will appear on the top right of the universal header element.
      * It allows for auth0 routing to handle the user session and authentication.
+     * props: session={userSession} retrieved from auth0
      * 
      */
     const iconWidth=50;
@@ -15,7 +16,7 @@ export default function LoginDropdown(props){
 
     const dropdownItems = 
     /**dropdownItems contains information about each potential item.
-    * key: rqeuired for the dropdownMenu component. Unique identifier for the item
+    * key: required for the dropdownMenu component. Unique identifier for the item
     * label: The text to be displayed with the item
     * type: allows specific handling of the item based on its type. (NOTE: this is not a typescript custom type)
     * link: allows for dynamic routing depending on the dropdown item
@@ -26,7 +27,8 @@ export default function LoginDropdown(props){
         {key:"logout",label:"Sign Out",type:"link", link:"/auth/logout"}
     ] : [
         {key:"guest",label:"Guest",type:"label"},
-        {key:"login",label:"Login / Sign Up",type:"link", link:"/auth/login"},
+        {key:"login",label:"Login",type:"link", link:"/auth/login"},
+        {key: "signup",label:"Sign Up",type:"link",link:"/auth/login?screenhint=signup"}
     ]
 
     return(

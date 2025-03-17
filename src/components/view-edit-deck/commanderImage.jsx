@@ -4,14 +4,12 @@ import Image from "next/image";
 import NameAutocomplete from "./nameAutocomplete";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
 
-export default function CommanderImage(props){
+export default function CommanderImage(){
     const{isEditMode} = useViewDeckContext();   
     
     //Page constants
     const imageHeight = 350;
     const imageWidth = 250;
-
-
 
     return(
         isEditMode?( 
@@ -37,8 +35,4 @@ export default function CommanderImage(props){
             </div>
         )
     );
-}
-
-const searchCommander = (query) => {
-    autocomplete(query);
 }
