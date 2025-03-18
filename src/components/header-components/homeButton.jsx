@@ -13,12 +13,15 @@ export default function HomeButton(){
     return(
         <div className="flex justify-start items-center">
             <Button radius="full" isIconOnly variant="bordered" 
-                className="w-[50] h-[50] border-0 p-0 m-0" as={Link} href="/">
+                className="w-full h-full border-0 p-0 m-0" as={Link} href="/">
                 <Image 
                     src={smallLogo} 
                     width={iconWidth} 
                     height={iconHeight} 
-                    alt='Mystic Tuner Logo'/>
+                    alt='Mystic Tuner Logo'
+                    className="w-full h-full"
+                    />
+                    
             </Button>
         </div>
     );

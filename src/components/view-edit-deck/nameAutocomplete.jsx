@@ -8,8 +8,11 @@ export default function NameAutocomplete({ onNameChange }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
     const [commander, selectCommander] = useState("temp"); //TODO: put in default commander value
     let list = useAsyncList({
-        //useAsyncList allows for a dynamic list to be updated whenever we change the filtertext
-        //ref: https://react-spectrum.adobe.com/react-stately/useAsyncList.html
+        /**useAsyncList allows for a dynamic list to be updated whenever we change the filtertext
+        * ref: https://react-spectrum.adobe.com/react-stately/useAsyncList.html
+        * KNOWN BUG: no function debouncing and therefore it is called upon every keystroke. Causes excessive delays.
+        * 
+        */
         async load({ filterText }) {
             {/**This func is called whenever filterText is changed */ }
             let cards = await getCards(filterText);

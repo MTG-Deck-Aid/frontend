@@ -32,11 +32,12 @@ export default function LoginDropdown(props){
     ]
 
     return(
-        <div className='flex justify-end items-center m-5'>
+        <div className='flex flex-shrink justify-end items-center p-2'>
             <Dropdown className="p-0">
                 <DropdownTrigger>
-                    <Button radius="full" isIconOnly disableRipple variant="bordered" className="w-[50] h-[50] border-0 p-0 m-0">
-                        <Image className="m-0 p-0" src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon'/>
+                    <Button radius="full" isIconOnly variant="bordered" 
+                className="w-full h-full border-0 p-0 m-0">
+                        <Image src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon' className="m-0 p-0 w-full h-full"/>
                     </Button>
                 </DropdownTrigger>
                 {/**Dropdown menu will be populated dynamically depending on the contents of dropdownItems*/}
