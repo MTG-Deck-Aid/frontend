@@ -11,7 +11,9 @@ export default function CommanderImage() {
     const [commanderImage, setCommanderImage] = useState(emptyCommanderFrame);
 
     const handleNameChange = (name) => {
-        setCommanderName(name);
+        console.log('Commander Returned: ', name);
+        console.log('Fetching Commander Image');
+        fetchAndSetCommanderImage(name);
     };
 
     const fetchAndSetCommanderImage = async (name) => {
@@ -32,6 +34,7 @@ export default function CommanderImage() {
         }
 
         if (data.status === 200) {
+            setCommanderName(data.commander);
             try {
                 let image = data.images.normal;
                 console.log('Commander Image: ', image);
@@ -43,9 +46,7 @@ export default function CommanderImage() {
     }
 
     useEffect(() => {
-        console.log('Commander Returned: ', commander);
-        console.log('Fetching Commander Image');
-        fetchAndSetCommanderImage(commander);
+        console.log('Commander Confirmed!');
     }, [commander]);
 
     //Page constants
@@ -54,24 +55,25 @@ export default function CommanderImage() {
 
     return (
         isEditMode ? (
-            <div className="relative flex justify-center items-center w-full max-w-md">
+            <div className="flex flex-col justify-center items-center w-full max-w-md">
+                <p>{commander}</p>
                 <Image
                     src={commanderImage}
                     width={imageWidth}
                     height={imageHeight}
-                    alt="Empty Commander Frame"
+                    alt={'Commander Image'}
                 />
 
                 <NameAutocomplete onNameChange={handleNameChange} />
             </div>
         ) : (
             <div className="flex flex-col justify-center items-center w-full max-w-md">
-                <p>Commander Name</p>
+                <p>{commander}</p>
                 <Image
-                    src={emptyCommanderFrame}
+                    src={commanderImage}
                     width={imageWidth}
                     height={imageHeight}
-                    alt="Empty Commander Frame"
+                    alt={'Commander Image'}
                 />
             </div>
         )
