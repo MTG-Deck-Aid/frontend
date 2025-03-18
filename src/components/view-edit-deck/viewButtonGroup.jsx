@@ -84,7 +84,8 @@ const createSelect = (label) => {
                 }}
                 labelPlacement={"inside"}>
                 {numberArray.map((item, index) =>{ return(
-                    <SelectItem key={index} textValue={item}>{item}</SelectItem>
+                    <SelectItem key={index} textValue={item}>{item}</SelectItem> // add onSelect={function} to cause something to happen on select.
+                    //the event handler will use the key as an argument. change accordingly (must be unique to the list)
                 )})}
             </Select>
         </div>
@@ -92,6 +93,7 @@ const createSelect = (label) => {
 }
 
 const arrayFromRange = (start, stop, step) => 
+    /**Creates an array from start to stop with step */
     Array.from(
     {length: (stop-start) / step + 1},
     (value, index) => start + index * step

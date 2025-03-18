@@ -5,11 +5,11 @@ export default async function CardSuggestions({params}){
     const {slug} = await params;
     return(
         <div className="grid auto-rows-min gap-5">
-            <SuggestionGrid add={true} />
+            <SuggestionGrid add={true} /> {/**cards to be added */}
             <div>
                 <Divider />
             </div>
-            <SuggestionGrid add={false} />
+            <SuggestionGrid add={false} />{/** card to be removed */}
         </div>
     )
 }

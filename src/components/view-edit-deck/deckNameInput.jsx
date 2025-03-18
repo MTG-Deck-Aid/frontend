@@ -8,7 +8,7 @@ export default function DeckNameInput(props){
     return(
         isEditMode ? 
         <div className="w-80">
-            <Input 
+            <Input
                 label="Deck Name"
                 type="text"
                 placeholder="Example Deck Name"
@@ -21,7 +21,7 @@ export default function DeckNameInput(props){
         :
         <div className="w-80">
             <p>
-                {props.deckName}
+                {props.deckName} {/**This can likely be held in a deckContext rather than passed around as a prop */}
             </p>
         </div>
     );

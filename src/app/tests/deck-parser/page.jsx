@@ -51,9 +51,9 @@ const DeckParser = () => {
 		});
 
 		// If there are no explicit sections, assume the first card is the commander and skip it.
-		if (!hasExplicitSections && deckLines.length > 0) {
-			deckLines = deckLines.slice(1);
-		}
+		// if (!hasExplicitSections && deckLines.length > 0) {
+		// 	deckLines = deckLines.slice(1);
+		// }
 
 		// Regex to capture the quantity and card name.
 		// This pattern matches a number at the start, then the card name,
@@ -74,6 +74,15 @@ const DeckParser = () => {
 
 		return { cards: parsedCards };
 	};
+
+	// Function to get deck JSON to text.
+	const getDeckText = (cards) => {
+		const lines = [];
+		cards.forEach(card => {
+			lines.push(`${card.quantity} ${card.cardName}`);
+		});
+		return lines.join('\n');
+	}
 
 	// Handler to parse the input text when the button is clicked.
 	const handleParse = () => {
@@ -97,6 +106,14 @@ const DeckParser = () => {
 			<pre style={{ background: 'black', padding: '1rem' }}>
 				{JSON.stringify({ cards }, null, 2)}
 			</pre>
+			<h2>Deck JSON to Text</h2>
+			<textarea
+				value={getDeckText(cards)}
+				rows="10"
+				cols="50"
+				readOnly
+				style={{ width: '100%', marginTop: '1rem' }}
+			/>
 		</div>
 	);
 };

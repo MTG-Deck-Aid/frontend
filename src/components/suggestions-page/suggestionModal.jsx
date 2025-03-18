@@ -7,11 +7,14 @@ import Image from "next/image";
 export default function SuggestionModal(props){
     /**
      * SuggestionModal is a window that pops up with generated suggestions for certain cards.
+     * props: card={at least card.name, card.image_uris.normal} <- card data, 
+     * textContent={string} <- gemini response to be displayed
      */
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const cardHeight = 375;
     const cardWidth = Math.round(0.75 * cardHeight);
     const card = props.card
+    const textContent = props.textContent
     return(
         <div>
         <>
@@ -28,19 +31,11 @@ export default function SuggestionModal(props){
             <ModalContent>
                 {(onClose) => (
                     <>
-                    <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1">Mystic Suggestions</ModalHeader>
                     <ModalBody className="flex flex-col m-2 py-0">
                     <div>
                         <p>
-                            Blah Blah Blah Card Card Card Blah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                        </p>
-                        <p>
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
-                            Blah Blah Blah Card Card CardBlah Blah Blah Card Card CardBlah Blah Blah Card Card Card
+                            {textContent} {/**gemini response */}
                         </p>
                     </div>
                     </ModalBody>

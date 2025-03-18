@@ -7,6 +7,7 @@ export default function LoginDropdown(props){
     /**
      * The login dropdown is a dropdown menu that will appear on the top right of the universal header element.
      * It allows for auth0 routing to handle the user session and authentication.
+     * props: session={userSession} retrieved from auth0
      * 
      */
     const iconWidth=50;
@@ -15,7 +16,7 @@ export default function LoginDropdown(props){
 
     const dropdownItems = 
     /**dropdownItems contains information about each potential item.
-    * key: rqeuired for the dropdownMenu component. Unique identifier for the item
+    * key: required for the dropdownMenu component. Unique identifier for the item
     * label: The text to be displayed with the item
     * type: allows specific handling of the item based on its type. (NOTE: this is not a typescript custom type)
     * link: allows for dynamic routing depending on the dropdown item
@@ -26,15 +27,17 @@ export default function LoginDropdown(props){
         {key:"logout",label:"Sign Out",type:"link", link:"/auth/logout"}
     ] : [
         {key:"guest",label:"Guest",type:"label"},
-        {key:"login",label:"Login / Sign Up",type:"link", link:"/auth/login"},
+        {key:"login",label:"Login",type:"link", link:"/auth/login"},
+        {key: "signup",label:"Sign Up",type:"link",link:"/auth/login?screenhint=signup"}
     ]
 
     return(
-        <div className='flex justify-end items-center m-5'>
+        <div className='flex flex-shrink justify-end items-center p-2'>
             <Dropdown className="p-0">
                 <DropdownTrigger>
-                    <Button radius="full" isIconOnly disableRipple variant="bordered" className="w-[50] h-[50] border-0 p-0 m-0">
-                        <Image className="m-0 p-0" src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon'/>
+                    <Button radius="full" isIconOnly variant="bordered" 
+                className="w-full h-full border-0 p-0 m-0">
+                        <Image src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon' className="m-0 p-0 w-full h-full"/>
                     </Button>
                 </DropdownTrigger>
                 {/**Dropdown menu will be populated dynamically depending on the contents of dropdownItems*/}
