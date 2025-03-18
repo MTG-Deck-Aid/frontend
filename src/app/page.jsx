@@ -38,7 +38,7 @@ export default async function Home() {
 					</Button>
 				</div>
 				<Divider/>
-				<div className="mt-10 w-full">
+				<div className="flex flex-row justify-center w-full">
 					<UserDecks />
 				</div>
 			</div>

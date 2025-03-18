@@ -21,6 +21,9 @@ export default async function UserDecks() {
 	const cardHeight = Math.round(0.73 * cardWidth);
     
 	return (
+        <div>
+            <p className='text-2xl m-0'>Your Decks</p>
+            <Divider />
 		<div className="grid auto-cols-max grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
 			{exampleCards.map((card) => (
 				<div className="m-2 flex flex-col justify-between items-center p-2" key={card.id}>
@@ -54,5 +57,6 @@ export default async function UserDecks() {
 				</div>
 			))}
 		</div>
+        </div>
 	);
 }
