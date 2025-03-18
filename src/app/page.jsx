@@ -1,40 +1,45 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@heroui/button';
 import './globals.css';
-import UserDecks from "@/components/userDecks";
+import UserDecks from '@/components/userDecks';
 import pageLogo from '/public/logo-dark.png';
 
 export default async function Home() {
-  const logoWidth = 350;
-  const logoHeight = logoWidth;
+	const logoWidth = 350;
+	const logoHeight = logoWidth;
 
-  return (
-    <div className="grid grid-rows-2 grid-cols-1 min-h-screen m-8 mb-20 p-8">
-      <main className="grid grid-cols-3 gap-4 content-evenly flex-col row-start-1 items-center sm:items-start">
-        <div className="flex justify-center items-center col-start-2 row-start-1">
-          <Image
-            src={pageLogo}
-            width={logoWidth}
-            height={logoHeight}
-            alt="Mystic Tuner logo"
-            className="self-center"
-          />
-        </div>
-        <div className="flex flex-auto items-center justify-center col-start-2">
-          <Link
-            href={{
-              pathname: "/view-import-deck/new-deck",
-              query: { title: "New Deck" },
-            }}
-            className="flex rounded-3xl bg-sky-blue hover:bg-blue text-dark-grey m-2 p-2 w-60 h-20 justify-center items-center 
-          text-5xl font-body no-underline">
-            New Deck
-          </Link>
-        </div>
-        <div className="flex justify-center mt-10 col-span-3">
-          <UserDecks />
-        </div>
-      </main>
-    </div>
-  );
+	return (
+		<main className="m-2 mb-10 p-2 sm:m-8 sm:mb-20 sm:p-8">
+			<div className="flex basis-full flex-col gap-4">
+				<div className="flex justify-center">
+					<Image
+						src={pageLogo}
+						width={logoWidth}
+						height={logoHeight}
+						alt="Mystic Tuner logo"
+						className="self-center w-full max-w-[350px] h-full max-h-[350px]"
+					/>
+				</div>
+				<div className="flex justify-center">
+					<Button
+						size="lg"
+						variant="shadow"
+						color="primary"
+						as={Link}
+						href={{
+							pathname: '/view-import-deck/new-deck',
+							query: { title: 'New Deck' },
+						}}
+						className="no-underline"
+					>
+						Make a Deck!
+					</Button>
+				</div>
+				<div className="mt-10 w-full">
+					<UserDecks />
+				</div>
+			</div>
+		</main>
+	);
 }
