@@ -15,6 +15,6 @@ export default function PageTitle(){
     const pageTitle = (titles[pathName] ? titles[pathName] : searchParams.get('title'));
 
     return(
-        <p className="m-2 justify-center font-body text-4xl text-nowrap">{pageTitle}</p>
+        <p className="m-2 justify-center font-body text-4xl md:text-5xl lg:text-6xl text-nowrap">{pageTitle}</p>
     )
 }
