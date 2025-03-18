@@ -2,25 +2,38 @@ import { Autocomplete, AutocompleteItem, Button } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
 import { getCards } from "@/app/api/cards/autocomplete/route";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function NameAutocomplete({ onNameChange }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
-    const [commander, selectCommander] = useState("temp"); //TODO: put in default commander value
+    const [commander, selectCommander] = useState(""); //TODO: put in default commander value
+    const [filterText, setFilterText] = useState("");
+    const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedFilterText(filterText);
+        }, 1000);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [filterText]);
+
     let list = useAsyncList({
-        /**useAsyncList allows for a dynamic list to be updated whenever we change the filtertext
-        * ref: https://react-spectrum.adobe.com/react-stately/useAsyncList.html
-        * KNOWN BUG: no function debouncing and therefore it is called upon every keystroke. Causes excessive delays.
-        * 
-        */
         async load({ filterText }) {
-            {/**This func is called whenever filterText is changed */ }
+            console.log("CALLING GET CARDS");
             let cards = await getCards(filterText);
             return {
                 items: cards
             };
         }
     });
+
+    useEffect(() => {
+        list.setFilterText(debouncedFilterText);
+    }, [debouncedFilterText]);
+
     const onSuccess = () => {
         console.log(commander);
         onNameChange(commander);
@@ -49,9 +62,9 @@ export default function NameAutocomplete({ onNameChange }) {
                                         classNames: { label: "my-0 relative" }
                                     }}
                                     items={list.items}
-                                    inputValue={list.filterText}
+                                    inputValue={filterText}
                                     isLoading={list.isLoading}
-                                    onInputChange={list.setFilterText}
+                                    onInputChange={setFilterText}
                                     onSelectionChange={selectCommander} //will call specified method with selected item's key (in this case key=item= commanders name)
                                 >
                                     {list.items.map((item) => {
