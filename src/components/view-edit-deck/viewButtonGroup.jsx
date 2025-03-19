@@ -9,15 +9,16 @@ import Link from "next/link";
 
 
 export default function ViewButtonGroup() {
-    const { isEditMode, toggleIsEditMode, deckInput, setDeckInput, setDeckList } = useViewDeckContext();
+    const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
-    const [isLoading, setIsLoading] = useState(false)
+
 
     const saveDeck = () => {
         setIsLoading(true);
-        
-    }
+        setIsLoading(false);
+        toggleIsEditMode();
+    }   
 
     const parseDeck = (text) => {
         // Split the text into individual lines.

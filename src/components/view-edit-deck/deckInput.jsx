@@ -10,7 +10,6 @@ export default function DeckInput() {
     return (
         <div className="">
             <Textarea
-                key={deckInput.length}
                 isReadOnly={isEditMode ? false : true}
                 classNames={{
                     base: "relative border rounded-lg",

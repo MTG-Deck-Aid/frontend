@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 const ViewDeckContext = createContext(false);
 
-export function ViewDeckContextProvider({ urlName = "New Deck", urlMode = "view", urlId = -1, children }) {
+export function ViewDeckContextProvider({ urlMode, children }) {
     /**
      * This context provider will allow components wrapped by it to access the page's context.
      * The context will be two states: either edit or view
@@ -21,9 +21,13 @@ export function ViewDeckContextProvider({ urlName = "New Deck", urlMode = "view"
         console.log("\n\n---- View Deck Context ----");
         console.log("isEditMode: ", isEditMode);
     }
+    
+    function toggleIsEditMode(){
+        setIsEditMode(isEditMode?false:true);
+    }
 
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, setIsEditMode, isLoading, setIsLoading, printContext}}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, isLoading, setIsLoading, printContext}}>
             {children}
         </ViewDeckContext.Provider>
     );

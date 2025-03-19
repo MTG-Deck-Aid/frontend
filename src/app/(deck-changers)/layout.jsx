@@ -1,6 +1,6 @@
 import { UserDeckContextProvider } from "@/components/context-providers/userDeckContextProvider";
 
-export default async function DeckChangersLayout({ children }){
+export default async function DeckChangersLayout({ params, searchParams, children }){
     // Get the slug from the URL
     const { initialDeckName } = await params;
 
