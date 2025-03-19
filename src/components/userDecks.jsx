@@ -32,7 +32,7 @@ export default async function UserDecks() {
                          */}
                         
                         <div>
-                            <div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-2xl">
+                            <div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-xl">
                                 {card.name}
                             </div>
                             <Link
@@ -49,7 +49,7 @@ export default async function UserDecks() {
                                         height={cardHeight}
                                         width={cardWidth}
                                         src={card.image_uris.art_crop}
-                                        className="h-auto w-[100%] rounded-xl border-2 border-solid border-white"
+                                        className="h-auto w-[100%]  rounded-xl border-2 border-solid border-white"
                                     />
                                 </div>
                             </Link>

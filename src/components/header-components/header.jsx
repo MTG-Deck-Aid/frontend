@@ -8,7 +8,7 @@ export default async function Header(){
     const session = await auth0.getSession();
     return(
         <header >
-            <div className='flex flex-row'>
+            <div className='flex flex-row w-full justify-between'>
             <HomeButton/>
             <TitleBar/>
             <LoginDropdown session={session}/>

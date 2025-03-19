@@ -17,9 +17,9 @@ export default async function ViewImportDeck({ params }) {
 
 	return (
 		<ViewDeckContextProvider>
-			<div className="max-w-screen flex flex-col items-center justify-center gap-0 lg:gap-8 p-4">
+			<div className="w-full min-h-screen flex flex-col items-center lg:gap-8">
 				{/* First row: Deck Name and Button Group */}
-				<div className="flex w-full flex-col-reverse items-start gap-4 md:flex-row md:justify-between">
+				<div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">
 					<div className="flex">
 						<DeckNameInput deckName="Placeholder Deck" />{' '}
 						{/**Initial deck name. Could be passed as a prop or setup as a context provider
@@ -32,12 +32,12 @@ export default async function ViewImportDeck({ params }) {
 				</div>
 				<Divider />
 				{/* Second Row: Commander Selection */}
-				<div className="">
+				<div>
 					<CommanderImage />
 				</div>
 				<Divider />
 				{/* Third Row: Deck Input */}
-				<div className="w-full">
+				<div className="w-[90%]">
 					<DeckInput />
 				</div>
 			</div>
