@@ -21,5 +21,5 @@ export default function DeckNameInput(props){
                 onChange={(event) => handleChange(event)}
                 value={props.name}
                 />
-        </div>
+        </div>)
 }
