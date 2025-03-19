@@ -39,6 +39,8 @@ export async function deckSuggestions(suggestionParams) {
       body: JSON.stringify(suggestionParams),
     });
 
+    (response);
+
     const data = await response.json();
     console.log("Suggestion response:", data);
     return data; // { authenticated: true/false, message: "..." }

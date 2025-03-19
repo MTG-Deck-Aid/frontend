@@ -22,11 +22,29 @@ export default function NameAutocomplete({ onNameChange }) {
 
     let list = useAsyncList({
         async load({ filterText }) {
-            console.log("CALLING GET CARDS");
-            let cards = await getCards(filterText);
-            return {
-                items: cards
-            };
+            if (!filterText) {
+                return {
+                    items: []
+                };
+            }
+            try {
+                const response = await fetch(`/api/cards/autocomplete?q=${filterText}&commander=true`);
+                const data = await response.json();
+                // console.log("Card response:", data.cards);
+                // console.log("Response Status:", response.status);
+                // console.log("Cards Status:", data.status);
+                if (data.status === 200) {
+                    return {
+                        items: data.cards
+                    };
+                } else {
+                    return {
+                        items: []
+                    };
+                }
+            } catch (error) {
+                console.error("Error getting autcomplete:", error);
+            }
         }
     });
 
@@ -42,11 +60,11 @@ export default function NameAutocomplete({ onNameChange }) {
     return (
         <>
             <Button
-                className="max-w-xs absolute w-[300px] h-[80px]"
+                className="text-xl"
                 onPress={onOpen}
                 color={"primary"}
                 variant={"faded"}
-            >Autocomplete
+            >Choose Your Commander
             </Button>
 
             <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="md">

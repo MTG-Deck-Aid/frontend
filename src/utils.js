@@ -1,4 +1,5 @@
 import { auth0 } from "@/lib/auth0";
+import { NextResponse } from "next/server";
 
 /**
  * Gets the current user token from the Auth0 client.

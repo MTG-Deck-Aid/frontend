@@ -54,28 +54,16 @@ export default function CommanderImage() {
     const imageWidth = 250;
 
     return (
-        isEditMode ? (
-            <div className="flex flex-col justify-center items-center w-full max-w-md">
-                <p>{commander}</p>
+        <div className="flex flex-col justify-center items-center w-full max-w-md">
+                <p className="text-lg">{commander}</p>
                 <Image
                     src={commanderImage}
                     width={imageWidth}
                     height={imageHeight}
                     alt={'Commander Image'}
+                    className="rounded-2xl border-white border-solid border-2"
                 />
-
-                <NameAutocomplete onNameChange={handleNameChange} />
+                {isEditMode && <NameAutocomplete onNameChange={handleNameChange} />}
             </div>
-        ) : (
-            <div className="flex flex-col justify-center items-center w-full max-w-md">
-                <p>{commander}</p>
-                <Image
-                    src={commanderImage}
-                    width={imageWidth}
-                    height={imageHeight}
-                    alt={'Commander Image'}
-                />
-            </div>
-        )
-    );
+        );
 }
