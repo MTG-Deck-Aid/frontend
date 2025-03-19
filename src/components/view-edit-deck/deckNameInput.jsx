@@ -19,7 +19,8 @@ export default function DeckNameInput(props){
                     label: "relative"
                 }}
                 onChange={(event) => handleChange(event)}
-                value={props.name}
+                value={deckName}
                 />
         </div>
+    );
 }
