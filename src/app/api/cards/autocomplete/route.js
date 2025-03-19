@@ -1,33 +1,30 @@
 "use server";
 import { NextResponse } from "next/server";
 
-
 export async function GET(request) {
     try {
-        const response = await getCards(request.params.query);
-        return NextResponse.json(response);
+        // Send request to backend...
+        const { searchParams } = new URL(request.url);
+        const query = searchParams.get('q');
+        const commander = searchParams.get('commander');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/autocomplete?q=${query}&commander=${commander}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        // Return response from backend
+        const data = await response.json();
+        // Add status to response
+        return NextResponse.json({
+            status: response.status,
+            cards: data
+        });
+
     } catch (error) {
-        console.error("Error getting autcomplete:", error);
+        console.error("Error getting autocomplete:", error);
         return NextResponse.json({
             status: 500,
             message: "Error getting Cards",
         });
-    }
-}
-
-export async function getCards(cardQuery, signal) {
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-        const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/autocomplete?q=${cardQuery}`, { signal });
-        clearTimeout(timeoutId);
-
-        const data = await response.json();
-        console.log("Card response:", data);
-        return data;
-    } catch (error) {
-        console.error("Error getting cards", error);
-        return { status: 500, message: "error getting cards" };
     }
 }
