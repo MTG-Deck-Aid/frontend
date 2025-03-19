@@ -1,4 +1,4 @@
-import { ViewDeckContextProvider } from '@/components/viewDeckContextProvider';
+import { ViewDeckContextProvider } from '@/components/context-providers/viewDeckContextProvider';
 import {
 	CommanderImage,
 	DeckInput,
@@ -14,15 +14,13 @@ export default async function ViewImportDeck({ params, searchParams }) {
      * View Mode: Allows a user to view their cards and move onto suggestions
      */
     // Get the slug from the URL
-    const { intialDeckName } = await params;
 
     // Get the query from the URL
     const awaitedSearchParams = await searchParams;
     const intialDeckMode = await awaitedSearchParams?.mode || "view";
-    const intialDeckId = await awaitedSearchParams?.deckId || "";
 
     return (
-        <ViewDeckContextProvider  urlName ={intialDeckName} urlMode ={intialDeckMode} urlId={intialDeckId}>
+        <ViewDeckContextProvider urlMode ={intialDeckMode}>
             <div className="flex flex-col items-center justify-center max-w-screen min-h-screen gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">

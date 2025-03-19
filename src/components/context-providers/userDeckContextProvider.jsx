@@ -1,7 +1,8 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from 'react';
 const UserDeckContext = createContext(false);
 
-export function UserDeckContextProvider(){
+export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, children }){
     const [deckInput, setDeckInput] = useState('');
     const [deckList, setDeckList] = useState({});
     const [deckName, setDeckName] = useState(urlName);
@@ -38,8 +39,7 @@ export function UserDeckContextProvider(){
 
     /** DEBUGGER FUNCTION */
     function printContext(){
-        console.log("\n\n---- View Deck Context ----");
-        console.log("isEditMode: ", isEditMode);
+        console.log("\n\n---- User Deck Context ----");
         console.log("deckInput: ", deckInput);
         console.log("deckList: ", deckList);
         console.log("deckName: ", deckName);
@@ -62,7 +62,7 @@ export function UserDeckContextProvider(){
     // Print the context whenever the context changes
     useEffect(() => {
         printContext();        
-    }, [deckInput, deckList, deckName, isEditMode]);
+    }, [deckInput, deckList, deckName]);
 
     return(
         <UserDeckContext.Provider value={{deckInput, setDeckInput, deckList, setDeckList , deckName, setDeckName}}>

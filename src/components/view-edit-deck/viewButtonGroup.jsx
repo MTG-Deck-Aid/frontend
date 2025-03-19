@@ -1,5 +1,5 @@
 'use client';
-import { useViewDeckContext } from "../viewDeckContextProvider";
+import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";

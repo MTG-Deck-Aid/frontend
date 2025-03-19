@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useViewDeckContext } from "../viewDeckContextProvider";
+import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { Textarea } from "@heroui/react";
 // import { u } from "framer-motion/dist/types.d-B50aGbjN";
 

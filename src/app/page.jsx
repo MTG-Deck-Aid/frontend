@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@heroui/button';
 import { Divider } from "@heroui/react";
 import './globals.css';
-import UserDecks from '@/components/userDecks';
+import UserDecks from '@/components/homepage-components/userDecks';
 import pageLogo from '/public/MysticTuner-Logo.svg';
 
 export default async function Home() {

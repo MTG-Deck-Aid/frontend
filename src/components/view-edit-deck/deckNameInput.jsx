@@ -1,5 +1,5 @@
 'use client';
-import { useViewDeckContext } from "../viewDeckContextProvider";
+import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { Input } from "@heroui/react";
 
 export default function DeckNameInput(props){

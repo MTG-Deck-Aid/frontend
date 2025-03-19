@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useViewDeckContext } from "../viewDeckContextProvider";
+import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import Image from "next/image";
 import NameAutocomplete from "./nameAutocomplete";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
