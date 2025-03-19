@@ -83,11 +83,58 @@ export default function ViewButtonGroup() {
         return lines.join('\n');
     }
 
-    const parseAndVerifyDeck = () => {
+    const parseAndVerifyDeck = async () => {
         const parsedDeck = parseDeck(deckInput);
         console.log(parsedDeck);
+
+        let verified = false;
+        let invalidNames = [];
+        try {
+            let names = parsedDeck.cards.map(card => card.cardName);
+            console.log("Names: ", names);
+            const response = await fetch('/api/decks/verify-cards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ names: names })
+            });
+            console.log(response);
+
+            const responseText = await response.text();
+            let data = {};
+            if (responseText) {
+                data = JSON.parse(responseText);
+            } else {
+                throw new Error('Empty response from the server.');
+            }
+            console.log(data);
+
+            if (data.status === 200) {
+                verified = true;
+            }
+
+            if (verified) {
+                console.log("Deck is valid! Exiting edit mode.");
+                toggleIsEditMode();
+            } else {
+                console.log("Deck is invalid! Removing invalid cards.");
+                invalidNames = data.invalidNames;
+                console.log("Invalid Names: ", invalidNames);
+                for (const invalidName of invalidNames) {
+                    // remove invalid names from parsedDeck
+                    parsedDeck.cards = parsedDeck.cards.filter(card => card.cardName !== invalidName);
+                    console.log("Removed: ", invalidName);
+                }
+                // NEED TO PUT ALERT HERE OF INVALID CARDS
+            }
+
+        } catch (err) {
+            setError(err.message);
+        }
+
         let deckList = cardsJsonToDeckList(parsedDeck.cards);
-        console.log(deckList);
+        // console.log(deckList);
         setDeckInput(deckList);
     }
 
