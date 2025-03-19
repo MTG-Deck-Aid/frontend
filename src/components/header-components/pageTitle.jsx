@@ -10,7 +10,7 @@ export default function PageTitle() {
 	//Collections of paths and Titles
 	const titles = {
 		'/': 'Deck Tuning Assistant',
-		'/redirect': 'The Mystics are Mysticising',
+		'/rate-limited': 'The Mystics are Mysticising',
 	};
 	//If the pageTitle is not in our pre-defined list, use the search parameter
 	const pageTitle = titles[pathName]

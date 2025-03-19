@@ -7,7 +7,7 @@ export default function RedirectPage(){
     const logoHeight = logoWidth;
 
     return(
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center min-h-screen w-full">
             <div>
                 <div className="absolute w-[350px] h-[350px] border-2 border-dashed border-white rounded-full animate-pulse"></div>
                 <Image
