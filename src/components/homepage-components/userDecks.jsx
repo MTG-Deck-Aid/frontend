@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Divider } from '@heroui/react';
+import { Divider, Spinner } from '@heroui/react';
 import { useEffect, useState } from 'react';
+
 export default function UserDecks() {
 	/**
 	 * UserDecks() will contain a collection of card images that can be clicked on the go to a dynamic link
@@ -68,7 +69,7 @@ export default function UserDecks() {
 		<div>
 			{loading ? (
 				<div className="text-center">
-					<p className="text-lg">Loading ...</p>
+					<Spinner variant='wave' className='text-lg'>Loading...</Spinner>
 				</div>
 			) : (
 				<div>
@@ -80,7 +81,6 @@ export default function UserDecks() {
 					):
 					decks === null ? 
 					(
-						
 						<div className="text-center">
 							<p className="text-lg">You must be signed in to view your decks.</p>
 						</div>

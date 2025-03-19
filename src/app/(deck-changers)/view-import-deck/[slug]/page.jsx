@@ -17,10 +17,10 @@ export default async function ViewImportDeck({ searchParams }) {
 
     // Get the query from the URL
     const awaitedSearchParams = await searchParams;
-    const intialDeckMode = await awaitedSearchParams?.mode || "view";
+    const initialDeckMode = await awaitedSearchParams?.mode || "edit";
 
     return (
-        <ViewDeckContextProvider urlMode={intialDeckMode}>
+        <ViewDeckContextProvider urlMode={initialDeckMode}>
             <div className="flex flex-col items-center justify-center max-w-screen max-h-fill gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">

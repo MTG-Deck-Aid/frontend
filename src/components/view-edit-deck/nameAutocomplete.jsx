@@ -3,13 +3,15 @@ import { useAsyncList } from "@react-stately/data";
 import { getCards } from "@/app/api/cards/autocomplete/route";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { useState, useEffect } from "react";
+import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 
 export default function NameAutocomplete({ onNameChange }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
     const [commander, selectCommander] = useState(""); //TODO: put in default commander value
     const [filterText, setFilterText] = useState("");
     const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
-    const debounceTime = 1000;
+    const debounceTime = 500;
+    const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -47,11 +49,13 @@ export default function NameAutocomplete({ onNameChange }) {
     useEffect(() => {
         list.setFilterText(debouncedFilterText);
     }, [debouncedFilterText]);
-    
+
     const onSuccess = () => {
+        setIsLoading(true);
         console.log(commander);
         onNameChange(commander);
         onOpenChange(); //closes modal
+        setIsLoading(false);
     }
     return (
         <>
@@ -60,10 +64,18 @@ export default function NameAutocomplete({ onNameChange }) {
                 onPress={onOpen}
                 color={"primary"}
                 variant={"faded"}
+                isLoading={isLoading}
             >Choose Your Commander
             </Button>
-
-            <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="md">
+            <Modal 
+                backdrop="blur"
+                isOpen={isOpen} 
+                placement="top-center" 
+                hideCloseButton={true} 
+                onOpenChange={onOpenChange} 
+                size="md" 
+                shouldBlockScroll={true}
+                >
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -72,8 +84,9 @@ export default function NameAutocomplete({ onNameChange }) {
                                 <Autocomplete
                                     label="Select Commander"
                                     placeholder="Type to search..."
+                                    isClearable={false}
                                     inputProps={{
-                                        classNames: { label: "my-0 relative" }
+                                        classNames: { label: "my-0 relative", }
                                     }}
                                     items={list.items}
                                     inputValue={filterText}
