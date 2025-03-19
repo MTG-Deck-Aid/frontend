@@ -33,7 +33,7 @@ export function ViewDeckContextProvider({ urlName = "New Deck", urlMode = "view"
         let formattedDeckList = [];
         // Finds the total quantity of cards in the deck for each card,
         // and adds that to the card object
-        deckList.forEach(card => {
+        deckList.map((card) => {
             let cardIndex = formattedDeckList.findIndex((element) => element.name === card.name);
             if(cardIndex === -1){
                 formattedDeckList.push({name: card.name, quantity: 1});
@@ -68,8 +68,10 @@ export function ViewDeckContextProvider({ urlName = "New Deck", urlMode = "view"
         if (urlId !== -1) {
             console.log("Fetching deck from backend");
             fetchUserDeck().then(deck => {
-                console.log("Populating deck list");
-                setDeckInput(populateDeckList(deck));
+                if(deck){
+                    console.log("Populating deck list");
+                    setDeckInput(populateDeckList(deck));
+                }
             });
         }
     }, []); 

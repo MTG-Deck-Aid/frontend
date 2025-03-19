@@ -40,7 +40,7 @@ export default async function ViewImportDeck({ params, searchParams }) {
                 </div>
                 <Divider />
                 {/* Third Row: Deck Input */}
-                <div className="w-[90%]">
+                <div className="w-full justify-start">
                     <DeckInput />
                 </div>
             </div>

@@ -8,15 +8,15 @@ export default function DeckInput() {
     const { isEditMode, setDeckInput, deckInput } = useViewDeckContext();
 
     return (
-        <div className="w-full">
+        <div className="">
             <Textarea
                 key={deckInput.length}
                 isReadOnly={isEditMode ? false : true}
                 classNames={{
-                    base: "p-4 border rounded-lg",
-                    inputWrapper: "m-0 w-[100%]"
+                    base: "relative border rounded-lg",
+                    inputWrapper: "w-[100%] p-2"
                 }}
-                className="relative w-[100%]"
+                className=""
                 value={deckInput}
                 // onChange={(event) => setDeckInput(event.target.value)}
                 color="primary"
