@@ -24,35 +24,37 @@ export default async function UserDecks() {
         <div>
             <p className='text-2xl m-0'>Your Decks</p>
             <Divider />
-		<div className="grid auto-cols-max grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+		<div className="grid auto-cols-max grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
 			{exampleCards.map((card) => (
-				<div className="m-2 flex flex-col justify-between items-center p-2" key={card.id}>
-					{/**IMPORTANT: we need to swap all of this card.{var} with deck information. That will include commander image and deck name
-					 */}
-                    
-					<div>
-                        <div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-2xl">
-                            {card.name}
-                        </div>
-						<Link
-							href={{
-								pathname: `/view-import-deck/${card.name}`, //this will be the slug to the edit deck page
-								query: { title: `${card.name}` }, //title: will be the next page's title (need to find solution such that we can update this from edit deck)
-								//possible TODO: denote whether page should start in edit or view mode
-							}}
-						>
-							<div className="inline-block">
-								<Image
-									//This is the image for displaying the deck. Will need to be replaced with deck info
-									alt={card.name}
-									height={cardHeight}
-									width={cardWidth}
-									src={card.image_uris.art_crop}
-									className="h-auto w-[100%] rounded-xl border-2 border-solid border-white"
-								/>
-							</div>
-						</Link>
-					</div>
+                <div key={card.id}>
+                    <div className="m-2 flex flex-col justify-between items-center p-2" >
+                        {/**IMPORTANT: we need to swap all of this card.{var} with deck information. That will include commander image and deck name
+                         */}
+                        
+                        <div>
+                            <div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-2xl">
+                                {card.name}
+                            </div>
+                            <Link
+                                href={{
+                                    pathname: `/view-import-deck/${card.name}`, //this will be the slug to the edit deck page
+                                    query: { title: `${card.name}` }, //title: will be the next page's title (need to find solution such that we can update this from edit deck)
+                                    //possible TODO: denote whether page should start in edit or view mode
+                                }}
+                            >
+                                <div className="inline-block">
+                                    <Image
+                                        //This is the image for displaying the deck. Will need to be replaced with deck info
+                                        alt={card.name}
+                                        height={cardHeight}
+                                        width={cardWidth}
+                                        src={card.image_uris.art_crop}
+                                        className="h-auto w-[100%] rounded-xl border-2 border-solid border-white"
+                                    />
+                                </div>
+                            </Link>
+					    </div>
+                    </div>
                     <Divider />
 				</div>
 			))}

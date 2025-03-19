@@ -34,7 +34,7 @@ export default async function Home() {
 						}}
 						className="no-underline"
 					>
-						Make a Deck!
+						Make a Deck
 					</Button>
 				</div>
 				<Divider/>

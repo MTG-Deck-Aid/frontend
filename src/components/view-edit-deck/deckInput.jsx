@@ -21,11 +21,13 @@ export default function DeckInput() {
             <Textarea
                 isReadOnly={isEditMode ? false : true}
                 classNames={{
-                    base: "w-max-full h-[120vh] p-4 border rounded-lg",
-                    inputWrapper: "m-0 w-[calc(100%]"
+                    base: "p-4 border rounded-lg",
+                    inputWrapper: "m-0 w-[calc(1]"
                 }}
+                className="relative w-[100%]"
                 onChange={handleChange}
-                placeholder="Paste your deck list here" />
+                placeholder="Paste your deck list here"
+                description="We support Moxfield, MTGA, or MTGO formatting" />
         </div>
     )
 }

@@ -54,7 +54,7 @@ export default function CommanderImage() {
     const imageWidth = 250;
 
     return (
-        <div className="flex flex-col justify-center items-center w-full max-w-md">
+        <div className="flex flex-col justify-center items-center w-full max-w-md gap-2">
                 <p className="text-lg">{commander}</p>
                 <Image
                     src={commanderImage}

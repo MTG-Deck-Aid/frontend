@@ -7,7 +7,7 @@ export default function DeckNameInput(props){
 
     return(
         isEditMode ? 
-        <div className="">
+        <div>
             <Input
                 label="Deck Name"
                 type="text"
