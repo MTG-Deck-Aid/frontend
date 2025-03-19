@@ -9,11 +9,12 @@ export default function NameAutocomplete({ onNameChange }) {
     const [commander, selectCommander] = useState(""); //TODO: put in default commander value
     const [filterText, setFilterText] = useState("");
     const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
+    const debounceTime = 1000;
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedFilterText(filterText);
-        }, 1000);
+        }, debounceTime);
 
         return () => {
             clearTimeout(handler);
@@ -22,11 +23,6 @@ export default function NameAutocomplete({ onNameChange }) {
 
     let list = useAsyncList({
         async load({ filterText }) {
-            if (!filterText) {
-                return {
-                    items: []
-                };
-            }
             try {
                 const response = await fetch(`/api/cards/autocomplete?q=${filterText}&commander=true`);
                 const data = await response.json();
@@ -43,7 +39,7 @@ export default function NameAutocomplete({ onNameChange }) {
                     };
                 }
             } catch (error) {
-                console.error("Error getting autcomplete:", error);
+                console.error("Error getting autocomplete:", error);
             }
         }
     });
@@ -51,7 +47,7 @@ export default function NameAutocomplete({ onNameChange }) {
     useEffect(() => {
         list.setFilterText(debouncedFilterText);
     }, [debouncedFilterText]);
-
+    
     const onSuccess = () => {
         console.log(commander);
         onNameChange(commander);
@@ -95,8 +91,7 @@ export default function NameAutocomplete({ onNameChange }) {
                                 </Autocomplete>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="success" variant="flat" onPress={onSuccess} > {/** Make sure whatever func this calls also
-                         *  calls onOpenChange in order to close the modal */}
+                                <Button color="success" variant="flat" onPress={onSuccess} >
                                     Commander Found!
                                 </Button>
                             </ModalFooter>

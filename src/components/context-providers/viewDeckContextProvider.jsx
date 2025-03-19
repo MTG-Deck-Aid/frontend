@@ -36,7 +36,6 @@ export function ViewDeckContextProvider({ urlMode, children }) {
 export function useViewDeckContext() {
     /**
      * useViewDeckContext takes in no parameters and returns the context of the page.
-     * This will be a string 
      */
     const context = useContext(ViewDeckContext);
     if (!context) {

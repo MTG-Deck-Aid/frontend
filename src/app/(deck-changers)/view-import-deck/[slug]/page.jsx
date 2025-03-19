@@ -21,7 +21,7 @@ export default async function ViewImportDeck({ searchParams }) {
 
     return (
         <ViewDeckContextProvider urlMode={intialDeckMode}>
-            <div className="flex flex-col items-center justify-center max-w-screen min-h-screen gap-8 p-4">
+            <div className="flex flex-col items-center justify-center max-w-screen max-h-fill gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">
                     <div className="flex">

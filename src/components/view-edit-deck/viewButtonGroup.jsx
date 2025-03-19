@@ -146,6 +146,7 @@ export default function ViewButtonGroup() {
         console.log(deckList);
         setDeckInput(deckList);
     }
+    
     return(
             isEditMode?(
                 <div className="flex">

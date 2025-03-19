@@ -64,6 +64,14 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         printContext();        
     }, [deckInput, deckList, deckName]);
 
+    function useUserDeckContext(){
+        const context = useContext(UserDeckContext);
+        if (!context) {
+            throw new Error('useUserDeckContext must be used within a UserDeckContextProvider');
+        }
+        return context;
+    }
+
     return(
         <UserDeckContext.Provider value={{deckInput, setDeckInput, deckList, setDeckList , deckName, setDeckName}}>
             {children}
