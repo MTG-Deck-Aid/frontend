@@ -1,5 +1,6 @@
 'use client';
 import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { UserDeckContextProvider } from "../context-providers/userDeckContextProvider";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
@@ -10,151 +11,18 @@ import Link from "next/link";
 
 export default function ViewButtonGroup() {
     const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
+    const { saveDeck } = UserDeckContextProvider();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
 
-
-    const saveDeck = () => {
-        setIsLoading(true);
-        setIsLoading(false);
-        toggleIsEditMode();
-    }   
-
-    const parseDeck = (text) => {
-        // Split the text into individual lines.
-        const lines = text.split('\n');
-        let deckLines = [];
-        let currentSection = 'deck'; // default section if none are specified
-        let hasExplicitSections = false;
-
-        // First pass: check if any explicit section headings exist.
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            if (/^(Commander|Deck|Sideboard|About):?/i.test(trimmed)) {
-                hasExplicitSections = true;
-            }
-        });
-
-        // Second pass: assign lines to sections.
-        // (If headings like "Commander:" or "Sideboard:" appear, we use them to ignore unwanted cards.)
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            if (trimmed === '') return;
-
-            // Update currentSection based on header lines.
-            if (/^(Commander):?/i.test(trimmed)) {
-                currentSection = 'commander';
-                return;
-            } else if (/^(Deck):?/i.test(trimmed)) {
-                currentSection = 'deck';
-                return;
-            } else if (/^(Sideboard):?/i.test(trimmed)) {
-                currentSection = 'sideboard';
-                return;
-            } else if (/^(About):?/i.test(trimmed)) {
-                // Skip sections like About.
-                currentSection = 'ignore';
-                return;
-            }
-
-            // Only add lines that belong to the deck section.
-            if (currentSection === 'deck') {
-                deckLines.push(trimmed);
-            }
-        });
-
-        // Regex to capture the quantity and card name.
-        // This pattern matches a number at the start, then the card name,
-        // and ignores any set identifiers or trailing numbers.
-        const cardRegex = /^(\d+)\s+(.+?)(?=\s+\([^)]+\)|\s+\d+$|$)/;
-        const parsedCards = [];
-
-        deckLines.forEach(line => {
-            const match = line.match(cardRegex);
-            if (match) {
-                const quantity = parseInt(match[1], 10);
-                let cardName = match[2].trim();
-                // Remove any trailing number that might remain
-                cardName = cardName.replace(/\s+\d+$/, '');
-                parsedCards.push({ quantity, cardName });
-            }
-        });
-
-        return { cards: parsedCards };
-    };
-
-    const cardsJsonToDeckList = (cards) => {
-        const lines = [];
-        cards.forEach(card => {
-            lines.push(`${card.quantity} ${card.cardName}`);
-        });
-        return lines.join('\n');
-    }
-
-    const parseAndVerifyDeck = async () => {
-        const parsedDeck = parseDeck(deckInput);
-        console.log(parsedDeck);
-
-        let verified = false;
-        let invalidNames = [];
-        try {
-            let names = parsedDeck.cards.map(card => card.cardName);
-            console.log("Names: ", names);
-            const response = await fetch('/api/decks/verify-cards', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ names: names })
-            });
-            console.log(response);
-
-            const responseText = await response.text();
-            let data = {};
-            if (responseText) {
-                data = JSON.parse(responseText);
-            } else {
-                throw new Error('Empty response from the server.');
-            }
-            console.log(data);
-
-            if (data.status === 200) {
-                verified = true;
-            }
-
-            if (verified) {
-                console.log("Deck is valid! Exiting edit mode.");
-                setDeckList(parsedDeck);
-                toggleIsEditMode();
-            } else {
-                console.log("Deck is invalid! Removing invalid cards.");
-                invalidNames = data.invalidNames;
-                console.log("Invalid Names: ", invalidNames);
-                for (const invalidName of invalidNames) {
-                    // remove invalid names from parsedDeck
-                    parsedDeck.cards = parsedDeck.cards.filter(card => card.cardName !== invalidName);
-                    console.log("Removed: ", invalidName);
-                }
-                // NEED TO PUT ALERT HERE OF INVALID CARDS
-            }
-
-        } catch (err) {
-            setError(err.message);
-        }
-
-        let deckList = cardsJsonToDeckList(parsedDeck.cards);
-        console.log(deckList);
-        setDeckInput(deckList);
-    }
-    
-    return(
-            isEditMode?(
-                <div className="flex">
-                    {createPageButton("Save Deck", saveDeck, isLoading)}
-                </div>
-            ):(
-                <div className="grid grid-rows-2 gap-2">
-                    <>
+    return (
+        isEditMode ? (
+            <div className="flex">
+                {createPageButton("Save Deck", saveDeck, isLoading)}
+            </div>
+        ) : (
+            <div className="grid grid-rows-2 gap-2">
+                <>
                     {createPageButton("Get Suggestions", onOpen, isLoading)}
                     <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
                         <ModalContent>
@@ -196,7 +64,7 @@ const createPageButton = (label, onPressEvent, isLoading) => {
         <Button
             size={"md"}
             onPress={onPressEvent}
-            isLoading={isLoading?true:false}
+            isLoading={isLoading ? true : false}
             color={"primary"}
             variant={"faded"}
             className=""
