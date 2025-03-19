@@ -3,26 +3,24 @@ import { useViewDeckContext } from "../viewDeckContextProvider";
 import { Input } from "@heroui/react";
 
 export default function DeckNameInput(props){
-    const{isEditMode, toggleEditMode} = useViewDeckContext();
+    const{deckName, setDeckName, printContext} = useViewDeckContext();
+    const handleChange = (event) => {
+        setDeckName(event.target.value);
+        printContext();
+    }
 
     return(
-        isEditMode ? 
         <div>
             <Input
                 label="Deck Name"
                 type="text"
-                placeholder="Example Deck Name"
                 color="primary"
                 classNames={{
                     label: "relative"
                 }}
+                onChange={(event) => handleChange(event)}
+                value={deckName}
                 />
-        </div>
-        :
-        <div className="font-xl">
-            <p>
-                {props.deckName} {/**This can likely be held in a deckContext rather than passed around as a prop */}
-            </p>
         </div>
     );
 }
