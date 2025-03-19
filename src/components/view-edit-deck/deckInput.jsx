@@ -17,7 +17,7 @@ export default function DeckInput() {
                 }}
                 className=""
                 value={deckInput}
-                // onChange={(event) => setDeckInput(event.target.value)}
+                onChange={(event) => setDeckInput(event.target.value)}
                 color="primary"
                 placeholder="Paste your deck list here"
                 description="We support Moxfield, MTGA, or MTGO formatting" />
