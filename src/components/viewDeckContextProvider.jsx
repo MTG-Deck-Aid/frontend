@@ -16,7 +16,7 @@ export function ViewDeckContextProvider({ children }) {
      */
     const [isEditMode, setIsEditMode] = useState(true);
     const [deckInput, setDeckInput] = useState('');
-    const [deckList, setDeckList] = useState([]);
+    const [deckList, setDeckList] = useState({});
 
     function toggleIsEditMode() {
         setIsEditMode((isEditMode ? false : true));
