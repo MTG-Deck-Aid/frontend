@@ -55,7 +55,6 @@ export default async function UserDecks() {
                             </Link>
 					    </div>
                     </div>
-                    <Divider />
 				</div>
 			))}
 		</div>

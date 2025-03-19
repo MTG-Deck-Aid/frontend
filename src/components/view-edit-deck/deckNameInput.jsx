@@ -19,7 +19,7 @@ export default function DeckNameInput(props){
                 />
         </div>
         :
-        <div className="">
+        <div className="font-xl">
             <p>
                 {props.deckName} {/**This can likely be held in a deckContext rather than passed around as a prop */}
             </p>

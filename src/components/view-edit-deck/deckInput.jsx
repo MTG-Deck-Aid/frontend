@@ -26,6 +26,7 @@ export default function DeckInput() {
                 }}
                 className="relative w-[100%]"
                 onChange={handleChange}
+                color="primary"
                 placeholder="Paste your deck list here"
                 description="We support Moxfield, MTGA, or MTGO formatting" />
         </div>
