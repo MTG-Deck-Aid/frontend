@@ -2,14 +2,16 @@
 import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { Input } from "@heroui/react";
 
-export default function DeckNameInput(props){
-    const{deckName, setDeckName, printContext} = useViewDeckContext();
+export default function DeckNameInput(props) {
+    const { printContext } = useViewDeckContext();
+    const { deckName, setDeckName } = UserDeckContextProvider();
+
     const handleChange = (event) => {
         setDeckName(event.target.value);
         printContext();
     }
 
-    return(
+    return (
         <div>
             <Input
                 label="Deck Name"
@@ -20,7 +22,7 @@ export default function DeckNameInput(props){
                 }}
                 onChange={(event) => handleChange(event)}
                 value={deckName}
-                />
+            />
         </div>
     );
 }
