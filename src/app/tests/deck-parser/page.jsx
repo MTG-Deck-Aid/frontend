@@ -50,11 +50,6 @@ const DeckParser = () => {
 			}
 		});
 
-		// If there are no explicit sections, assume the first card is the commander and skip it.
-		// if (!hasExplicitSections && deckLines.length > 0) {
-		// 	deckLines = deckLines.slice(1);
-		// }
-
 		// Regex to capture the quantity and card name.
 		// This pattern matches a number at the start, then the card name,
 		// and ignores any set identifiers or trailing numbers.
