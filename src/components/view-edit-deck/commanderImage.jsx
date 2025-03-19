@@ -7,7 +7,7 @@ import emptyCommanderFrame from "/public/emptyCommander.svg";
 
 export default function CommanderImage() {
     const { isEditMode } = useViewDeckContext();
-    const [commander, setCommanderName] = useState(""); //TODO: put in default commander value
+    const { commander, setCommander } = UserDeckContextProvider();
     const [commanderImage, setCommanderImage] = useState(emptyCommanderFrame);
 
     const handleNameChange = (name) => {
@@ -34,7 +34,7 @@ export default function CommanderImage() {
         }
 
         if (data.status === 200) {
-            setCommanderName(data.commander);
+            setCommander(data.commander);
             try {
                 let image = data.images.normal;
                 console.log('Commander Image: ', image);
@@ -55,15 +55,15 @@ export default function CommanderImage() {
 
     return (
         <div className="flex flex-col justify-center items-center w-full max-w-md">
-                <p className="text-2xl font-body m-0.5">{commander}</p>
-                <Image
-                    src={commanderImage}
-                    width={imageWidth}
-                    height={imageHeight}
-                    alt={'Commander Image'}
-                    className="rounded-2xl border-white border-solid border-2"
-                />
-                {isEditMode && <NameAutocomplete onNameChange={handleNameChange} />}
-            </div>
-        );
+            <p className="text-2xl font-body m-0.5">{commander}</p>
+            <Image
+                src={commanderImage}
+                width={imageWidth}
+                height={imageHeight}
+                alt={'Commander Image'}
+                className="rounded-2xl border-white border-solid border-2"
+            />
+            {isEditMode && <NameAutocomplete onNameChange={handleNameChange} />}
+        </div>
+    );
 }
