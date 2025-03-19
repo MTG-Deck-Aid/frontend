@@ -12,14 +12,14 @@ export default function TitleBar(){
     const lineWidth = 520;
     const lineHeight = 70;
     return(
-        <div className="flex items-center gap-4 mx-2 md:mx-8">
+        <div className="flex items-center md:mx-8">
             <div>
                 <Image
                     src={leftLine}
                     width={lineWidth}
                     height={lineHeight}
                     alt="Impact Line One"
-                    className="w-full h-full"
+                    className="w-full h-full invisible sm:visible"
                 />
             </div>
             <TitleText />
@@ -29,7 +29,7 @@ export default function TitleBar(){
                     width={lineWidth}
                     height={lineHeight}
                     alt="Impact Line Two"
-                    className="w-full h-full"
+                    className="w-full h-full invisible sm:visible"
                 />
             </div> 
         </div> 

@@ -7,7 +7,7 @@ export default function DeckNameInput(props){
 
     return(
         isEditMode ? 
-        <div className="w-80">
+        <div className="">
             <Input
                 label="Deck Name"
                 type="text"
@@ -19,7 +19,7 @@ export default function DeckNameInput(props){
                 />
         </div>
         :
-        <div className="w-80">
+        <div className="">
             <p>
                 {props.deckName} {/**This can likely be held in a deckContext rather than passed around as a prop */}
             </p>

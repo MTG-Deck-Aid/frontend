@@ -36,7 +36,7 @@ export default function LoginDropdown(props){
             <Dropdown className="p-0">
                 <DropdownTrigger>
                     <Button radius="full" isIconOnly variant="bordered" 
-                className="w-full h-full border-0 p-0 m-0">
+                            className="w-[50px] h-[50px] border-0 p-0 m-0">
                         <Image src={lightUserIcon} width={iconWidth} height={iconHeight} alt='Light User Icon' className="m-0 p-0 w-full h-full"/>
                     </Button>
                 </DropdownTrigger>

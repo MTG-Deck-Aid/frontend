@@ -60,11 +60,11 @@ export default function NameAutocomplete({ onNameChange }) {
     return (
         <>
             <Button
-                className="max-w-xs absolute w-[300px] h-[80px]"
+                className="text-xl"
                 onPress={onOpen}
                 color={"primary"}
                 variant={"faded"}
-            >Autocomplete
+            >Choose Your Commander
             </Button>
 
             <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="md">

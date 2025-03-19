@@ -7,19 +7,19 @@ export default function HomeButton(){
     /**
      * HomeButton is a static icon that will redirect the user to the homePage when it is clicked
      */
-    const iconWidth = 100;
+    const iconWidth = 50;
     const iconHeight = iconWidth;
 
     return(
-        <div className="flex justify-start items-center">
+        <div className="flex justify-start items-center p-2">
             <Button radius="full" isIconOnly variant="bordered" 
-                className="w-full h-full border-0 p-0 m-0" as={Link} href="/">
+                className="w-full h-full" as={Link} href="/">
                 <Image 
                     src={smallLogo} 
                     width={iconWidth} 
                     height={iconHeight} 
                     alt='Mystic Tuner Logo'
-                    className="w-full h-full"
+                    className="w-[66px] h-[66px]"
                     />
                     
             </Button>
