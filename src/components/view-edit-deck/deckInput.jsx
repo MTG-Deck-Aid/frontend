@@ -8,17 +8,20 @@ export default function DeckInput() {
     const { isEditMode, setDeckInput, deckInput } = useViewDeckContext();
 
     return (
-        <div className="w-full">
+        <div className="">
             <Textarea
                 key={deckInput.length}
                 isReadOnly={isEditMode ? false : true}
                 classNames={{
-                    base: "w-max-full h-[120vh] p-4 border rounded-lg",
-                    inputWrapper: "m-0 w-[calc(100%]"
+                    base: "relative border rounded-lg",
+                    inputWrapper: "w-[100%] p-2"
                 }}
+                className=""
                 value={deckInput}
                 // onChange={(event) => setDeckInput(event.target.value)}
-                placeholder="Paste your deck list here" />
+                color="primary"
+                placeholder="Paste your deck list here"
+                description="We support Moxfield, MTGA, or MTGO formatting" />
         </div>
     )
 }

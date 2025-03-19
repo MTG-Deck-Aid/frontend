@@ -10,7 +10,7 @@ export default function DeckNameInput(props){
     }
 
     return(
-        <div className="">
+        <div>
             <Input
                 label="Deck Name"
                 type="text"
