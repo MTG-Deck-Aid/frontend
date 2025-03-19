@@ -22,5 +22,4 @@ export default function DeckNameInput(props){
                 value={props.name}
                 />
         </div>
-    );
 }
