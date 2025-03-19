@@ -16,13 +16,14 @@ export function ViewDeckContextProvider({ children }) {
      */
     const [isEditMode, setIsEditMode] = useState(true);
     const [deckInput, setDeckInput] = useState('');
+    const [deckList, setDeckList] = useState([]);
 
     function toggleIsEditMode() {
         setIsEditMode((isEditMode ? false : true));
     }
 
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput }}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput, deckList, setDeckList }}>
             {children}
         </ViewDeckContext.Provider>
     );
