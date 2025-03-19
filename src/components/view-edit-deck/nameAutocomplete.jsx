@@ -30,9 +30,9 @@ export default function NameAutocomplete({ onNameChange }) {
             try {
                 const response = await fetch(`/api/cards/autocomplete?q=${filterText}&commander=true`);
                 const data = await response.json();
-                console.log("Card response:", data.cards);
-                console.log("Response Status:", response.status);
-                console.log("Cards Status:", data.status);
+                // console.log("Card response:", data.cards);
+                // console.log("Response Status:", response.status);
+                // console.log("Cards Status:", data.status);
                 if (data.status === 200) {
                     return {
                         items: data.cards
