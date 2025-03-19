@@ -16,9 +16,7 @@ export default async function ViewImportDeck({ params }) {
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex w-full justify-between items-center">
                     <div className="flex">
-                        <DeckNameInput deckName="Placeholder Deck" /> {/**Initial deck name. Could be passed as a prop or setup as a context provider
-                         * Look at viewDeckContextProvider for additional info.
-                         */}
+                        <DeckNameInput/> {/** Uses Context */}
                     </div>
                     <div className="flex">
                         <ViewButtonGroup />

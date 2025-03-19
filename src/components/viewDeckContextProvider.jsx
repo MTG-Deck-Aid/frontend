@@ -17,13 +17,23 @@ export function ViewDeckContextProvider({ children }) {
     const [isEditMode, setIsEditMode] = useState(true);
     const [deckInput, setDeckInput] = useState('');
     const [deckList, setDeckList] = useState({});
+    const [deckName, setDeckName] = useState('My New Deck');
 
     function toggleIsEditMode() {
         setIsEditMode((isEditMode ? false : true));
     }
 
+    /** DEBUGGER FUNCTION */
+    function printContext(){
+        console.log("---- View Deck Context ----");
+        console.log("isEditMode: ", isEditMode);
+        console.log("deckInput: ", deckInput);
+        console.log("deckList: ", deckList);
+        console.log("deckName: ", deckName);
+    }
+
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput, deckList, setDeckList }}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput, deckList, setDeckList , deckName, setDeckName, printContext}}>
             {children}
         </ViewDeckContext.Provider>
     );
