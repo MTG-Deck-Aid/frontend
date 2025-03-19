@@ -135,7 +135,7 @@ export default function ViewButtonGroup() {
         }
 
         let deckList = cardsJsonToDeckList(parsedDeck.cards);
-        // console.log(deckList);
+        console.log(deckList);
         setDeckInput(deckList);
     }
 
