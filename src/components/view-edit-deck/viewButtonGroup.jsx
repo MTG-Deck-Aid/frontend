@@ -18,7 +18,7 @@ export default function ViewButtonGroup(){
                     {createPageButton("Save Deck", toggleIsEditMode)}
                 </div>
             ):(
-                <div className="flex flex-col gap-2">
+                <div className="grid grid-rows-2">
                     <>
                     {createPageButton("Get Suggestions", onOpen)}
                     <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
@@ -58,13 +58,14 @@ const createPageButton = (label, onPressEvent) => {
      * Helper function to standardize buttons on this page
      */
     return(
-        <Button
-            size={"md"}
-            onPress={onPressEvent}
-            color={"primary"}
-            variant={"faded"}
-        >{label}
-        </Button>
+            <Button
+                size={"md"}
+                onPress={onPressEvent}
+                color={"primary"}
+                variant={"faded"}
+                className=""
+            >{label}
+            </Button>
     )
 }
 
