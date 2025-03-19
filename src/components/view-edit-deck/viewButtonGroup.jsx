@@ -8,7 +8,7 @@ import Link from "next/link";
 
 
 export default function ViewButtonGroup() {
-    const { isEditMode, toggleIsEditMode, deckInput, setDeckInput } = useViewDeckContext();
+    const { isEditMode, toggleIsEditMode, deckInput, setDeckInput, setDeckList } = useViewDeckContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
 
@@ -116,6 +116,7 @@ export default function ViewButtonGroup() {
 
             if (verified) {
                 console.log("Deck is valid! Exiting edit mode.");
+                setDeckList(parsedDeck);
                 toggleIsEditMode();
             } else {
                 console.log("Deck is invalid! Removing invalid cards.");
