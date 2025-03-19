@@ -18,7 +18,7 @@ export default function RedirectPage(){
                 />
             </div>
             <div className="text-center text-medium lg:text-xl">
-                <p>We're getting overloaded. Please wait to make any more requests!</p>
+                <p>We're getting overloaded. Please wait before making any more requests!</p>
             </div>
         </div>
     )

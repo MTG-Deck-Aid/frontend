@@ -34,7 +34,6 @@ export default function SuggestionGrid(props){
                     </div>
                 </div>
                 <Divider className="lg:hidden"/>
-                
                 <ScrollShadow orientation="horizontal" className="col-span-3 max-w-full">
                     <div className="flex justify-start gap-10">
                     {displayedCards.map((card, index) => (

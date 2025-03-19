@@ -138,15 +138,14 @@ export default function ViewButtonGroup() {
         console.log(deckList);
         setDeckInput(deckList);
     }
-
-    return (
-        isEditMode ? (
-            <div className="flex">
-                {createPageButton("Save Deck", parseAndVerifyDeck)}
-            </div>
-        ) : (
-            <div className="flex flex-col gap-2">
-                <>
+    return(
+            isEditMode?(
+                <div className="flex">
+                    {createPageButton("Save Deck", toggleIsEditMode)}
+                </div>
+            ):(
+                <div className="grid grid-rows-2 gap-2">
+                    <>
                     {createPageButton("Get Suggestions", onOpen)}
                     <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
                         <ModalContent>

@@ -11,7 +11,7 @@ export default async function Home() {
 	const logoHeight = logoWidth;
 
 	return (
-		<main className="m-2 mb-10 p-2 sm:m-8 sm:mb-20 sm:p-8">
+		<main className="min-h-screen m-2 mb-10 p-2 sm:m-8 sm:mb-20 sm:p-8">
 			<div className="flex basis-full flex-col gap-4">
 				<div className="flex flex-shrink justify-center">
 					<Image
@@ -34,7 +34,7 @@ export default async function Home() {
 						}}
 						className="no-underline"
 					>
-						Make a Deck!
+						Make a Deck
 					</Button>
 				</div>
 				<Divider/>

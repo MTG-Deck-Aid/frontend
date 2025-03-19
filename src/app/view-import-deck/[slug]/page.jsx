@@ -1,6 +1,11 @@
-import { ViewDeckContextProvider } from "@/components/viewDeckContextProvider";
-import { CommanderImage, DeckInput, DeckNameInput, ViewButtonGroup } from "@/components/view-edit-deck";
-import { Divider } from "@heroui/react";
+import { ViewDeckContextProvider } from '@/components/viewDeckContextProvider';
+import {
+	CommanderImage,
+	DeckInput,
+	DeckNameInput,
+	ViewButtonGroup,
+} from '@/components/view-edit-deck';
+import { Divider } from '@heroui/react';
 
 export default async function ViewImportDeck({ params, searchParams }) {
     /**
@@ -17,12 +22,12 @@ export default async function ViewImportDeck({ params, searchParams }) {
     const intialDeckId = await awaitedSearchParams?.deckId || "";
 
     return (
-        <ViewDeckContextProvider urlName ={intialDeckName} urlMode ={intialDeckMode} urlId={intialDeckId}>
+        <ViewDeckContextProvider  urlName ={intialDeckName} urlMode ={intialDeckMode} urlId={intialDeckId}>
             <div className="flex flex-col items-center justify-center max-w-screen min-h-screen gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}
-                <div className="flex w-full justify-between items-center">
+                <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">
                     <div className="flex">
-                        <DeckNameInput/> {/** Uses Context */}
+                        <DeckNameInput deckName="Placeholder Deck" /> 
                     </div>
                     <div className="flex">
                         <ViewButtonGroup />
@@ -35,7 +40,7 @@ export default async function ViewImportDeck({ params, searchParams }) {
                 </div>
                 <Divider />
                 {/* Third Row: Deck Input */}
-                <div className="w-full">
+                <div className="w-[90%]">
                     <DeckInput />
                 </div>
             </div>
