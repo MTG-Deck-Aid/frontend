@@ -17,23 +17,78 @@ export function ViewDeckContextProvider({ children }) {
     const [isEditMode, setIsEditMode] = useState(true);
     const [deckInput, setDeckInput] = useState('');
     const [deckList, setDeckList] = useState({});
-    const [deckName, setDeckName] = useState('My New Deck');
+    const [deckName, setDeckName] = useState(urlName);
+    const [loading, setLoading] = useState(false);
+
+    async function fetchUserDeck() {
+        // Send request to Server Side JS
+        const response = await fetch(`/api/decks/deck?deckId=${urlId}`, {
+            method: 'GET',
+        });
+
+        // Await the response from server side JS
+        const data = await response.json();
+        return data.deck; // Return only the data
+    }
+
+    function populateDeckList(deckList) {
+        let formattedDeckList = [];
+        // Finds the total quantity of cards in the deck for each card,
+        // and adds that to the card object
+        deckList.forEach(card => {
+            let cardIndex = formattedDeckList.findIndex((element) => element.name === card.name);
+            if (cardIndex === -1) {
+                formattedDeckList.push({ name: card.name, quantity: 1 });
+            } else {
+                formattedDeckList[cardIndex].quantity += 1;
+            }
+        });
+
+        // Convert the deck list into "quantity name" string
+        const deckListString = formattedDeckList.map(card => `${card.quantity} ${card.name}`).join('\n');
+        console.log(deckListString);
+        return deckListString;
+    }
+
 
     function toggleIsEditMode() {
         setIsEditMode((isEditMode ? false : true));
     }
 
+    function toggleLoading() {
+        setLoading((loading ? false : true));
+    }
+
     /** DEBUGGER FUNCTION */
-    function printContext(){
-        console.log("---- View Deck Context ----");
+    function printContext() {
+        console.log("\n\n---- View Deck Context ----");
         console.log("isEditMode: ", isEditMode);
         console.log("deckInput: ", deckInput);
         console.log("deckList: ", deckList);
         console.log("deckName: ", deckName);
+        console.log("loading: ", loading);
+
     }
 
+    // On page load, fetch the deck from the backend
+    useEffect(() => {
+        if (urlId !== -1) {
+            console.log("Fetching deck from backend");
+            fetchUserDeck().then(deck => {
+                console.log("Populating deck list");
+                setDeckInput(populateDeckList(deck));
+            });
+        }
+    }, []);
+
+
+    // Print the context whenever the context changes
+    useEffect(() => {
+        printContext();
+    }, [deckInput, deckList, deckName, isEditMode]);
+
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput, deckList, setDeckList , deckName, setDeckName, printContext}}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, deckInput, setDeckInput, deckList, setDeckList, deckName, setDeckName, printContext, loading, toggleLoading }}>
             {children}
         </ViewDeckContext.Provider>
     );

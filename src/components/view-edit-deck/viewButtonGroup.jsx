@@ -8,7 +8,7 @@ import Link from "next/link";
 
 
 export default function ViewButtonGroup() {
-    const { isEditMode, toggleIsEditMode, deckInput, setDeckInput, setDeckList } = useViewDeckContext();
+    const { isEditMode, toggleIsEditMode, deckInput, setDeckInput, setDeckList, toggleLoading } = useViewDeckContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
 
@@ -84,6 +84,7 @@ export default function ViewButtonGroup() {
     }
 
     const parseAndVerifyDeck = async () => {
+        toggleLoading();
         const parsedDeck = parseDeck(deckInput);
         console.log(parsedDeck);
 
@@ -137,6 +138,7 @@ export default function ViewButtonGroup() {
         let deckList = cardsJsonToDeckList(parsedDeck.cards);
         // console.log(deckList);
         setDeckInput(deckList);
+        toggleLoading();
     }
 
     return (

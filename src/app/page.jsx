@@ -37,7 +37,7 @@ export default async function Home() {
 						Make a Deck!
 					</Button>
 				</div>
-				<Divider/>
+				<Divider />
 				<div className="flex flex-row justify-center w-full">
 					<UserDecks />
 				</div>

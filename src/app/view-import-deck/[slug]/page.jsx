@@ -1,6 +1,7 @@
 import { ViewDeckContextProvider } from "@/components/viewDeckContextProvider";
 import { CommanderImage, DeckInput, DeckNameInput, ViewButtonGroup } from "@/components/view-edit-deck";
 import { Divider } from "@heroui/react";
+import LoadingOverlay from "@/components/loading/LoadingOverlay";
 
 export default async function ViewImportDeck({ params }) {
     /**
@@ -16,7 +17,7 @@ export default async function ViewImportDeck({ params }) {
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex w-full justify-between items-center">
                     <div className="flex">
-                        <DeckNameInput/> {/** Uses Context */}
+                        <DeckNameInput /> {/** Uses Context */}
                     </div>
                     <div className="flex">
                         <ViewButtonGroup />
@@ -32,6 +33,7 @@ export default async function ViewImportDeck({ params }) {
                 <div className="w-full">
                     <DeckInput />
                 </div>
+                <LoadingOverlay />
             </div>
         </ViewDeckContextProvider>
     );
