@@ -1,5 +1,5 @@
 import SuggestionModal from "@/components/suggestions-page/suggestionModal";
-import { ScrollShadow } from "@heroui/react";
+import { Divider, ScrollShadow } from "@heroui/react";
 export default function SuggestionGrid(props){
     //props: add=(true/false). Denotes whether we use cardsToRemove or cardsToAdd
     //will need to be replaced with API call
@@ -20,11 +20,11 @@ export default function SuggestionGrid(props){
     }];
 
     const displayedCards = (props.add?cardsToAdd:cardsToRemove); //change displayed cards to change what is displayed
-    const label = (props.add?"Cards to Add:":"Cards to Remove:");
+    const label = (props.add?"Cards to Add":"Cards to Remove");
     const textContent = "Click to see suggested reasoning";
 
     return(
-        <div className="grid grid-cols-4 w-full">
+        <div className="lg:grid lg:grid-cols-4 w-full">
                 <div className="flex flex-col justify-center items-center gap-4 font-body">
                     <div className="flex text-6xl">
                         {label}
@@ -33,7 +33,9 @@ export default function SuggestionGrid(props){
                         {textContent}
                     </div>
                 </div>
-                <ScrollShadow orientation="horizontal" size={60} className="col-span-3 max-w-full">
+                <Divider className="lg:hidden"/>
+                
+                <ScrollShadow orientation="horizontal" className="col-span-3 max-w-full">
                     <div className="flex justify-start gap-10">
                     {displayedCards.map((card, index) => (
                         <SuggestionModal card={card} key={index}/>  //FOR API: card is the main prop to pass card info. We can probably add another prop like geminiResponse
