@@ -22,6 +22,7 @@ export async function POST(request) {
     );
     clearTimeout(timeoutId);
 
+
     console.log("Raw response text:", response.statusText);
     console.log("Response status:", response.status);
 
