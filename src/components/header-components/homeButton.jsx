@@ -11,7 +11,7 @@ export default function HomeButton(){
     const iconHeight = iconWidth;
 
     return(
-        <div className="flex justify-start items-center p-2">
+        <div className="flex justify-start items-center">
             <Button radius="full" isIconOnly variant="bordered" 
                 className="w-full h-full" as={Link} href="/">
                 <Image 
