@@ -28,11 +28,29 @@ export default function UserDecks() {
 	// Get the user decks returns [], [...] for signed in, returns a none for guest
 	const fetchUserDecks = async () => {
 		try{
-			// setLoading(true);
-			const response = await fetch('/api/decks/user-decks/');
-			const data = await response.json();
-			console.log("User Decks response:", data);
-			setDecks(data.data.decks);
+			setLoading(true);
+			const response = await fetch('/api/decks/user-decks/').then(async (res) => await res.json());
+			console.log("User Decks response:", response);
+			
+			setLoading(false);
+			console.log(response);
+			if (response.status !== 200){
+				if (response.status === 429){
+					// Redirect to the rate limited page and ensure no caching
+					console.error("Rate limited, redirecting to rate limited page");
+					window.location.href ="/rate-limited?no-cache=" + new Date().getTime();
+					return;
+				}
+				else{
+					console.error("Error getting user decks:", response);
+					setDecks(undefined);
+					setLoading(false);
+					return;
+				}
+			}
+
+			// const data = await response.json();
+			setDecks(response.data.decks);
 			setLoading(false);
 		}
 		catch (error) {
