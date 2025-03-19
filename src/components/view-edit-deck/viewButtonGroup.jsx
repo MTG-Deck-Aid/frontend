@@ -4,6 +4,7 @@ import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
 
 
@@ -11,6 +12,12 @@ export default function ViewButtonGroup() {
     const { isEditMode, toggleIsEditMode, deckInput, setDeckInput, setDeckList } = useViewDeckContext();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
+    const [isLoading, setIsLoading] = useState(false)
+
+    const saveDeck = () => {
+        setIsLoading(true);
+        
+    }
 
     const parseDeck = (text) => {
         // Split the text into individual lines.
@@ -141,12 +148,12 @@ export default function ViewButtonGroup() {
     return(
             isEditMode?(
                 <div className="flex">
-                    {createPageButton("Save Deck", toggleIsEditMode)}
+                    {createPageButton("Save Deck", saveDeck, isLoading)}
                 </div>
             ):(
                 <div className="grid grid-rows-2 gap-2">
                     <>
-                    {createPageButton("Get Suggestions", onOpen)}
+                    {createPageButton("Get Suggestions", onOpen, isLoading)}
                     <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
                         <ModalContent>
                             {(onClose) => (
@@ -173,13 +180,13 @@ export default function ViewButtonGroup() {
                         </ModalContent>
                     </Modal>
                 </>
-                {createPageButton("Edit Deck", toggleIsEditMode)}
+                {createPageButton("Edit Deck", toggleIsEditMode, isLoading)}
             </div>
         )
     )
 }
 
-const createPageButton = (label, onPressEvent) => {
+const createPageButton = (label, onPressEvent, isLoading) => {
     /**
      * Helper function to standardize buttons on this page
      */
@@ -187,6 +194,7 @@ const createPageButton = (label, onPressEvent) => {
         <Button
             size={"md"}
             onPress={onPressEvent}
+            isLoading={isLoading?true:false}
             color={"primary"}
             variant={"faded"}
             className=""
