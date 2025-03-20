@@ -7,7 +7,7 @@ export default function RedirectPage(){
     const logoHeight = logoWidth;
 
     return(
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center min-h-screen w-full">
             <div>
                 <div className="absolute w-[350px] h-[350px] border-2 border-dashed border-white rounded-full animate-pulse"></div>
                 <Image
@@ -18,7 +18,7 @@ export default function RedirectPage(){
                 />
             </div>
             <div className="text-center text-medium lg:text-xl">
-                <p>We're getting overloaded. Please wait to make any more requests!</p>
+                <p>We're getting overloaded. Please wait before making any more requests!</p>
             </div>
         </div>
     )

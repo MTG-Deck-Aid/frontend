@@ -20,7 +20,7 @@ export default async function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body>
         <Providers>
-        <Header />
+        <Header /> 
           {children}
         </Providers>
       </body>

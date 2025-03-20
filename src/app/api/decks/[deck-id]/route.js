@@ -51,9 +51,23 @@ export async function updateDeck(deckId, auth0Token, cardsAdded, cardsRemoved) {
 
 export async function GET(request) {
 	try {
-		const { auth0Token } = request.json();
-		const response = await getDeck(request.params.deckId, auth0Token);
-		return NextResponse.json(response);
+		const {searchParams} = new URL(request.url);
+		const deckId = searchParams.get("deckId");
+
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+		const authorization_field = await getAuthorizationHeader();
+		const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/deck?deck_id=${deckId}`, { 
+            signal: controller.signal,
+            headers: {
+                "Content-Type": "application/json",
+                ...authorization_field
+            },
+            method: "GET",
+        });
+        clearTimeout(timeoutId); 
+		// Await and return the response from the backend, unwrap the response too.
+		return NextResponse.json(await response.json());
 	} catch (error) {
 		console.error("Error getting deck:", error);
 		return NextResponse.json({

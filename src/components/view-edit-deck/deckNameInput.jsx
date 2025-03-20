@@ -10,7 +10,7 @@ export default function DeckNameInput(props){
     }
 
     return(
-        <div className="">
+        <div>
             <Input
                 label="Deck Name"
                 type="text"
@@ -19,7 +19,8 @@ export default function DeckNameInput(props){
                     label: "relative"
                 }}
                 onChange={(event) => handleChange(event)}
-                value={props.name}
+                value={deckName}
                 />
-        </div>)
+        </div>
+    );
 }

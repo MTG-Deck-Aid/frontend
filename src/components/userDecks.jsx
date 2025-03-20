@@ -90,17 +90,17 @@ export default function UserDecks() {
 							<p className="text-lg">Create a new deck to get started.</p>
 						</div>
 					) : (
-						<div className="grid auto-cols-max grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+						<div className="grid auto-cols-max grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-3">
 							{decks.map((deck) => (
 								<div className="m-2 flex flex-col justify-between items-center p-2" key={deck.id}>
 									<div>
-										<div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-2xl">
+										<div className="absolute m-2 text-wrap italic sm:text-medium md:text-xl lg:text-xl">
 											{deck.name}
 										</div>
 										<Link
 											href={{
 												pathname: `/view-import-deck/${deck.name}`, 
-												//query: { title: `${deck.name}` }, 
+												query: { mode: `edit`, deckId: deck.id }, 
 											}}
 										>
 											<div className="inline-block">
