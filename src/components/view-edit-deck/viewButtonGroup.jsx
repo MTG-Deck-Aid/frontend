@@ -1,6 +1,6 @@
 'use client';
-import { useEditContext, useLoadingContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
-import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
+import { useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
+import SaveButton from "./saveButton";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
@@ -11,14 +11,8 @@ import Link from "next/link";
 
 export default function ViewButtonGroup(props) {
     //page context
-    //const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
     const{isEditMode, toggleIsEditMode} = useEditContext();
     const{isLoading, setIsLoading} = useLoadingContext();
-    //deck context
-    const deckInput = props.deckInput;
-    const setDeckInput = props.setDeckInput;
-    const setDeckList = props.setDeckList;
-    const commander = props.commander;
     //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     //route handler
@@ -27,16 +21,11 @@ export default function ViewButtonGroup(props) {
     /** Function to save the current deck (to database if logged in) and exit edit mode.
      *  @returns {void}
      */
-    const handleSave = () => {
-        setIsLoading(true);
-        saveDeck( deckInput, setDeckInput, setDeckList, toggleIsEditMode, commander);
-        setIsLoading(false);
-    }
 
     return (
         isEditMode ? (
             <div className="flex">
-                {createPageButton("Save Deck", handleSave, isLoading)}
+                <SaveButton/>
             </div>
         ) : (
             <div className="grid grid-rows-2 gap-2">

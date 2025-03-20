@@ -2,18 +2,19 @@
 import { useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
 import { useDeckInputContext, useDeckListContext, useCommanderContext, useDeckNameContext } from "../context-providers/userDeckContextProvider";
 import { saveDeck } from "./utils";
+import { Button } from "@heroui/button";
 
 export default function SaveButton(){
     const {isLoading, setIsLoading} = useLoadingContext();
-    const {isEditMode, setIsEditMode} = useEditContext();
+    const {isEditMode, toggleIsEditMode} = useEditContext();
     const {deckInput, setDeckInput} = useDeckInputContext();
     const {deckList, setDeckList} = useDeckListContext();
     const {commander, setCommander} = useCommanderContext();
     const {deckName, setDeckName} = useDeckNameContext();
 
-    const handleSave = () => {
+    const handleSave = async () => {
         setIsLoading(true);
-        saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName);
+        await saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode);
         setIsLoading(false);
     }
 
@@ -25,7 +26,7 @@ export default function SaveButton(){
             color={"primary"}
             variant={"faded"}
             className=""
-        >{label}
+        >Save
         </Button>
     )
 }
