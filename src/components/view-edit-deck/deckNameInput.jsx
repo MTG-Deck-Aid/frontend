@@ -1,6 +1,7 @@
 'use client';
 import { useDeckNameContext } from "../context-providers/userDeckContextProvider";
 import { Input } from "@heroui/react";
+import SetPageTitle from "../header-components/setPageTitle";
 
 export default function DeckNameInput() {
     /** This is the input field for the deck name
@@ -11,6 +12,7 @@ export default function DeckNameInput() {
 
     return (
         <div>
+            <SetPageTitle title={deckName}/>
             <Input
                 label="Deck Name"
                 type="text"

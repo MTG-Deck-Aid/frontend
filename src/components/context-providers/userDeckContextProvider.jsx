@@ -5,12 +5,11 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const UserDeckContext = createContext();
 export default function UserDeckContextProvider({ children }) {
 	//useParams and useSearchParams are the ideal way for getting url parameters in nextJS
-	const urlName = useParams().slug;
 	const urlId = useSearchParams().get('deckId');
 	/** States to be held */
 	const [deckInput, setDeckInput] = useState(''); //the current Input in the textBox
 	const [deckList, setDeckList] = useState({}); //the user's deckList
-	const [deckName, setDeckName] = useState(urlName); //the name of the user's deck
+	const [deckName, setDeckName] = useState(''); //the name of the user's deck
 	const [commander, setCommander] = useState(''); //the current commander?
 
 	async function fetchUserDeck() {
@@ -66,6 +65,9 @@ export default function UserDeckContextProvider({ children }) {
 				//setting the commander
 				setCommander(deck.commander);
 				console.log("Commander: ", commander)
+
+				//setting the deckName
+				setDeckName(deck.deck_name);
 			}
 		});
 		
