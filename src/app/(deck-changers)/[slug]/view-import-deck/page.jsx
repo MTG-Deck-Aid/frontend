@@ -12,6 +12,8 @@ export default async function ViewImportDeck({ searchParams }) {
      * Edit Mode: allows a user to edit and import the cards that are present in their deck. This is the default path if the user clicks NewDeck.
      * View Mode: Allows a user to view their cards and move onto suggestions
      */
+    
+
     return (
             <div className="flex flex-col items-center justify-center max-w-screen max-h-fill gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}

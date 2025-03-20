@@ -1,17 +1,16 @@
 'use client';
 import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
-import { UserDeckContextProvider } from "../context-providers/userDeckContextProvider";
+import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
 
 
 export default function ViewButtonGroup() {
     const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
-    const { saveDeck } = UserDeckContextProvider();
+    const { saveDeck } = useUserDeckContext;
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const searchParams = useSearchParams();
 

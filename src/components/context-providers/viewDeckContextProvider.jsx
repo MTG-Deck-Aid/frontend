@@ -1,9 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 const ViewDeckContext = createContext();
 
-export function ViewDeckContextProvider({ urlMode, children }) {
+export default function ViewDeckContextProvider({ children }) {
     /**
      * This context provider will allow components wrapped by it to access the page's context.
      * The context will be two states: either edit or view
@@ -13,7 +14,10 @@ export function ViewDeckContextProvider({ urlMode, children }) {
      * i.e., if making context for card-suggestions/[slug] and view-import-deck/[slug], context could be placed in a shared layout.jsx file
      * see: https://nextjs.org/docs/app/building-your-application/routing/route-groups#opting-specific-segments-into-a-layout for more info
      */
-    const [isEditMode, setIsEditMode] = useState((urlMode === "edit" ? true : false));
+    const searchParams = useSearchParams();
+    const initialMode = searchParams.get("mode") || "edit";
+
+    const [isEditMode, setIsEditMode] = useState((initialMode === "edit" ? true : false));
     const [isLoading, setIsLoading] = useState(false);
 
     /** DEBUGGER FUNCTION */
