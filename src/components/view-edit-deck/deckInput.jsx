@@ -1,13 +1,14 @@
 "use client";
-import { useEffect } from "react";
-import { useEditContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
-import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
+import { useEditContext } from "../context-providers/viewDeckContextProvider";
 import { Textarea } from "@heroui/react";
 // import { u } from "framer-motion/dist/types.d-B50aGbjN";
 
-export default function DeckInput() {
+export default function DeckInput(props) {
+    //Edit context
     const { isEditMode, setIsEditMode } = useEditContext();
-    const { deckInput, setDeckInput } = useUserDeckContext();
+    //Deck context
+    const deckInput = props.deckInput;
+    const setDeckInput = props.setDeckInput;
 
     return (
         <div className="">
@@ -19,7 +20,7 @@ export default function DeckInput() {
                 }}
                 className=""
                 value={deckInput}
-                onChange={(event) => setDeckInput(event.target.value)}
+                onChange={(event) => {setDeckInput(event.target.value); console.log(deckInput)}}
                 color="primary"
                 placeholder="Paste your deck list here"
                 description="We support Moxfield, MTGA, or MTGO formatting" />
