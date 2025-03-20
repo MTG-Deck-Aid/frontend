@@ -19,7 +19,6 @@ export default function UserDeckContextProvider({ children }) {
 		const response = await fetch(`/api/decks/deck?deckId=${urlId}`, {
 			method: 'GET',
 		});
-
 		// Await the response from server side JS
 		const data = await response.json();
 		return data.deck; // Return only the data
@@ -27,6 +26,7 @@ export default function UserDeckContextProvider({ children }) {
 
 	function populateDeckList(deckList) {
 		let formattedDeckList = [];
+		console.log(deckList)
 		// Finds the total quantity of cards in the deck for each card,
 		// and adds that to the card object
 		deckList.map((card) => {
@@ -50,15 +50,25 @@ export default function UserDeckContextProvider({ children }) {
 
 	// On page load, fetch the deck from the backend
 	useEffect(() => {
-		if (urlId !== -1) {
-			console.log('Fetching deck from backend');
-			fetchUserDeck().then((deck) => {
-				if (deck) {
-					console.log('Populating deck list');
-					setDeckInput(populateDeckList(deck));
-				}
-			});
+		if(urlId === -1){
+			//user is not signed in don't bother fetching
+			return;
 		}
+		console.log('Fetching deck from backend');
+		fetchUserDeck().then((deck) => {
+			if (deck) {
+				console.log('Received deck from backend');
+				console.log(deck)
+				//setting deckInput
+				let fetchedDeckInput = populateDeckList(deck.cards);
+				setDeckInput(fetchedDeckInput);
+				
+				//setting the commander
+				setCommander(deck.commander);
+				console.log("Commander: ", commander)
+			}
+		});
+		
 	}, []);
 
 	/** DEBUGGER FUNCTION */
