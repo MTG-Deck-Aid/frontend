@@ -66,8 +66,15 @@ export default function NameAutocomplete({ onNameChange }) {
                 variant={"faded"}
             >Choose Your Commander
             </Button>
-
-            <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="md">
+            <Modal
+                backdrop="blur"
+                isOpen={isOpen}
+                placement="top-center"
+                hideCloseButton={true}
+                onOpenChange={onOpenChange}
+                size="md"
+                shouldBlockScroll={true}
+            >
                 <ModalContent>
                     {(onClose) => (
                         <>

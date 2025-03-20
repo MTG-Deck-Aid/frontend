@@ -38,14 +38,6 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         return deckListString;
     }
 
-    /** DEBUGGER FUNCTION */
-    function printContext() {
-        console.log("\n\n---- User Deck Context ----");
-        console.log("deckInput: ", deckInput);
-        console.log("deckList: ", deckList);
-        console.log("deckName: ", deckName);
-    }
-
     // On page load, fetch the deck from the backend
     useEffect(() => {
         if (urlId !== -1) {
@@ -59,80 +51,10 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         }
     }, []);
 
-
     // Print the context whenever the context changes
-    useEffect(() => {
-        printContext();
-    }, [deckInput, deckList, deckName]);
-
-
-    /** Function to save the current deck (to database if logged in) and exit edit mode.
-     *  @returns {void}
-     */
-    const saveDeck = async () => {
-        setIsLoading(true); // Set loading to true to prevent multiple clicks
-
-        // Remains true if: valid deckList, commander exists, and deckName exists
-        let validSave = true;
-        let invalidFields = [];
-
-        // Parse the deck input into a JSON object.
-        const parsedDeck = parseDeckInput(deckInput);
-        // Validate the deck list.
-        let invalidNames = verifyDeckList(parsedDeck);
-        if (invalidNames.length > 0) {
-            validSave = false;
-            invalidFields.push("Invalid Cards: " + invalidNames.join(", "));
-            // Remove invalid cards from the deck list.
-            parsedDeck.cards = parsedDeck.cards.filter(card => !invalidNames.includes(card.cardName));
-            invalidFields.push("(These names have been removed from your list)");
-        }
-        // Update the deck input with the parsed deck list.
-        setDeckInput(deparseDeckList(parsedDeck.cards));
-        setDeckList(parsedDeck);
-
-        // Commander is required (not empty string)
-        if (commander === '') {
-            // ALERT MESSAGE
-            validSave = false;
-            invalidFields.push("Commander is required.");
-        }
-
-        // Deck Name is required (not empty string)
-        if (deckName === '') {
-            // ALERT MESSAGE
-            validSave = false;
-            invalidFields.push("Deck Name is required.");
-        }
-
-        if (!validSave) {
-            // @CodyCasselman: Alert user of invalid fields
-            //
-            // ALERT SHIT GO HERE
-            //
-            console.log("Invalid Fields: ", invalidFields);
-        } else {
-            // @b-smiley: Save the deck to the database if user is logged in
-            /*
-            "commander" has the commander name (string)
-            "deckName" has the deck name (string)
-            "deckList" has the JSON deck list in the format:
-            {
-            cards: [
-                { quantity: 4, cardName: 'Name1' }, 
-                { quantity: 1, cardName: 'Name2' }
-            ]
-            }
-            */
-
-            // IF LOGGED IN:
-            //   SAVE TO DATABASE
-
-            toggleIsEditMode();
-        }
-
-        setIsLoading(false);
-    }
+    // useEffect(() => {
+    //     printContext();
+    // }, [deckInput, deckList, deckName]);
 
     /** Function to parse the deck input into a json object.
      * @param {string} text - The deck input text.
@@ -254,14 +176,34 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         return data.invalidNames;
     }
 
+    /** DEBUGGER FUNCTION */
+    function printContext() {
+        console.log("\n\n---- User Deck Context ----");
+        console.log("deckInput: ", deckInput);
+        console.log("deckList: ", deckList);
+        console.log("deckName: ", deckName);
+        console.log("commander: ", commander);
+        console.log("---- User Deck Context ----\n\n");
+    }
+
     return (
         <UserDeckContext.Provider value={{
             deckInput, setDeckInput,
             deckList, setDeckList,
             deckName, setDeckName,
-            commander, setCommander
+            commander, setCommander,
+            parseDeckInput, deparseDeckList,
+            verifyDeckList, printContext
         }}>
             {children}
         </UserDeckContext.Provider>
     )
+}
+
+export function useUserDeckContext() {
+    const context = useContext(UserDeckContext);
+    if (!context) {
+        throw new Error('useUserDeckContext must be used within a UserDeckContextProvider');
+    }
+    return context;
 }
