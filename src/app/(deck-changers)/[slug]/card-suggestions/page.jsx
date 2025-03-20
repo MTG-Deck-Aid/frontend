@@ -2,7 +2,7 @@ import SuggestionGrid from "@/components/suggestions-page/suggestionGrid";
 import { Divider } from "@heroui/react";
 
 export default async function CardSuggestions({params}){
-    const {slug} = await params;
+    
     return(
         <div className="w-full min-h-screen flex flex-col lg:grid lg:auto-rows-min gap-5">
             <SuggestionGrid add={true} /> {/**cards to be added */}

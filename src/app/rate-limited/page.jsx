@@ -1,6 +1,5 @@
 import mysticLogo from "/public/MysticTuner-Logo.svg"
 import Image from "next/image"
-import { CircularProgress } from "@heroui/progress";
 
 export default function RedirectPage(){
     const logoWidth = 350;

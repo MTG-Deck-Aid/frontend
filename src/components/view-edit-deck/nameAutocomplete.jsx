@@ -1,19 +1,29 @@
 import { Autocomplete, AutocompleteItem, Button } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
-import { getCards } from "@/app/api/cards/autocomplete/route";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { useState, useEffect } from "react";
+import { useLoadingContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { useCommanderContext } from "../context-providers/userDeckContextProvider";
 
-export default function NameAutocomplete({ onNameChange }) {
+export default function NameAutocomplete() {
+    //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
-    const [commander, selectCommander] = useState(""); //TODO: put in default commander value
+    //loading context
+    const { isLoading, setIsLoading } = useLoadingContext();
+    //commander context
+    const {commander, setCommander} = useCommanderContext();
+    //componentState
+    const [selectedCommander, setSelectedCommander] = useState(commander); //TODO: put in default commander value
     const [filterText, setFilterText] = useState("");
     const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
+    
+    //component constants
+    const debounceTime = 500;
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedFilterText(filterText);
-        }, 1000);
+        }, debounceTime);
 
         return () => {
             clearTimeout(handler);
@@ -22,11 +32,6 @@ export default function NameAutocomplete({ onNameChange }) {
 
     let list = useAsyncList({
         async load({ filterText }) {
-            if (!filterText) {
-                return {
-                    items: []
-                };
-            }
             try {
                 const response = await fetch(`/api/cards/autocomplete?q=${filterText}&commander=true`);
                 const data = await response.json();
@@ -43,7 +48,7 @@ export default function NameAutocomplete({ onNameChange }) {
                     };
                 }
             } catch (error) {
-                console.error("Error getting autcomplete:", error);
+                console.error("Error getting autocomplete:", error);
             }
         }
     });
@@ -53,9 +58,8 @@ export default function NameAutocomplete({ onNameChange }) {
     }, [debouncedFilterText]);
 
     const onSuccess = () => {
-        console.log(commander);
-        onNameChange(commander);
-        onOpenChange(); //closes modal
+        setCommander(selectedCommander);
+        onOpenChange();
     }
     return (
         <>
@@ -64,10 +68,18 @@ export default function NameAutocomplete({ onNameChange }) {
                 onPress={onOpen}
                 color={"primary"}
                 variant={"faded"}
+                isLoading={isLoading}
             >Choose Your Commander
             </Button>
-
-            <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="md">
+            <Modal 
+                backdrop="blur"
+                isOpen={isOpen} 
+                placement="top-center" 
+                hideCloseButton={true} 
+                onOpenChange={onOpenChange} 
+                size="md" 
+                shouldBlockScroll={true}
+                >
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -76,14 +88,15 @@ export default function NameAutocomplete({ onNameChange }) {
                                 <Autocomplete
                                     label="Select Commander"
                                     placeholder="Type to search..."
+                                    isClearable={false}
                                     inputProps={{
-                                        classNames: { label: "my-0 relative" }
+                                        classNames: { label: "my-0 relative", }
                                     }}
                                     items={list.items}
                                     inputValue={filterText}
                                     isLoading={list.isLoading}
                                     onInputChange={setFilterText}
-                                    onSelectionChange={selectCommander} //will call specified method with selected item's key (in this case key=item= commanders name)
+                                    onSelectionChange={setSelectedCommander}
                                 >
                                     {list.items.map((item) => {
                                         return (
@@ -95,8 +108,7 @@ export default function NameAutocomplete({ onNameChange }) {
                                 </Autocomplete>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="success" variant="flat" onPress={onSuccess} > {/** Make sure whatever func this calls also
-                         *  calls onOpenChange in order to close the modal */}
+                                <Button color="success" variant="flat" onPress={onSuccess} >
                                     Commander Found!
                                 </Button>
                             </ModalFooter>

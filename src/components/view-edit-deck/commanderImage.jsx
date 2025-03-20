@@ -1,20 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useViewDeckContext } from "../viewDeckContextProvider";
+import { useEditContext, useLoadingContext} from "../context-providers/viewDeckContextProvider";
+import { useCommanderContext} from "../context-providers/userDeckContextProvider";
 import Image from "next/image";
 import NameAutocomplete from "./nameAutocomplete";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
 
 export default function CommanderImage() {
-    const { isEditMode } = useViewDeckContext();
-    const [commander, setCommanderName] = useState(""); //TODO: put in default commander value
+    //page context
+    const { isEditMode, setIsEditMode } = useEditContext();
+    const {isLoading, setIsLoading} = useLoadingContext();
+    //commander context
+    const {commander, setCommander} = useCommanderContext();
+    //component state
     const [commanderImage, setCommanderImage] = useState(emptyCommanderFrame);
-
-    const handleNameChange = (name) => {
-        console.log('Commander Returned: ', name);
-        console.log('Fetching Commander Image');
-        fetchAndSetCommanderImage(name);
-    };
 
     const fetchAndSetCommanderImage = async (name) => {
         let input = { commander: name };
@@ -34,7 +33,7 @@ export default function CommanderImage() {
         }
 
         if (data.status === 200) {
-            setCommanderName(data.commander);
+            setCommander(data.commander);
             try {
                 let image = data.images.normal;
                 console.log('Commander Image: ', image);
@@ -46,7 +45,13 @@ export default function CommanderImage() {
     }
 
     useEffect(() => {
-        console.log('Commander Confirmed!');
+        //load the commander image whenever the commander is changed
+        if(!commander){
+            return;
+        }
+        setIsLoading(true);
+        fetchAndSetCommanderImage(commander);
+        setIsLoading(false);
     }, [commander]);
 
     //Page constants
@@ -55,15 +60,15 @@ export default function CommanderImage() {
 
     return (
         <div className="flex flex-col justify-center items-center w-full max-w-md">
-                <p className="text-2xl font-body m-0.5">{commander}</p>
-                <Image
-                    src={commanderImage}
-                    width={imageWidth}
-                    height={imageHeight}
-                    alt={'Commander Image'}
-                    className="rounded-2xl border-white border-solid border-2"
-                />
-                {isEditMode && <NameAutocomplete onNameChange={handleNameChange} />}
-            </div>
-        );
+            <p className="text-2xl font-body m-0.5">{commander}</p>
+            <Image
+                src={commanderImage}
+                width={imageWidth}
+                height={imageHeight}
+                alt={'Commander Image'}
+                className="rounded-2xl border-white border-solid border-2"
+            />
+            {isEditMode && <NameAutocomplete />}
+        </div>
+    );
 }

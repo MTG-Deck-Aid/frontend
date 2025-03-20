@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@heroui/button';
-import { Divider } from "@heroui/react";
+import { Divider } from '@heroui/react';
 import './globals.css';
-import UserDecks from '@/components/userDecks';
+import UserDecks from '@/components/homepage-components/userDecks';
 import pageLogo from '/public/MysticTuner-Logo.svg';
 
 export default async function Home() {
@@ -11,7 +11,7 @@ export default async function Home() {
 	const logoHeight = logoWidth;
 
 	return (
-		<main className="min-h-screen m-2 mb-10 p-2 sm:m-8 sm:mb-20 sm:p-8">
+		<main className="m-2 mb-10 min-h-screen p-2 sm:m-8 sm:mb-20 sm:p-8">
 			<div className="flex basis-full flex-col gap-4">
 				<div className="flex flex-shrink justify-center">
 					<Image
@@ -19,7 +19,7 @@ export default async function Home() {
 						width={logoWidth}
 						height={logoHeight}
 						alt="Mystic Tuner logo"
-						className="self-center w-full max-w-[350px] h-auto"
+						className="h-auto w-full max-w-[350px] self-center"
 					/>
 				</div>
 				<div className="flex justify-center">
@@ -29,16 +29,16 @@ export default async function Home() {
 						color="primary"
 						as={Link}
 						href={{
-							pathname: '/view-import-deck/new-deck',
-							query: { title: 'New Deck' },
+							pathname: `/${'new-deck'}/view-import-deck`,
+							query: { title: 'New Deck', deckId: -1 },
 						}}
 						className="no-underline"
 					>
 						Make a Deck
 					</Button>
 				</div>
-				<Divider/>
-				<div className="flex flex-row justify-center w-full">
+				<Divider />
+				<div className="flex w-full flex-row justify-center">
 					<UserDecks />
 				</div>
 			</div>
