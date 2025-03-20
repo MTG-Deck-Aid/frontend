@@ -1,19 +1,22 @@
 import { Autocomplete, AutocompleteItem, Button } from "@heroui/react";
 import { useAsyncList } from "@react-stately/data";
-import { getCards } from "@/app/api/cards/autocomplete/route";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { useState, useEffect } from "react";
 import { useLoadingContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { useCommanderContext } from "../context-providers/userDeckContextProvider";
 
-export default function NameAutocomplete({ onNameChange }) {
+export default function NameAutocomplete() {
     //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
-    //componentState
-    const [commander, selectCommander] = useState(""); //TODO: put in default commander value
-    const [filterText, setFilterText] = useState("");
-    const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
     //loading context
     const { isLoading, setIsLoading } = useLoadingContext();
+    //commander context
+    const {commander, setCommander} = useCommanderContext();
+    //componentState
+    const [selectedCommander, setSelectedCommander] = useState(commander); //TODO: put in default commander value
+    const [filterText, setFilterText] = useState("");
+    const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
+    
     //component constants
     const debounceTime = 500;
 
@@ -55,11 +58,8 @@ export default function NameAutocomplete({ onNameChange }) {
     }, [debouncedFilterText]);
 
     const onSuccess = () => {
-        setIsLoading(true);
-        console.log(commander);
-        onNameChange(commander);
-        onOpenChange(); //closes modal
-        setIsLoading(false);
+        setCommander(selectedCommander);
+        onOpenChange();
     }
     return (
         <>
@@ -96,7 +96,7 @@ export default function NameAutocomplete({ onNameChange }) {
                                     inputValue={filterText}
                                     isLoading={list.isLoading}
                                     onInputChange={setFilterText}
-                                    onSelectionChange={selectCommander} //will call specified method with selected item's key (in this case key=item= commanders name)
+                                    onSelectionChange={setSelectedCommander}
                                 >
                                     {list.items.map((item) => {
                                         return (

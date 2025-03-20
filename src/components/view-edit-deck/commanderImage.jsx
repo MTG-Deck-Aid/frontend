@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useEditContext} from "../context-providers/viewDeckContextProvider";
+import { useEditContext, useLoadingContext} from "../context-providers/viewDeckContextProvider";
 import { useCommanderContext} from "../context-providers/userDeckContextProvider";
 import Image from "next/image";
 import NameAutocomplete from "./nameAutocomplete";
@@ -9,16 +9,11 @@ import emptyCommanderFrame from "/public/emptyCommander.svg";
 export default function CommanderImage() {
     //page context
     const { isEditMode, setIsEditMode } = useEditContext();
+    const {isLoading, setIsLoading} = useLoadingContext();
     //commander context
     const {commander, setCommander} = useCommanderContext();
     //component state
     const [commanderImage, setCommanderImage] = useState(emptyCommanderFrame);
-
-    const handleNameChange = (name) => {
-        console.log('Commander Returned: ', name);
-        console.log('Fetching Commander Image');
-        fetchAndSetCommanderImage(name);
-    };
 
     const fetchAndSetCommanderImage = async (name) => {
         let input = { commander: name };
@@ -50,11 +45,13 @@ export default function CommanderImage() {
     }
 
     useEffect(() => {
+        //load the commander image whenever the commander is changed
         if(!commander){
             return;
         }
+        setIsLoading(true);
         fetchAndSetCommanderImage(commander);
-
+        setIsLoading(false);
     }, [commander]);
 
     //Page constants
@@ -71,7 +68,7 @@ export default function CommanderImage() {
                 alt={'Commander Image'}
                 className="rounded-2xl border-white border-solid border-2"
             />
-            {isEditMode && <NameAutocomplete onNameChange={handleNameChange} />}
+            {isEditMode && <NameAutocomplete />}
         </div>
     );
 }
