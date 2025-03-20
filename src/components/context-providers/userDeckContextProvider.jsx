@@ -8,7 +8,7 @@ export default function UserDeckContextProvider({ children }) {
 	const urlName = useParams().slug;
 	const urlId = useSearchParams().get('deckId');
 	/** States to be held */
-	const [deckInput, setDeckInput] = useState(''); //the current Input in the deck (SHOULD NOT BE HERE)
+	const [deckInput, setDeckInput] = useState(''); //the current Input in the textBox
 	const [deckList, setDeckList] = useState({}); //the user's deckList
 	const [deckName, setDeckName] = useState(urlName); //the name of the user's deck
 	const [commander, setCommander] = useState(''); //the current commander?
