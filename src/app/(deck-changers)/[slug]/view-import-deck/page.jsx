@@ -1,6 +1,3 @@
-'use client';
-
-import { useUserDeckContext } from '@/components/context-providers/userDeckContextProvider';
 import {
 	CommanderImage,
 	DeckInput,
