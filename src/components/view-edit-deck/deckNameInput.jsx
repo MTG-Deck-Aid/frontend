@@ -8,8 +8,8 @@ export default function DeckNameInput(props) {
      * Onpress: update the deckName value
      */
     //deck context
-    deckName = props.deckName;
-    setDeckName = props.setDeckName;
+    const deckName = props.deckName;
+    const setDeckName = props.setDeckName;
 
     return (
         <div>

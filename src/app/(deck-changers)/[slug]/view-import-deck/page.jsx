@@ -16,16 +16,14 @@ export default async function ViewImportDeck({ searchParams }) {
 	 * View Mode: Allows a user to view their cards and move onto suggestions
 	 */
 	const {
-		parseDeckInput,
-		deparseDeckList,
-		verifyDeckList,
-		printContext,
 		deckInput,
 		setDeckInput,
 		deckList,
 		setDeckList,
 		commander,
+        setCommander,
 		deckName,
+        setDeckName,
 	} = useUserDeckContext();
 
 	return (
