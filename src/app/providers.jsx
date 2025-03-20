@@ -1,5 +1,6 @@
 /* Allows for HeroUI Components */
 import { HeroUIProvider } from "@heroui/system";
+import { ToastProvider } from "@heroui/react";
 /* Allows for Auth0 Components reference: https://github.com/auth0/nextjs-auth0/ */
 import { Auth0Provider } from "@auth0/nextjs-auth0";
 import { auth0 } from "@/lib/auth0";
@@ -11,6 +12,7 @@ export async function Providers({children}){
     return(
         <HeroUIProvider>
         <Auth0Provider user={session?.user}>
+            <ToastProvider/>
             {children}
         </Auth0Provider>
         </HeroUIProvider>

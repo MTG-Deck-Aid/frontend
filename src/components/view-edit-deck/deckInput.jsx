@@ -23,7 +23,8 @@ export default function DeckInput() {
                 onChange={(event) => {setDeckInput(event.target.value); console.log(deckInput)}}
                 color="primary"
                 placeholder="Paste your deck list here"
-                description="We support Moxfield, MTGA, or MTGO formatting" />
+                description="We support Moxfield, MTGA, or MTGO formatting"
+                isRequired={true} />
         </div>
     )
 }

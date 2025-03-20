@@ -1,6 +1,6 @@
 "use client";
-import { useCommanderContext, useDeckInputContext, useDeckListContext } from "../context-providers/userDeckContextProvider";
-import { useEditContext } from "../context-providers/viewDeckContextProvider";
+
+import { addToast } from "@heroui/react";
 
 /** Function to save the current deck (to database if logged in) and exit edit mode.
  * @param {string} deckInput -> current input in the text field
@@ -28,7 +28,7 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 		);
 		invalidFields.push('(These names have been removed from your list)');
 	}
-
+	
 	// Update the deck input with the parsed deck list.
 	setDeckInput(deparseDeckList(parsedDeck.cards));
 	setDeckList(parsedDeck);
@@ -56,9 +56,13 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 
 	if (!validSave) {
 		// @CodyCasselman: Alert user of invalid fields
-		//
-		// ALERT SHIT GO HERE
-		//
+		addToast({
+			title: "Invalid Input",
+			description: invalidFields.map((field) => {
+				return (field + "\n");
+			}),
+			color:"danger",
+		})
 		console.log('Invalid Fields: ', invalidFields);
 	} else {
 		// @b-smiley: Save the deck to the database if user is logged in

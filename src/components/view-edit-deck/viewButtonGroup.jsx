@@ -5,7 +5,6 @@ import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import { useSearchParams } from "next/navigation";
-import { saveDeck } from "./utils";
 import Link from "next/link";
 
 
@@ -46,7 +45,7 @@ export default function ViewButtonGroup(props) {
                                         </Button>
                                         <Button color="primary" as={Link} className="no-underline"
                                             href={{
-                                                pathname: `../card-suggestions/${searchParams.get("title")}`,
+                                                pathname: `./card-suggestions`,
                                                 query: { title: searchParams.get("title") },
                                             }}>
                                             Okay!
