@@ -1,4 +1,3 @@
-import { ViewDeckContextProvider } from '@/components/context-providers/viewDeckContextProvider';
 import {
 	CommanderImage,
 	DeckInput,
@@ -13,14 +12,7 @@ export default async function ViewImportDeck({ searchParams }) {
      * Edit Mode: allows a user to edit and import the cards that are present in their deck. This is the default path if the user clicks NewDeck.
      * View Mode: Allows a user to view their cards and move onto suggestions
      */
-    // Get the slug from the URL
-
-    // Get the query from the URL
-    const awaitedSearchParams = await searchParams;
-    const initialDeckMode = await awaitedSearchParams?.mode || "edit";
-
     return (
-        <ViewDeckContextProvider urlMode={initialDeckMode}>
             <div className="flex flex-col items-center justify-center max-w-screen max-h-fill gap-8 p-4">
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">
@@ -42,6 +34,5 @@ export default async function ViewImportDeck({ searchParams }) {
                     <DeckInput />
                 </div>
             </div>
-        </ViewDeckContextProvider>
     );
 }
