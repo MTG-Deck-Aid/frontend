@@ -50,7 +50,11 @@ export default function CommanderImage() {
     }
 
     useEffect(() => {
-        console.log('Commander Confirmed!');
+        if(!commander){
+            return;
+        }
+        fetchAndSetCommanderImage(commander);
+
     }, [commander]);
 
     //Page constants
