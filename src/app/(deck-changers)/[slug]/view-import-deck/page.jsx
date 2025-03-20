@@ -15,16 +15,6 @@ export default function ViewImportDeck() {
 	 * Edit Mode: allows a user to edit and import the cards that are present in their deck. This is the default path if the user clicks NewDeck.
 	 * View Mode: Allows a user to view their cards and move onto suggestions
 	 */
-	const {
-		deckInput,
-		setDeckInput,
-		deckList,
-		setDeckList,
-		commander,
-        setCommander,
-		deckName,
-        setDeckName,
-	} = useUserDeckContext();
 
 	return (
 		<div className="max-w-screen max-h-fill flex flex-col items-center justify-center gap-8 p-4">
@@ -34,7 +24,7 @@ export default function ViewImportDeck() {
 					<DeckNameInput />
 				</div>
 				<div className="flex">
-					<ViewButtonGroup deckInput={deckInput} setDeckInput={setDeckInput} setDeckList={setDeckList} commander={commander}/>
+					<ViewButtonGroup />
 				</div>
 			</div>
 			<Divider />
@@ -45,7 +35,7 @@ export default function ViewImportDeck() {
 			<Divider />
 			{/* Third Row: Deck Input */}
 			<div className="w-full justify-start">
-				<DeckInput deckInput={deckInput} setDeckInput={setDeckInput} />
+				<DeckInput />
 			</div>
 		</div>
 	);
