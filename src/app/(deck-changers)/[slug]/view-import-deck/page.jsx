@@ -1,3 +1,5 @@
+"use client";
+
 import { useUserDeckContext } from '@/components/context-providers/userDeckContextProvider';
 import {
 	CommanderImage,
@@ -6,6 +8,7 @@ import {
 	ViewButtonGroup,
 } from '@/components/view-edit-deck';
 import { Divider } from '@heroui/react';
+
 
 export default async function ViewImportDeck({ searchParams }) {
     /**

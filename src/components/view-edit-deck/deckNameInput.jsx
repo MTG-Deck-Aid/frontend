@@ -4,7 +4,11 @@ import { useUserDeckContext } from "../context-providers/userDeckContextProvider
 import { Input } from "@heroui/react";
 
 export default function DeckNameInput(props) {
-    const { deckName, setDeckName } = useUserDeckContext();
+    /** This is the input field for the deck name
+     * Onpress: update the deckName value
+     */
+    deckName = props.deckName;
+    setDeckName = props.setDeckName;
 
     return (
         <div>
