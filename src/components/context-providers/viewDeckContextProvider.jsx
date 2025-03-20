@@ -37,9 +37,35 @@ export default function ViewDeckContextProvider({ children }) {
     );
 }
 
+export function useLoadingContext(){
+    /**
+     * useLoadingContext only returns the section of context relevant to the pageLoadingState
+     * returns: isLoading, setIsLoading
+     */
+    const isLoading = useContext(ViewDeckContext).isLoading;
+    const setIsLoading = useContext(ViewDeckContext).setIsLoading;
+    if (!isLoading || !setIsLoading) {
+        throw new Error('useViewDeckContext must be used within a ViewDeckContextProvider');
+    }
+    return {isLoading, setIsLoading};
+}
+
+export function useEditContext(){
+    /**
+     * useEditContext only returns the section of context relevant to whether the page is in editMode or not
+     * returns: isEditMode, setIsEditMode
+     */
+    const isEditMode = useContext(ViewDeckContext).isEditMode;
+    const setIsEditMode = useContext(ViewDeckContext).setIsEditMode;
+    if (!isEditMode || !setIsEditMode) {
+        throw new Error('useViewDeckContext must be used within a ViewDeckContextProvider');
+    }
+    return {isEditMode, setIsEditMode};
+}
+
 export function useViewDeckContext() {
     /**
-     * useViewDeckContext takes in no parameters and returns the context of the page.
+     * useViewDeckContext takes in no parameters and returns the entire context from the provider
      */
     const context = useContext(ViewDeckContext);
     if (!context) {

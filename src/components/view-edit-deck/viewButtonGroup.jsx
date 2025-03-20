@@ -10,9 +10,13 @@ import Link from "next/link";
 
 
 export default function ViewButtonGroup(props) {
+    //page context
     const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
+    //deck context
     const deckInput = props.deckInput;
+    //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    //route handler
     const searchParams = useSearchParams();
     
     /** Function to save the current deck (to database if logged in) and exit edit mode.

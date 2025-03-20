@@ -1,14 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { useEditContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 import Image from "next/image";
 import NameAutocomplete from "./nameAutocomplete";
 import emptyCommanderFrame from "/public/emptyCommander.svg";
 
-export default function CommanderImage() {
-    const { isEditMode } = useViewDeckContext();
-    const { commander, setCommander } = useUserDeckContext();
+export default function CommanderImage(props) {
+    //page context
+    const { isEditMode, setIsEditMode } = useEditContext();
+    //deck context
+    const commander = props.commander;
+    const setCommander = props.setCommander;
+    //component state
     const [commanderImage, setCommanderImage] = useState(emptyCommanderFrame);
 
     const handleNameChange = (name) => {

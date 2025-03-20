@@ -7,6 +7,7 @@ export default function DeckNameInput(props) {
     /** This is the input field for the deck name
      * Onpress: update the deckName value
      */
+    //deck context
     deckName = props.deckName;
     setDeckName = props.setDeckName;
 

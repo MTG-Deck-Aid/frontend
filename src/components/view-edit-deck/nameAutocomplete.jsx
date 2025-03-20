@@ -3,15 +3,19 @@ import { useAsyncList } from "@react-stately/data";
 import { getCards } from "@/app/api/cards/autocomplete/route";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { useState, useEffect } from "react";
-import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { useLoadingContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 
 export default function NameAutocomplete({ onNameChange }) {
+    //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure(); //disclosure handles the state of the modal
+    //componentState
     const [commander, selectCommander] = useState(""); //TODO: put in default commander value
     const [filterText, setFilterText] = useState("");
     const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
+    //loading context
+    const { isLoading, setIsLoading } = useLoadingContext();
+    //component constants
     const debounceTime = 500;
-    const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
 
     useEffect(() => {
         const handler = setTimeout(() => {
