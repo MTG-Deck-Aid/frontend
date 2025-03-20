@@ -20,7 +20,7 @@ export default function DeckInput() {
                 }}
                 className=""
                 value={deckInput}
-                onChange={(event) => {setDeckInput(event.target.value); console.log(deckInput)}}
+                onChange={(event) => {setDeckInput(event.target.value)}} //either this should be in the pageContext or should wait to setDeckInput when save button is pressed
                 color="primary"
                 placeholder="Paste your deck list here"
                 description="We support Moxfield, MTGA, or MTGO formatting"

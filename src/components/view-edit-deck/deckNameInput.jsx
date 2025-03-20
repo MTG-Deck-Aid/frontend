@@ -20,7 +20,7 @@ export default function DeckNameInput() {
                 classNames={{
                     label: "relative"
                 }}
-                onChange={(event) => setDeckName(event.target.value)}
+                onChange={(event) => setDeckName(event.target.value)} //Should only change input value. setDeckName() on save button being pressed
                 value={deckName}
             />
         </div>
