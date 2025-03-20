@@ -7,9 +7,10 @@ export default async function DeckChangersLayout({ params, searchParams, childre
     // Get the query from the URL
     const awaitedSearchParams = await searchParams;
     const initialDeckId = await awaitedSearchParams?.deckId || "";
+    console.log(initialDeckName)
 
     return(
-        <UserDeckContextProvider urlName={initialDeckName} urlId={initialDeckId}>
+        <UserDeckContextProvider urlName={params?.deckName} urlId={searchParams?.deckId}>
             {children}
         </UserDeckContextProvider>
     )

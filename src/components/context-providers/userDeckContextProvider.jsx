@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from 'react';
-const UserDeckContext = createContext(false);
+const UserDeckContext = createContext();
 
 export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, children }) {
     const [deckInput, setDeckInput] = useState('');
@@ -13,7 +13,7 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         const response = await fetch(`/api/decks/deck?deckId=${urlId}`, {
             method: 'GET',
         });
-
+        
         // Await the response from server side JS
         const data = await response.json();
         return data.deck; // Return only the data
@@ -64,14 +64,6 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
     useEffect(() => {
         printContext();
     }, [deckInput, deckList, deckName]);
-
-    function useUserDeckContext(){
-        const context = useContext(UserDeckContext);
-        if (!context) {
-            throw new Error('useUserDeckContext must be used within a UserDeckContextProvider');
-        }
-        return context;
-    }
 
 
     /** Function to save the current deck (to database if logged in) and exit edit mode.
@@ -262,6 +254,8 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
         return data.invalidNames;
     }
 
+    
+
     return (
         <UserDeckContext.Provider value={{
             deckInput, setDeckInput,
@@ -272,4 +266,12 @@ export function UserDeckContextProvider({ urlName = "New Deck", urlId = -1, chil
             {children}
         </UserDeckContext.Provider>
     )
+}
+
+export function useUserDeckContext(){
+    const context = useContext(UserDeckContext);
+    if (!context) {
+        throw new Error('useUserDeckContext must be used within a UserDeckContextProvider');
+    }
+    return context;
 }

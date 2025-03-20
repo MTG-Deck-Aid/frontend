@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-const ViewDeckContext = createContext(false);
+const ViewDeckContext = createContext();
 
 export function ViewDeckContextProvider({ urlMode, children }) {
     /**

@@ -17,7 +17,7 @@ export default async function ViewImportDeck({ searchParams }) {
                 {/* First row: Deck Name and Button Group */}
                 <div className="flex flex-col-reverse w-full items-start gap-4 md:flex-row md:justify-between">
                     <div className="flex">
-                        <DeckNameInput deckName="Placeholder Deck" /> 
+                        <DeckNameInput /> 
                     </div>
                     <div className="flex">
                         <ViewButtonGroup />
