@@ -1,14 +1,14 @@
 "use client";
+import { useDeckInputContext } from "../context-providers/userDeckContextProvider";
 import { useEditContext } from "../context-providers/viewDeckContextProvider";
 import { Textarea } from "@heroui/react";
 // import { u } from "framer-motion/dist/types.d-B50aGbjN";
 
-export default function DeckInput(props) {
+export default function DeckInput() {
     //Edit context
     const { isEditMode, setIsEditMode } = useEditContext();
     //Deck context
-    const deckInput = props.deckInput;
-    const setDeckInput = props.setDeckInput;
+    const{deckInput, setDeckInput} = useDeckInputContext()
 
     return (
         <div className="">

@@ -37,32 +37,6 @@ export default function ViewDeckContextProvider({ children }) {
     );
 }
 
-export function useLoadingContext(){
-    /**
-     * useLoadingContext only returns the section of context relevant to the pageLoadingState
-     * returns: isLoading, setIsLoading
-     */
-    const context = useContext(ViewDeckContext);
-    if (!context) {
-        throw new Error('useViewDeckContext must be used within a ViewDeckContextProvider');
-    }
-    const {isLoading, setIsLoading} = context;
-    return {isLoading, setIsLoading};
-}
-
-export function useEditContext(){
-    /**
-     * useEditContext only returns the section of context relevant to whether the page is in editMode or not
-     * returns: isEditMode, setIsEditMode
-     */
-    const context = useContext(ViewDeckContext);
-    if (!context) {
-        throw new Error('useViewDeckContext must be used within a ViewDeckContextProvider');
-    }
-    const {isEditMode, setIsEditMode} = context
-    return {isEditMode, setIsEditMode};
-}
-
 export function useViewDeckContext() {
     /**
      * useViewDeckContext takes in no parameters and returns the entire context from the provider
@@ -73,3 +47,24 @@ export function useViewDeckContext() {
     }
     return context;
 }
+
+export function useLoadingContext(){
+    /**
+     * useLoadingContext only returns the section of context relevant to the pageLoadingState
+     * returns: isLoading, setIsLoading
+     */
+    const context = useViewDeckContext();
+    const {isLoading, setIsLoading} = context;
+    return {isLoading, setIsLoading};
+}
+
+export function useEditContext(){
+    /**
+     * useEditContext only returns the section of context relevant to whether the page is in editMode or not
+     * returns: isEditMode, setIsEditMode
+     */
+    const context = useViewDeckContext();
+    const {isEditMode, toggleIsEditMode} = context
+    return {isEditMode, toggleIsEditMode};
+}
+

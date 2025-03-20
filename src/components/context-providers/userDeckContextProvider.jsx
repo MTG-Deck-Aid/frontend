@@ -98,10 +98,31 @@ export function useUserDeckContext() {
 	}
 	return context;
 	/**
-     * context will contain:
-     * deckInput, setDeckInput, 
-     * deckList, setDeckList, 
-     * commander, setCommander, 
-     * deckName, setDeckName,
-     */
+	 * context will contain:
+	 * deckInput, setDeckInput,
+	 * deckList, setDeckList,
+	 * commander, setCommander,
+	 * deckName, setDeckName,
+	 */
+}
+
+export function useCommanderContext() {
+	const context = useUserDeckContext();
+	const { commander, setCommander } = context;
+	return { commander, setCommander };
+}
+export function useDeckInputContext() {
+	const context = useUserDeckContext();
+	const { deckInput, setDeckInput } = context;
+	return { deckInput, setDeckInput };
+}
+export function useDeckListContext() {
+	const context = useUserDeckContext();
+	const { deckList, setDeckList } = context;
+	return { deckList, setDeckList };
+}
+export function useDeckNameContext() {
+	const context = useUserDeckContext();
+	const { deckName, setDeckName } = context;
+	return { deckName, setDeckName };
 }

@@ -9,7 +9,7 @@ import {
 } from '@/components/view-edit-deck';
 import { Divider } from '@heroui/react';
 
-export default async function ViewImportDeck({ searchParams }) {
+export default function ViewImportDeck() {
 	/**
 	 * ViewImportDeck is a page that has two modes.
 	 * Edit Mode: allows a user to edit and import the cards that are present in their deck. This is the default path if the user clicks NewDeck.
@@ -31,16 +31,16 @@ export default async function ViewImportDeck({ searchParams }) {
 			{/* First row: Deck Name and Button Group */}
 			<div className="flex w-full flex-col-reverse items-start gap-4 md:flex-row md:justify-between">
 				<div className="flex">
-					<DeckNameInput deckName={deckName} setDeckName={setDeckName} />
+					<DeckNameInput />
 				</div>
 				<div className="flex">
-					<ViewButtonGroup deckList={deckList} />
+					<ViewButtonGroup deckInput={deckInput} setDeckInput={setDeckInput} setDeckList={setDeckList} commander={commander}/>
 				</div>
 			</div>
 			<Divider />
 			{/* Second Row: Commander Selection */}
 			<div className="">
-				<CommanderImage commander={commander} setCommander={setCommander} />
+				<CommanderImage />
 			</div>
 			<Divider />
 			{/* Third Row: Deck Input */}

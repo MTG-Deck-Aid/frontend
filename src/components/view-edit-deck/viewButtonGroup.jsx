@@ -1,5 +1,5 @@
 'use client';
-import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
+import { useEditContext, useLoadingContext, useViewDeckContext } from "../context-providers/viewDeckContextProvider";
 import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
@@ -11,9 +11,14 @@ import Link from "next/link";
 
 export default function ViewButtonGroup(props) {
     //page context
-    const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
+    //const { isEditMode, toggleIsEditMode, isLoading, setIsLoading } = useViewDeckContext();
+    const{isEditMode, toggleIsEditMode} = useEditContext();
+    const{isLoading, setIsLoading} = useLoadingContext();
     //deck context
     const deckInput = props.deckInput;
+    const setDeckInput = props.setDeckInput;
+    const setDeckList = props.setDeckList;
+    const commander = props.commander;
     //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     //route handler
@@ -23,7 +28,9 @@ export default function ViewButtonGroup(props) {
      *  @returns {void}
      */
     const handleSave = () => {
-        saveDeck(setIsLoading, deckInput, toggleIsEditMode)
+        setIsLoading(true);
+        saveDeck( deckInput, setDeckInput, setDeckList, toggleIsEditMode, commander);
+        setIsLoading(false);
     }
 
     return (

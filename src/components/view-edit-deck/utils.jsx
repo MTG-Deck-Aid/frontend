@@ -1,13 +1,15 @@
+"use client";
+import { useCommanderContext, useDeckInputContext, useDeckListContext } from "../context-providers/userDeckContextProvider";
+import { useEditContext } from "../context-providers/viewDeckContextProvider";
+
 /** Function to save the current deck (to database if logged in) and exit edit mode.
  * @param {string} deckInput -> current input in the text field
- * @param {method} setIsLoading -> To disable buttons while function is saving
  * @param {method} toggleIsEditMode -> Toggles between edit/save
  *
  *  @returns {void}
  */
-export async function saveDeck(setIsLoading, deckInput, toggleIsEditMode) {
-	setIsLoading(true); // Set loading to true to prevent multiple clicks
-
+export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode) {
+    
 	// Remains true if: valid deckList, commander exists, and deckName exists
 	let validSave = true;
 	let invalidFields = [];
@@ -16,6 +18,7 @@ export async function saveDeck(setIsLoading, deckInput, toggleIsEditMode) {
 	const parsedDeck = parseDeckInput(deckInput);
 	// Validate the deck list.
 	let invalidNames = await verifyDeckList(parsedDeck);
+
 	if (invalidNames.length > 0) {
 		validSave = false;
 		invalidFields.push('Invalid Cards: ' + invalidNames.join(', '));
@@ -25,6 +28,7 @@ export async function saveDeck(setIsLoading, deckInput, toggleIsEditMode) {
 		);
 		invalidFields.push('(These names have been removed from your list)');
 	}
+
 	// Update the deck input with the parsed deck list.
 	setDeckInput(deparseDeckList(parsedDeck.cards));
 	setDeckList(parsedDeck);
@@ -76,8 +80,6 @@ export async function saveDeck(setIsLoading, deckInput, toggleIsEditMode) {
 		// Console log, deckList, commander, and deckName
 		toggleIsEditMode();
 	}
-	printContext();
-	setIsLoading(false);
 }
 
 /** Function to parse the deck input into a json object.
@@ -180,7 +182,7 @@ const verifyDeckList = async (deckList) => {
 	});
 
 	const data = await response.json();
-	return data.invalidNames;
+	return data.invalidNames || "";
 };
 
 /** Function to convert a deckList object into a string for populating the deck input field.

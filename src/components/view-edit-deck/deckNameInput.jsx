@@ -1,15 +1,13 @@
 'use client';
-import { useViewDeckContext } from "../context-providers/viewDeckContextProvider";
-import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
+import { useDeckNameContext } from "../context-providers/userDeckContextProvider";
 import { Input } from "@heroui/react";
 
-export default function DeckNameInput(props) {
+export default function DeckNameInput() {
     /** This is the input field for the deck name
      * Onpress: update the deckName value
      */
-    //deck context
-    const deckName = props.deckName;
-    const setDeckName = props.setDeckName;
+    //deck name context
+    const {deckName, setDeckName} = useDeckNameContext();
 
     return (
         <div>
