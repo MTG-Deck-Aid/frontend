@@ -1,6 +1,6 @@
 "use client";
 import { useDisplayNameContext, useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
-import { useDeckInputContext, useDeckListContext, useCommanderContext, useDeckNameContext } from "../context-providers/userDeckContextProvider";
+import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 import { saveDeck } from "./utils";
 import { Button } from "@heroui/button";
 import SetPageTitle from "../header-components/setPageTitle";
@@ -12,12 +12,9 @@ export default function SaveButton(){
     const {isEditMode, toggleIsEditMode} = useEditContext();
     const {displayName, setDisplayName} = useDisplayNameContext();
     //Deck context
-    const {deckInput, setDeckInput} = useDeckInputContext();
-    const {deckList, setDeckList} = useDeckListContext();
-    const {commander, setCommander} = useCommanderContext();
-    const {deckName, setDeckName} = useDeckNameContext();
+    const {deckInput, setDeckInput, setDeckList, commander, deckName, setDeckName, deckId, setDeckId} = useUserDeckContext();
     
-    const handleSave = async () => {
+    const handleSave = async ({deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId}) => {
         setIsLoading(true);
         setDeckName(displayName) //set the display name when we press the save button
         await saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode);

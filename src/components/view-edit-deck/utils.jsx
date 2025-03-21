@@ -8,8 +8,12 @@ import { addToast } from "@heroui/react";
  *
  *  @returns {void}
  */
-export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode) {
-    
+
+export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId) {
+	/**
+	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
+	 * JUST LOAD THE CONTEXT INSTEAD
+	 */
 	// Remains true if: valid deckList, commander exists, and deckName exists
 	let validSave = true;
 	let invalidFields = [];
@@ -64,6 +68,7 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 			color:"danger",
 		})
 		console.log('Invalid Fields: ', invalidFields);
+    return false;
 	} else {
 		// @b-smiley: Save the deck to the database if user is logged in
 		/*
@@ -80,9 +85,8 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 
 		// IF LOGGED IN:
 		//   SAVE TO DATABASE
-
-		// Console log, deckList, commander, and deckName
-		toggleIsEditMode();
+    return true;
+		
 	}
 }
 
