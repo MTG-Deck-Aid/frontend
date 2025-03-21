@@ -16,7 +16,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */ // NO
 	// Runs the verifySave function to check if the deck is valid
-	const invalidFields = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName);
+	const {invalidFields, parsedDeck} = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName);
 
 	// If there are invalid fields, do not save the deck.
 	const validSave = invalidFields.length === 0;
@@ -40,6 +40,9 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		try {
 			let response;
 			const isNewDeck = deckId === -1;
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
 			if (isNewDeck) {
 				response = fetch('/api/decks/new-deck', {
 					method: 'POST',
@@ -49,8 +52,9 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 					body: JSON.stringify({
 						deckName: deckName,
 						commander: commander,
-						deckList: deckList,
+						deckList: parsedDeck.cards,
 					}),
+					signal: controller.signal,
 				});
 			} else {
 				response = fetch('/api/decks/update-deck', {
@@ -62,17 +66,21 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 						deckId: deckId,
 						deckName: deckName,
 						commander: commander,
-						deckList: deckList,
+						deckList: parsedDeck.cards,
 					}),
+					signal: controller.signal,
 				});
 			}
+
 			const backend_response = await response.json();
+			clearTimeout(timeoutId);
+
 			if (backend_response.status !== 200) {
 				addToast({
 					title: "Error Saving Deck",
 					description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
 					color: "danger",
-				})
+				});
 				return false;
 			}
 			setDeckId(backend_response.data.deckId);
@@ -80,15 +88,14 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 				title: "Deck Saved",
 				description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
 				color: "success",
-			})
-		}
-		catch (error) {
+			});
+		} catch (error) {
 			console.error('Error saving deck:', error);
 			addToast({
 				title: "Error Saving Deck",
 				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
 				color: "danger",
-			})
+			});
 			return false;
 		}
 		toggleIsEditMode();
@@ -143,7 +150,7 @@ async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckN
 		invalidFields.push('Deck Name is required.');
 	}
 
-	return invalidFields;
+	return {invalidFields, parsedDeck};
 }
 
 /** Function to parse the deck input into a json object.
