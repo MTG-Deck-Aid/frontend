@@ -13,7 +13,6 @@ export default function SuggestionModal({card, add}){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const cardHeight = 375;
     const cardWidth = Math.round(0.75 * cardHeight);
-    const card = card
     return(
         <div>
         <>

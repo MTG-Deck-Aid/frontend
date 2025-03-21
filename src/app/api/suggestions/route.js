@@ -22,7 +22,7 @@ export async function POST(request) {
     const response = await deckSuggestions(suggestionParams);
     return NextResponse.json(response);
   } catch (error) {
-    console.error("Error getting AI deck suggestions:", error);
+    console.error("Error getting AI deck suggestions: (restAPI)", error);
     return NextResponse.json({
       status: 500,
       message: "Error getting AI deck suggestions",

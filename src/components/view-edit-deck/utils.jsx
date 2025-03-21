@@ -148,9 +148,7 @@ export async function getSuggestions(deck, commander, numToAdd, numToRemove) {
 		console.error('Error getting AI deck suggestions:', error);
 		// return { authenticated: false, message: "Error during authentication" };
 	}
-
 	return suggestions;
-
 }
 
 /** Function to verify the deck input and return a list of invalid fields.
