@@ -11,6 +11,7 @@ export default function UserDeckContextProvider({ children }) {
 	const [deckList, setDeckList] = useState({}); //the user's deckList
 	const [deckName, setDeckName] = useState('New Deck'); //the name of the user's deck
 	const [commander, setCommander] = useState(''); //the current commander?
+	const [deckId, setDeckId] = useState();
 
 	async function fetchUserDeck() {
 		//Fetches the user's deck information given the url parameter
@@ -25,7 +26,7 @@ export default function UserDeckContextProvider({ children }) {
 
 	function populateDeckList(deckList) {
 		let formattedDeckList = [];
-		console.log(deckList)
+		console.log(deckList);
 		// Finds the total quantity of cards in the deck for each card,
 		// and adds that to the card object
 		deckList.map((card) => {
@@ -49,28 +50,30 @@ export default function UserDeckContextProvider({ children }) {
 
 	// On page load, fetch the deck from the backend
 	useEffect(() => {
-		if(urlId === -1){
+		if (urlId === -1) {
 			//user is not signed in don't bother fetching
+			setDeckId(-1);
 			return;
 		}
 		console.log('Fetching deck from backend');
 		fetchUserDeck().then((deck) => {
 			if (deck) {
 				console.log('Received deck from backend');
-				console.log(deck)
+				console.log(deck);
 				//setting deckInput
 				let fetchedDeckInput = populateDeckList(deck.cards);
 				setDeckInput(fetchedDeckInput);
-				
+
 				//setting the commander
 				setCommander(deck.commander);
-				console.log("Commander: ", commander)
+				console.log('Commander: ', commander);
 
 				//setting the deckName
 				setDeckName(deck.deck_name);
+
+				setDeckId(urlId);
 			}
 		});
-		
 	}, []);
 
 	/** DEBUGGER FUNCTION */
@@ -94,6 +97,8 @@ export default function UserDeckContextProvider({ children }) {
 				setCommander,
 				deckName,
 				setDeckName,
+				deckId,
+				setDeckId
 			}}
 		>
 			{children}
