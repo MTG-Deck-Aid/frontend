@@ -1,12 +1,15 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
 import SaveButton from "./saveButton";
 import SubmitSuggestionButton from "./submitSuggestionButton";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
+import Link from "next/link";
+import { useDeckIDContext } from "../context-providers/userDeckContextProvider";
 import DeleteButton from "./deleteButton";
+
 
 export default function ViewButtonGroup(props) {
     //page context
@@ -17,6 +20,12 @@ export default function ViewButtonGroup(props) {
 
     const [numCardsToAdd, setNumCardsToAdd] = useState(3);
     const [numCardsToRemove, setNumCardsToRemove] = useState(3);
+
+    const {deckId} = useDeckIDContext();
+
+    useEffect(() => {
+        console.log(numCardsToAdd)
+    },[numCardsToAdd])
 
     /** Function to save the current deck (to database if logged in) and exit edit mode.
      *  @returns {void}
@@ -45,7 +54,18 @@ export default function ViewButtonGroup(props) {
                                         <Button color="danger" variant="flat" onPress={onClose} >
                                             Not yet!
                                         </Button>
-                                        <SubmitSuggestionButton numToAdd={numCardsToAdd} numToRemove={numCardsToRemove} />
+                                        <Button
+                                            color={"primary"}
+                                            isLoading={isLoading ? true : false}
+                                            className="no-underline"
+                                            as={Link}
+                                            href={{
+                                                pathname: `./card-suggestions`,
+                                                query: { numToAdd:`${numCardsToAdd}`, numToRemove:`${numCardsToRemove}`, deckId:`${deckId}`},
+                                            }}
+                                            >
+                                            Okay!
+                                        </Button>
                                     </ModalFooter>
                                 </>
                             )}
@@ -75,16 +95,19 @@ const createPageButton = (label, onPressEvent, isLoading) => {
     )
 }
 
-const createSelect = (label, value, setValue) => {
+const createSelect = (label, value, setValue, val) => {
     const maxCards = 5;
     const numberArray = arrayFromRange(1, maxCards, 1);
+    const handleSelectionChange = (event) => {
+        setValue(+event.target.value + 1);
+    }
 
     return (
         <div>
             <Select
                 label={label}
                 value={value}
-                onChange={(event) => setValue(+event.target.value + 1)}
+                onChange={handleSelectionChange}
                 classNames={{
                     innerWrapper: "group-data-[has-label=true]:pt-0",
                     label: "text-xs my-0 relative",
