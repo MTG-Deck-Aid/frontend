@@ -16,12 +16,14 @@ import {
   useDisclosure,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
+import Link from "next/link";
+import { useDeckIDContext } from "../context-providers/userDeckContextProvider";
 import DeleteButton from "./deleteButton";
 import { useDeckIdContext } from "../context-providers/userDeckContextProvider";
 
 export default function ViewButtonGroup(props) {
   // local use state
-  const [showButton, setShowButton] = useState(false);
+  const [showDeleteButton, setshowDeleteButton] = useState(false);
 
   //page context
   const { isEditMode, toggleIsEditMode } = useEditContext();
@@ -64,7 +66,7 @@ export default function ViewButtonGroup(props) {
   return isEditMode ? (
     <div className="flex">
       <SaveButton />
-      {showButton ? <DeleteButton /> : null}
+      {showDeleteButton ? <DeleteButton /> : null}
     </div>
   ) : (
     <div className="grid grid-rows-2 gap-2">
@@ -99,10 +101,22 @@ export default function ViewButtonGroup(props) {
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Not yet!
                   </Button>
-                  <SubmitSuggestionButton
-                    numToAdd={numCardsToAdd}
-                    numToRemove={numCardsToRemove}
-                  />
+                  <Button
+                    color={"primary"}
+                    isLoading={isLoading ? true : false}
+                    className="no-underline"
+                    as={Link}
+                    href={{
+                      pathname: `./card-suggestions`,
+                      query: {
+                        numToAdd: `${numCardsToAdd}`,
+                        numToRemove: `${numCardsToRemove}`,
+                        deckId: `${deckId}`,
+                      },
+                    }}
+                  >
+                    Okay!
+                  </Button>
                 </ModalFooter>
               </>
             )}
@@ -132,16 +146,19 @@ const createPageButton = (label, onPressEvent, isLoading) => {
   );
 };
 
-const createSelect = (label, value, setValue) => {
+const createSelect = (label, value, setValue, val) => {
   const maxCards = 5;
   const numberArray = arrayFromRange(1, maxCards, 1);
+  const handleSelectionChange = (event) => {
+    setValue(+event.target.value + 1);
+  };
 
   return (
     <div>
       <Select
         label={label}
         value={value}
-        onChange={(event) => setValue(+event.target.value + 1)}
+        onChange={handleSelectionChange}
         classNames={{
           innerWrapper: "group-data-[has-label=true]:pt-0",
           label: "text-xs my-0 relative",

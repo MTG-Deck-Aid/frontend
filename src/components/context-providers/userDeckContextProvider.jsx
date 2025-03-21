@@ -147,3 +147,8 @@ export function useDeckNameContext() {
   const { deckName, setDeckName } = context;
   return { deckName, setDeckName };
 }
+
+export function useDeckIDContext(){
+	const {deckId, setDeckId} = useUserDeckContext();
+	return {deckId, setDeckId};
+}
