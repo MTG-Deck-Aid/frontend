@@ -9,7 +9,7 @@ export async function POST(request) {
 		// Request to the backend
 		const controller = new AbortController();
 		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-		const authorizationHeaders = getAuthorizationHeader(auth0Token);
+		const authorizationHeaders = await getAuthorizationHeader();
 		const response = await fetch(`${process.env.BACKEND_BASE_URL}/api/decks/new-deck/`, {
 			method: "POST",
 			headers: {
