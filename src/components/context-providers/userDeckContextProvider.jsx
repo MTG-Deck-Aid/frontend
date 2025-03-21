@@ -1,6 +1,7 @@
 'use client';
 import { useSearchParams, useParams } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { parseDeckInput, deparseDeckList } from '../view-edit-deck/utils';
 
 const UserDeckContext = createContext();
 export default function UserDeckContextProvider({ children }) {
@@ -60,8 +61,12 @@ export default function UserDeckContextProvider({ children }) {
 				console.log('Received deck from backend');
 				console.log(deck)
 				//setting deckInput
+
 				let fetchedDeckInput = populateDeckList(deck.cards);
 				setDeckInput(fetchedDeckInput);
+				let parsedDeck = parseDeckInput(deckInput);
+				setDeckList(parsedDeck);
+
 
 				//setting the commander
 				setCommander(deck.commander);

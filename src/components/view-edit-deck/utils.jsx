@@ -215,7 +215,7 @@ async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckN
  *   ]
  * }
  */
-const parseDeckInput = (text) => {
+export const parseDeckInput = (text) => {
 	// Split the text into individual lines.
 	const lines = text.split('\n');
 	let deckLines = [];
@@ -311,7 +311,7 @@ const verifyDeckList = async (deckList) => {
  * // Returns:
  * `4 Card Name\n1 Another Card`
  */
-const deparseDeckList = (cards) => {
+export const deparseDeckList = (cards) => {
 	const lines = [];
 	cards.forEach((card) => {
 		lines.push(`${card.quantity} ${card.cardName}`);
