@@ -1,7 +1,7 @@
 "use client";
 
 import { addToast } from "@heroui/react";
-
+import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 /** Function to save the current deck (to database if logged in) and exit edit mode.
  * @param {string} deckInput -> current input in the text field
  * @param {method} toggleIsEditMode -> Toggles between edit/save
@@ -9,11 +9,15 @@ import { addToast } from "@heroui/react";
  *  @returns {void}
  */
 
-export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId) {
+export async function saveDeck() {
 	/**
 	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */
+	// Load the context
+	const { deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId } = useUserDeckContext();
+
+
 	// Remains true if: valid deckList, commander exists, and deckName exists
 	let validSave = true;
 	let invalidFields = [];
@@ -57,7 +61,6 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 		validSave = false;
 		invalidFields.push('Deck Name is required.');
 	}
-
 	if (!validSave) {
 		// @CodyCasselman: Alert user of invalid fields
 		addToast({
@@ -68,23 +71,64 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 			color:"danger",
 		})
 		console.log('Invalid Fields: ', invalidFields);
-    return false;
+    	return false;
 	} else {
-		// @b-smiley: Save the deck to the database if user is logged in
-		/*
-        "commander" has the commander name (string)
-        "deckName" has the deck name (string)
-        "deckList" has the JSON deck list in the format:
-        {
-        cards: [
-            { quantity: 4, cardName: 'Name1' }, 
-            { quantity: 1, cardName: 'Name2' }
-        ]
-        }
-        */
-
-		// IF LOGGED IN:
-		//   SAVE TO DATABASE
+		// Save the deck to the database if user is logged in
+		console.log("Deck is valid, saving to database...");
+		try{
+			let response;
+		   const isNewDeck = deckId === -1;
+	   if (isNewDeck) {
+			response = fetch('/api/decks/new-deck', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					deckName: deckName,
+					commander: commander,
+					deckList: parsedDeck,
+				}),
+			});
+	   }else{
+		response = fetch('/api/decks/update-deck', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				deckId: deckId,
+				deckName: deckName,
+				commander: commander,
+				deckList: parsedDeck,
+			}),
+		});
+		}
+		const backend_response = await response.json();
+		if (backend_response.status !== 200) {
+			addToast({
+				title: "Error Saving Deck",
+				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+				color:"danger",
+			})
+			return false;
+		}
+		setDeckId(backend_response.data.deckId);
+		addToast({
+			title: "Deck Saved",
+			description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
+			color:"success",
+		})
+	}
+		catch (error) {
+			console.error('Error saving deck:', error);
+			addToast({
+				title: "Error Saving Deck",
+				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+				color:"danger",
+			})
+			return false;
+		}
     return true;
 		
 	}
