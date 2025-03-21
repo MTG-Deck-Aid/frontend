@@ -34,7 +34,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		setDisplayName(deckName); //set the display name
 		// Stall for 0.1s so the deckName sets before the page title updates
 		await new Promise((resolve) => setTimeout(resolve, 100));
-		/*
+
 		// Save the deck to the database if user is logged in
 		console.log("Deck is valid, saving to database...");
 		try {
@@ -90,7 +90,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 				color: "danger",
 			})
 			return false;
-		} */
+		}
 		toggleIsEditMode();
 	}
 
