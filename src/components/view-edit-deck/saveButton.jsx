@@ -4,7 +4,6 @@ import { useDeckInputContext, useDeckListContext, useCommanderContext, useDeckNa
 import { saveDeck } from "./utils";
 import { Button } from "@heroui/button";
 import SetPageTitle from "../header-components/setPageTitle";
-import { useDeferredValue, useEffect } from "react";
 
 export default function SaveButton(){
     //Page context
@@ -20,7 +19,11 @@ export default function SaveButton(){
     const handleSave = async () => {
         setIsLoading(true);
         setDeckName(displayName) //set the display name when we press the save button
-        await saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode);
+        const savedDeck = await saveDeck(); //returns true if save successful
+        //PULLED EDITMODE toggling out of saveDeck function to simplify
+        if(savedDeck){
+            toggleIsEditMode();
+        }
         setIsLoading(false);
     }
 
