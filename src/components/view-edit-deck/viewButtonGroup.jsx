@@ -6,6 +6,7 @@ import SubmitSuggestionButton from "./submitSuggestionButton";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
+import DeleteButton from "./deleteButton";
 
 export default function ViewButtonGroup(props) {
     //page context
@@ -25,6 +26,7 @@ export default function ViewButtonGroup(props) {
         isEditMode ? (
             <div className="flex">
                 <SaveButton />
+                <DeleteButton/>
             </div>
         ) : (
             <div className="grid grid-rows-2 gap-2">
