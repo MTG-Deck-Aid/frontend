@@ -7,16 +7,15 @@ import { Button } from "@heroui/button";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-
 export default function ViewButtonGroup(props) {
     //page context
-    const{isEditMode, toggleIsEditMode} = useEditContext();
-    const{isLoading, setIsLoading} = useLoadingContext();
+    const { isEditMode, toggleIsEditMode } = useEditContext();
+    const { isLoading } = useLoadingContext();
     //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     //route handler
     const searchParams = useSearchParams();
-    
+
     /** Function to save the current deck (to database if logged in) and exit edit mode.
      *  @returns {void}
      */
@@ -24,7 +23,7 @@ export default function ViewButtonGroup(props) {
     return (
         isEditMode ? (
             <div className="flex">
-                <SaveButton/>
+                <SaveButton />
             </div>
         ) : (
             <div className="grid grid-rows-2 gap-2">

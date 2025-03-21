@@ -19,15 +19,15 @@ export default function ViewDeckContextProvider({ children }) {
 
     const [isEditMode, setIsEditMode] = useState((initialMode === "edit" ? true : false));
     const [isLoading, setIsLoading] = useState(false);
-    const [displayName, setDisplayName] = useState();
-    
-    
-    function toggleIsEditMode(){
-        setIsEditMode(isEditMode?false:true);
+    const [displayName, setDisplayName] = useState(initialMode === "edit" ? "New Deck" : "NeedExistingDeckNameVar");
+
+
+    function toggleIsEditMode() {
+        setIsEditMode(isEditMode ? false : true);
     }
 
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, isLoading, setIsLoading, displayName, setDisplayName}}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, isLoading, setIsLoading, displayName, setDisplayName }}>
             {children}
         </ViewDeckContext.Provider>
     );
@@ -44,28 +44,28 @@ export function useViewDeckContext() {
     return context;
 }
 
-export function useLoadingContext(){
+export function useLoadingContext() {
     /**
      * useLoadingContext only returns the section of context relevant to the pageLoadingState
      * returns: isLoading, setIsLoading
      */
     const context = useViewDeckContext();
-    const {isLoading, setIsLoading} = context;
-    return {isLoading, setIsLoading};
+    const { isLoading, setIsLoading } = context;
+    return { isLoading, setIsLoading };
 }
 
-export function useEditContext(){
+export function useEditContext() {
     /**
      * useEditContext only returns the section of context relevant to whether the page is in editMode or not
      * returns: isEditMode, setIsEditMode
      */
     const context = useViewDeckContext();
-    const {isEditMode, toggleIsEditMode} = context
-    return {isEditMode, toggleIsEditMode};
+    const { isEditMode, toggleIsEditMode } = context
+    return { isEditMode, toggleIsEditMode };
 }
 
-export function useDisplayNameContext(){
-    const {displayName, setDisplayName} = useViewDeckContext();
-    return {displayName, setDisplayName};
+export function useDisplayNameContext() {
+    const { displayName, setDisplayName } = useViewDeckContext();
+    return { displayName, setDisplayName };
 }
 

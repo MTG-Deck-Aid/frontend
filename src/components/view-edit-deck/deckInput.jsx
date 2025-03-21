@@ -6,9 +6,9 @@ import { Textarea } from "@heroui/react";
 
 export default function DeckInput() {
     //Edit context
-    const { isEditMode, setIsEditMode } = useEditContext();
+    const { isEditMode } = useEditContext();
     //Deck context
-    const{deckInput, setDeckInput} = useDeckInputContext()
+    const { deckInput, setDeckInput } = useDeckInputContext()
 
     return (
         <div className="">
@@ -20,7 +20,7 @@ export default function DeckInput() {
                 }}
                 className=""
                 value={deckInput}
-                onChange={(event) => {setDeckInput(event.target.value)}} //either this should be in the pageContext or should wait to setDeckInput when save button is pressed
+                onChange={(event) => { setDeckInput(event.target.value) }} //either this should be in the pageContext or should wait to setDeckInput when save button is pressed
                 color="primary"
                 placeholder="Paste your deck list here"
                 description="We support Moxfield, MTGA, or MTGO formatting"

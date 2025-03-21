@@ -1,6 +1,7 @@
 "use client";
 
-import { addToast } from "@heroui/react";
+import { addToast, toggle } from "@heroui/react";
+// import { u } from "framer-motion/dist/types.d-B50aGbjN";
 
 /** Function to save the current deck (to database if logged in) and exit edit mode.
  * @param {string} deckInput -> current input in the text field
@@ -9,13 +10,67 @@ import { addToast } from "@heroui/react";
  *  @returns {void}
  */
 
-export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId) {
+export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, toggleIsEditMode, setDisplayName, deckId) {
 	/**
 	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */
-	// Remains true if: valid deckList, commander exists, and deckName exists
-	let validSave = true;
+	// Runs the verifySave function to check if the deck is valid
+	const invalidFields = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode);
+
+	// If there are invalid fields, do not save the deck.
+	const validSave = invalidFields.length === 0;
+
+	if (!validSave) {
+		// Display invalid fields as toast messages.
+		invalidFields.forEach((field) => {
+			addToast({
+				title: "Invalid Input",
+				description: field,
+				color: "danger",
+			});
+		});
+	} else if (validSave) {
+		setDisplayName(deckName); //set the display name
+		// Stall for 0.1s so the deckName sets before the page title updates
+		await new Promise((resolve) => setTimeout(resolve, 100));
+
+		if (deckId === -1) {
+			// THIS A NEW DECK
+		} else {
+			// THIS IS AN EXISTING DECK
+		}
+
+		// @b-smiley: Save the deck to the database if user is logged in
+		/*
+		"commander" has the commander name (string)
+		"deckName" has the deck name (string)
+		"deckList" has the JSON deck list in the format:
+		{
+		cards: [
+			{ quantity: 4, cardName: 'Name1' }, 
+			{ quantity: 1, cardName: 'Name2' }
+		]
+		}
+		*/
+
+		// IF LOGGED IN:
+		//   SAVE TO DATABASE
+
+		toggleIsEditMode();
+	}
+
+	return validSave;
+}
+
+/** Function to verify the deck input and return a list of invalid fields.
+ * @param {*} deckInput 
+ * @param {*} commander 
+ * @param {*} deckName 
+ * @returns {array} - The list of invalid fields.
+ */
+async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckName) {
+
 	let invalidFields = [];
 
 	// Parse the deck input into a JSON object.
@@ -24,7 +79,6 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 	let invalidNames = await verifyDeckList(parsedDeck);
 
 	if (invalidNames.length > 0) {
-		validSave = false;
 		invalidFields.push('Invalid Cards: ' + invalidNames.join(', '));
 		// Remove invalid cards from the deck list.
 		parsedDeck.cards = parsedDeck.cards.filter(
@@ -32,7 +86,7 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 		);
 		invalidFields.push('(These names have been removed from your list)');
 	}
-	
+
 	// Update the deck input with the parsed deck list.
 	setDeckInput(deparseDeckList(parsedDeck.cards));
 	setDeckList(parsedDeck);
@@ -40,54 +94,23 @@ export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, 
 	// Deck List needs at least 10 cards
 	if (parsedDeck.cards.length < 10) {
 		// ALERT MESSAGE
-		validSave = false;
 		invalidFields.push('Deck must have at least 10 cards.');
 	}
 
 	// Commander is required (not empty string)
 	if (commander === '') {
 		// ALERT MESSAGE
-		validSave = false;
 		invalidFields.push('Commander is required.');
 	}
 
 	// Deck Name is required (not empty string)
-	if (deckName === '' || deckName === 'New Deck') {
+	console.log('Deck Name: ', deckName); // or undefined
+	if (deckName === '' || deckName === 'New Deck' || deckName === undefined) {
 		// ALERT MESSAGE
-		validSave = false;
 		invalidFields.push('Deck Name is required.');
 	}
 
-	if (!validSave) {
-		// @CodyCasselman: Alert user of invalid fields
-		addToast({
-			title: "Invalid Input",
-			description: invalidFields.map((field) => {
-				return (field + "\n");
-			}),
-			color:"danger",
-		})
-		console.log('Invalid Fields: ', invalidFields);
-    return false;
-	} else {
-		// @b-smiley: Save the deck to the database if user is logged in
-		/*
-        "commander" has the commander name (string)
-        "deckName" has the deck name (string)
-        "deckList" has the JSON deck list in the format:
-        {
-        cards: [
-            { quantity: 4, cardName: 'Name1' }, 
-            { quantity: 1, cardName: 'Name2' }
-        ]
-        }
-        */
-
-		// IF LOGGED IN:
-		//   SAVE TO DATABASE
-    return true;
-		
-	}
+	return invalidFields;
 }
 
 /** Function to parse the deck input into a json object.
