@@ -37,14 +37,14 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 
 		// Save the deck to the database if user is logged in
 		console.log("Deck is valid, saving to database...");
+		const isNewDeck = deckId === -1;
 		try {
 			let response;
-			const isNewDeck = deckId === -1;
 			const controller = new AbortController();
 			const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
 			if (isNewDeck) {
-				response = fetch('/api/decks/new-deck', {
+				response = await fetch('/api/decks/new-deck', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 					signal: controller.signal,
 				});
 			} else {
-				response = fetch('/api/decks/update-deck', {
+				response = await fetch('/api/decks/update-deck', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
