@@ -33,7 +33,7 @@ export default async function Home() {
 						as={Link}
 						href={{
 							pathname: `/${'new-deck'}/view-import-deck`,
-							query: { mode:'edit' , deckId: -1 },
+							query: { title: 'New Deck', deckId: -1 },
 						}}
 						className="no-underline"
 					>
