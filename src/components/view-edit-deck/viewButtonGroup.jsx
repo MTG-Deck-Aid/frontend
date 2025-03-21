@@ -7,6 +7,7 @@ import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
 import Link from "next/link";
+import { useDeckIDContext } from "../context-providers/userDeckContextProvider";
 
 export default function ViewButtonGroup(props) {
     //page context
@@ -17,6 +18,8 @@ export default function ViewButtonGroup(props) {
 
     const [numCardsToAdd, setNumCardsToAdd] = useState(3);
     const [numCardsToRemove, setNumCardsToRemove] = useState(3);
+
+    const {deckId} = useDeckIDContext();
 
     useEffect(() => {
         console.log(numCardsToAdd)
@@ -55,7 +58,7 @@ export default function ViewButtonGroup(props) {
                                             as={Link}
                                             href={{
                                                 pathname: `./card-suggestions`,
-                                                query: { numToAdd:`${numCardsToAdd}`, numToRemove:`${numCardsToRemove}`},
+                                                query: { numToAdd:`${numCardsToAdd}`, numToRemove:`${numCardsToRemove}`, deckId:`${deckId}`},
                                             }}
                                             >
                                             Okay!
