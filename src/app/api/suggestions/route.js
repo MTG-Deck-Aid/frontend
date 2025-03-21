@@ -17,7 +17,8 @@ import { authenticateUser } from "@/utils";
  */
 export async function POST(request) {
   try {
-    const { suggestionParams } = request.json();
+    // get the params from the request body
+    const suggestionParams = await request.json();
     const response = await deckSuggestions(suggestionParams);
     return NextResponse.json(response);
   } catch (error) {

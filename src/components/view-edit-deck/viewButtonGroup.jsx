@@ -1,11 +1,11 @@
 'use client';
+import { useState } from "react";
 import { useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
 import SaveButton from "./saveButton";
+import SubmitSuggestionButton from "./submitSuggestionButton";
 import { Select, SelectItem } from "@heroui/select";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 export default function ViewButtonGroup(props) {
     //page context
@@ -13,8 +13,9 @@ export default function ViewButtonGroup(props) {
     const { isLoading } = useLoadingContext();
     //modal context
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    //route handler
-    const searchParams = useSearchParams();
+
+    const [numCardsToAdd, setNumCardsToAdd] = useState(3);
+    const [numCardsToRemove, setNumCardsToRemove] = useState(3);
 
     /** Function to save the current deck (to database if logged in) and exit edit mode.
      *  @returns {void}
@@ -35,20 +36,14 @@ export default function ViewButtonGroup(props) {
                                 <>
                                     <ModalHeader className="flex flex-col p-2 m-2">Ready to Submit?</ModalHeader>
                                     <ModalBody className="flex flex-col m-2 py-0">
-                                        {createSelect("Number of cards to add")}
-                                        {createSelect("Number of cards to remove")}
+                                        {createSelect("Number of cards to add", numCardsToAdd, setNumCardsToAdd)}
+                                        {createSelect("Number of cards to remove", numCardsToRemove, setNumCardsToRemove)}
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button color="danger" variant="flat" onPress={onClose} >
                                             Not yet!
                                         </Button>
-                                        <Button color="primary" as={Link} className="no-underline"
-                                            href={{
-                                                pathname: `./card-suggestions`,
-                                                query: { title: searchParams.get("title") },
-                                            }}>
-                                            Okay!
-                                        </Button>
+                                        <SubmitSuggestionButton numToAdd={numCardsToAdd} numToRemove={numCardsToRemove} />
                                     </ModalFooter>
                                 </>
                             )}
@@ -78,7 +73,7 @@ const createPageButton = (label, onPressEvent, isLoading) => {
     )
 }
 
-const createSelect = (label) => {
+const createSelect = (label, value, setValue) => {
     const maxCards = 5;
     const numberArray = arrayFromRange(1, maxCards, 1);
 
@@ -86,6 +81,8 @@ const createSelect = (label) => {
         <div>
             <Select
                 label={label}
+                value={value}
+                onChange={(event) => setValue(+event.target.value + 1)}
                 classNames={{
                     innerWrapper: "group-data-[has-label=true]:pt-0",
                     label: "text-xs my-0 relative",

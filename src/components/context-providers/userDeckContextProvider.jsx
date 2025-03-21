@@ -8,7 +8,7 @@ export default function UserDeckContextProvider({ children }) {
 	const urlId = useSearchParams().get('deckId');
 	/** States to be held */
 	const [deckInput, setDeckInput] = useState(''); //the current Input in the textBox
-	const [deckList, setDeckList] = useState({}); //the user's deckList
+	const [deckList, setDeckList] = useState(); //the user's deckList
 	const [deckName, setDeckName] = useState('New Deck'); //the name of the user's deck
 	const [commander, setCommander] = useState(''); //the current commander?
 
@@ -49,7 +49,7 @@ export default function UserDeckContextProvider({ children }) {
 
 	// On page load, fetch the deck from the backend
 	useEffect(() => {
-		if(urlId === -1){
+		if (urlId === -1) {
 			//user is not signed in don't bother fetching
 			return;
 		}
@@ -61,7 +61,7 @@ export default function UserDeckContextProvider({ children }) {
 				//setting deckInput
 				let fetchedDeckInput = populateDeckList(deck.cards);
 				setDeckInput(fetchedDeckInput);
-				
+
 				//setting the commander
 				setCommander(deck.commander);
 				console.log("Commander: ", commander)
@@ -70,7 +70,7 @@ export default function UserDeckContextProvider({ children }) {
 				setDeckName(deck.deck_name);
 			}
 		});
-		
+
 	}, []);
 
 	/** DEBUGGER FUNCTION */

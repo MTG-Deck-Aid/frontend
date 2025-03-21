@@ -16,7 +16,13 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */ // NO
 	// Runs the verifySave function to check if the deck is valid
-	const invalidFields = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName);
+	const returnObject = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, deckList);
+
+	await new Promise((resolve) => setTimeout(resolve, 2000));
+
+	const invalidFields = returnObject.invalidFields;
+	const parsedDeck = returnObject.parsedDeck;
+	console.log('Returned ParseDeck:', parsedDeck);
 
 	// If there are invalid fields, do not save the deck.
 	const validSave = invalidFields.length === 0;
@@ -35,67 +41,176 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		// Stall for 0.1s so the deckName sets before the page title updates
 		await new Promise((resolve) => setTimeout(resolve, 100));
 
-		// Save the deck to the database if user is logged in
-		console.log("Deck is valid, saving to database...");
-		try {
-			let response;
-			const isNewDeck = deckId === -1;
-			if (isNewDeck) {
-				response = fetch('/api/decks/new-deck', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						deckName: deckName,
-						commander: commander,
-						deckList: deckList,
-					}),
-				});
-			} else {
-				response = fetch('/api/decks/update-deck', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						deckId: deckId,
-						deckName: deckName,
-						commander: commander,
-						deckList: deckList,
-					}),
-				});
-			}
-			const backend_response = await response.json();
-			if (backend_response.status !== 200) {
-				addToast({
-					title: "Error Saving Deck",
-					description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
-					color: "danger",
-				})
-				return false;
-			}
-			setDeckId(backend_response.data.deckId);
-			addToast({
-				title: "Deck Saved",
-				description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
-				color: "success",
-			})
-		}
-		catch (error) {
-			console.error('Error saving deck:', error);
-			addToast({
-				title: "Error Saving Deck",
-				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
-				color: "danger",
-			})
-			return false;
-		}
+		/* 
+				// Save the deck to the database if user is logged in
+				console.log("Deck is valid, saving to database...");
+				try {
+					let response;
+					const isNewDeck = deckId === -1;
+					if (isNewDeck) {
+						response = fetch('/api/decks/new-deck', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								deckName: deckName,
+								commander: commander,
+								deckList: deckList,
+							}),
+						});
+					} else {
+						response = fetch('/api/decks/update-deck', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								deckId: deckId,
+								deckName: deckName,
+								commander: commander,
+								deckList: deckList,
+							}),
+						});
+					}
+					const backend_response = await response.json();
+					if (backend_response.status !== 200) {
+						addToast({
+							title: "Error Saving Deck",
+							description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+							color: "danger",
+						})
+						return false;
+					}
+					setDeckId(backend_response.data.deckId);
+					addToast({
+						title: "Deck Saved",
+						description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
+						color: "success",
+					})
+				}
+				catch (error) {
+					console.error('Error saving deck:', error);
+					addToast({
+						title: "Error Saving Deck",
+						description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+						color: "danger",
+					})
+					return false;
+				} */
 		toggleIsEditMode();
 	}
 
 	// Return whether the save was successful.
 	return validSave;
+}
+
+export async function getSuggestions(deck, commander, numToAdd, numToRemove) {
+	// Convert the parsedDeck to the format required by the suggestion route
+
+	/* Decklist looks like this:
+	{
+  "cards": [
+	{
+	  "quantity": 1,
+	  "cardName": "Agent of Treachery"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "An Offer You Can't Refuse"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Arcane Signet"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Archaeomancer"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Avenger of Zendikar"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Baleful Strix"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Circuitous Route"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Clifftop Lookout"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Cloud of Faeries"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Coiling Oracle"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Command Tower"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Conjurer's Closet"
+	},
+	{
+	  "quantity": 1,
+	  "cardName": "Counterspell"
+	}
+  ]
+}
+	*/
+
+	console.log('Deck Inside Suggestions:', deck);
+
+	const mainboard = deck.cards.map((card) => {
+		return {
+			quantity: card.quantity,
+			name: card.cardName,
+		};
+	});
+
+	const suggestionParams = {
+		num_to_add: numToAdd,
+		num_to_remove: numToRemove,
+		decklist: {
+			commander: commander,
+			mainboard: mainboard,
+		},
+	};
+
+	console.log('Suggestion Params:', suggestionParams);
+	console.log('Passed Body:', JSON.stringify(suggestionParams));
+
+	let suggestions = null;
+
+	// Send the suggestionParams to the suggestion route
+	try {
+		const response = await fetch('/api/suggestions', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(suggestionParams),
+		});
+
+		const data = await response.json();
+		console.log('Suggestion response:', data);
+		suggestions = data;
+		// return data; // { authenticated: true/false, message: "..." }
+	} catch (error) {
+		console.error('Error getting AI deck suggestions:', error);
+		// return { authenticated: false, message: "Error during authentication" };
+	}
+
+	return suggestions;
+
 }
 
 /** Function to verify the deck input and return a list of invalid fields.
@@ -104,7 +219,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
  * @param {*} deckName 
  * @returns {array} - The list of invalid fields.
  */
-async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckName) {
+async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, deckList) {
 	let invalidFields = [];
 
 	// Parse the deck input into a JSON object.
@@ -143,7 +258,13 @@ async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckN
 		invalidFields.push('Deck Name is required.');
 	}
 
-	return invalidFields;
+	// return invalid fields and parsedDeck
+	const returnObject = {
+		invalidFields: invalidFields,
+		parsedDeck: parsedDeck,
+	};
+	return returnObject;
+
 }
 
 /** Function to parse the deck input into a json object.
