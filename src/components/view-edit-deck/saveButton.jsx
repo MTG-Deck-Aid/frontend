@@ -4,7 +4,6 @@ import { useUserDeckContext } from "../context-providers/userDeckContextProvider
 import { saveDeck } from "./utils";
 import { Button } from "@heroui/button";
 import SetPageTitle from "../header-components/setPageTitle";
-import { useDeferredValue, useEffect } from "react";
 
 export default function SaveButton() {
     //Page context
@@ -16,7 +15,7 @@ export default function SaveButton() {
 
     const handleSave = async () => {
         setIsLoading(true);
-        await saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, toggleIsEditMode, setDisplayName, deckId, setDeckId);
+        await saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, deckId, setDeckId, toggleIsEditMode, setDisplayName);
         setIsLoading(false);
     }
 

@@ -10,13 +10,13 @@ import { addToast, toggle } from "@heroui/react";
  *  @returns {void}
  */
 
-export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, toggleIsEditMode, setDisplayName, deckId) {
+export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, deckId, setDeckId, toggleIsEditMode, setDisplayName) {
 	/**
 	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
 	 * JUST LOAD THE CONTEXT INSTEAD
-	 */
+	 */ // NO
 	// Runs the verifySave function to check if the deck is valid
-	const invalidFields = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode);
+	const invalidFields = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName);
 
 	// If there are invalid fields, do not save the deck.
 	const validSave = invalidFields.length === 0;
@@ -34,13 +34,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		setDisplayName(deckName); //set the display name
 		// Stall for 0.1s so the deckName sets before the page title updates
 		await new Promise((resolve) => setTimeout(resolve, 100));
-
-		if (deckId === -1) {
-			// THIS A NEW DECK
-		} else {
-			// THIS IS AN EXISTING DECK
-		}
-
+		/*
 		// Save the deck to the database if user is logged in
 		console.log("Deck is valid, saving to database...");
 		try {
@@ -55,7 +49,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 					body: JSON.stringify({
 						deckName: deckName,
 						commander: commander,
-						deckList: parsedDeck,
+						deckList: deckList,
 					}),
 				});
 			} else {
@@ -68,7 +62,7 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 						deckId: deckId,
 						deckName: deckName,
 						commander: commander,
-						deckList: parsedDeck,
+						deckList: deckList,
 					}),
 				});
 			}
@@ -96,12 +90,11 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 				color: "danger",
 			})
 			return false;
-		}
-		return true;
-
+		} */
 		toggleIsEditMode();
 	}
 
+	// Return whether the save was successful.
 	return validSave;
 }
 
@@ -139,13 +132,12 @@ async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckN
 	}
 
 	// Commander is required (not empty string)
-	if (commander === '') {
+	if (commander === '' || commander === undefined) {
 		// ALERT MESSAGE
 		invalidFields.push('Commander is required.');
 	}
 
 	// Deck Name is required (not empty string)
-	console.log('Deck Name: ', deckName); // or undefined
 	if (deckName === '' || deckName === 'New Deck' || deckName === undefined) {
 		// ALERT MESSAGE
 		invalidFields.push('Deck Name is required.');
