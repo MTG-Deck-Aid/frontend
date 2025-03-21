@@ -9,7 +9,7 @@ export default function UserDeckContextProvider({ children }) {
 	/** States to be held */
 	const [deckInput, setDeckInput] = useState(''); //the current Input in the textBox
 	const [deckList, setDeckList] = useState({}); //the user's deckList
-	const [deckName, setDeckName] = useState(''); //the name of the user's deck
+	const [deckName, setDeckName] = useState('New Deck'); //the name of the user's deck
 	const [commander, setCommander] = useState(''); //the current commander?
 
 	async function fetchUserDeck() {

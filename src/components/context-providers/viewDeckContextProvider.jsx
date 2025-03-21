@@ -19,19 +19,15 @@ export default function ViewDeckContextProvider({ children }) {
 
     const [isEditMode, setIsEditMode] = useState((initialMode === "edit" ? true : false));
     const [isLoading, setIsLoading] = useState(false);
-
-    /** DEBUGGER FUNCTION */
-    function printContext(){
-        console.log("\n\n---- View Deck Context ----");
-        console.log("isEditMode: ", isEditMode);
-    }
+    const [displayName, setDisplayName] = useState();
+    
     
     function toggleIsEditMode(){
         setIsEditMode(isEditMode?false:true);
     }
 
     return (
-        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, isLoading, setIsLoading, printContext}}>
+        <ViewDeckContext.Provider value={{ isEditMode, toggleIsEditMode, isLoading, setIsLoading, displayName, setDisplayName}}>
             {children}
         </ViewDeckContext.Provider>
     );
@@ -66,5 +62,10 @@ export function useEditContext(){
     const context = useViewDeckContext();
     const {isEditMode, toggleIsEditMode} = context
     return {isEditMode, toggleIsEditMode};
+}
+
+export function useDisplayNameContext(){
+    const {displayName, setDisplayName} = useViewDeckContext();
+    return {displayName, setDisplayName};
 }
 
