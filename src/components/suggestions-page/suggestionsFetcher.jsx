@@ -21,8 +21,6 @@ export default function SuggestionsFetcher(){
         }
 
         fetchSuggestion();
-    }, [deckList, commander, setSuggestions]) 
-    //Will resend on initial render and page refreshes (only times these value are updated)
-    //Using useEffect with [] causes it to send again on every render (including when the suggestions are rendered) (caused two in a row)
+    }, []) 
     return null;
 }
