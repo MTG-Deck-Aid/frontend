@@ -100,7 +100,7 @@ export default function UserDecks() {
 										<Link
 											href={{
 												pathname: `/${deck.name}/view-import-deck`, 
-												query: { mode: `edit`, deckId: deck.id }, 
+												query: { mode: `edit`, deckId: deck.id, title:deck.name }, 
 											}}
 										>
 											<div className="inline-block">
