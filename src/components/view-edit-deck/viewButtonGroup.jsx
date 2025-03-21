@@ -33,6 +33,7 @@ export default function ViewButtonGroup() {
         const parsedDeck = parseDeckInput(deckInput);
         // Validate the deck list.
         let invalidNames = await verifyDeckList(parsedDeck);
+        console.log("Invalid Names: ", invalidNames);
         if (invalidNames.length > 0) {
             validSave = false;
             invalidFields.push("Invalid Cards: " + invalidNames.join(", "));
