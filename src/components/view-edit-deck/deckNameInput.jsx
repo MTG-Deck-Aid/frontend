@@ -23,7 +23,7 @@ export default function DeckNameInput() {
                 }}
                 onChange={(event) => setDisplayName(event.target.value)} //Should only change input value. setDeckName() on save button being pressed
                 value={displayName}
-                defaultValue={deckName}
+                placeholder="New Deckname"
             />
         </div>
     );
