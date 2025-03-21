@@ -84,11 +84,13 @@ const createSelect = (label) => {
 
     return (
         <div>
-            <Select label={label} classNames={{
-                innerWrapper: "group-data-[has-label=true]:pt-0",
-                label: "text-xs my-0 relative",
-                popoverContent: "p-4 py-1"
-            }}
+            <Select
+                label={label}
+                classNames={{
+                    innerWrapper: "group-data-[has-label=true]:pt-0",
+                    label: "text-xs my-0 relative",
+                    popoverContent: "p-4 py-1"
+                }}
                 listboxProps={{
                     classNames: { base: "w-full", list: "ps-0 w-max-fit" }
                 }}

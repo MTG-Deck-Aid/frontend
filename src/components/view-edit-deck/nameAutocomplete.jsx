@@ -11,12 +11,12 @@ export default function NameAutocomplete() {
     //loading context
     const { isLoading, setIsLoading } = useLoadingContext();
     //commander context
-    const {commander, setCommander} = useCommanderContext();
+    const { commander, setCommander } = useCommanderContext();
     //componentState
     const [selectedCommander, setSelectedCommander] = useState(commander); //TODO: put in default commander value
     const [filterText, setFilterText] = useState("");
     const [debouncedFilterText, setDebouncedFilterText] = useState(filterText);
-    
+
     //component constants
     const debounceTime = 500;
 
@@ -71,15 +71,15 @@ export default function NameAutocomplete() {
                 isLoading={isLoading}
             >Choose Your Commander
             </Button>
-            <Modal 
+            <Modal
                 backdrop="blur"
-                isOpen={isOpen} 
-                placement="top-center" 
-                hideCloseButton={true} 
-                onOpenChange={onOpenChange} 
-                size="md" 
+                isOpen={isOpen}
+                placement="top-center"
+                hideCloseButton={true}
+                onOpenChange={onOpenChange}
+                size="md"
                 shouldBlockScroll={true}
-                >
+            >
                 <ModalContent>
                     {(onClose) => (
                         <>
