@@ -1,21 +1,15 @@
 "use client";
 
 import { addToast } from "@heroui/react";
-import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
-
 
 /** Function to save the current deck (to database if logged in) and exit edit mode.
- * 
+ * @param {string} deckInput -> current input in the text field
+ * @param {method} toggleIsEditMode -> Toggles between edit/save
+ *
  *  @returns {void}
  */
-export async function saveDeck() {
-	/**
-	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
-	 * JUST LOAD THE CONTEXT INSTEAD
-	 */
-    const {deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId} = useUserDeckContext();
-
-
+export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, toggleIsEditMode) {
+    
 	// Remains true if: valid deckList, commander exists, and deckName exists
 	let validSave = true;
 	let invalidFields = [];
@@ -70,7 +64,6 @@ export async function saveDeck() {
 			color:"danger",
 		})
 		console.log('Invalid Fields: ', invalidFields);
-		return false;
 	} else {
 		// @b-smiley: Save the deck to the database if user is logged in
 		/*
@@ -84,20 +77,12 @@ export async function saveDeck() {
         ]
         }
         */
-		/**
-		 * If deckId = -1 => its a new deck -> create deck
-		 * If deckId != -1 => its a saved deck -> 
-		 */
-		if(deckId === -1){
-			/**save new deck */
-		}else{
-			/**update existing deck */
-		}
 
 		// IF LOGGED IN:
 		//   SAVE TO DATABASE
 
-		return true;
+		// Console log, deckList, commander, and deckName
+		toggleIsEditMode();
 	}
 }
 
