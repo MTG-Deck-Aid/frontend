@@ -37,7 +37,8 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		await new Promise((resolve) => setTimeout(resolve, 100));
 		// Save the deck to the database if user is logged in
 		console.log("Deck is valid, saving to database...");
-		const isNewDeck = deckId === -1;
+		const isNewDeck = parseInt(deckId) === -1;
+		console.log("Is new deck:", isNewDeck);
 		try {
 			let response;
 			const controller = new AbortController();
