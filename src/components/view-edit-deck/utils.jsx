@@ -8,12 +8,12 @@ import { useUserDeckContext } from "../context-providers/userDeckContextProvider
  * 
  *  @returns {void}
  */
-export async function saveDeck() {
+export async function saveDeck(deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId) {
 	/**
 	 * SAVE DECK ONLY USES ITEMS IN USERDECKCONTEXT AND THEREFORE DOES NOT NEED PARAMETERS. IT CAN
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */
-    const {deckInput, setDeckInput, setDeckList, commander, deckName, deckId, setDeckId} = useUserDeckContext();
+    
 
 
 	// Remains true if: valid deckList, commander exists, and deckName exists
