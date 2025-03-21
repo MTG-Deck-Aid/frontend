@@ -93,7 +93,7 @@ const createSelect = (label, value, setValue, val) => {
     const maxCards = 5;
     const numberArray = arrayFromRange(1, maxCards, 1);
     const handleSelectionChange = (event) => {
-        setValue(+event.target.value + 1)
+        setValue(+event.target.value + 1);
     }
 
     return (

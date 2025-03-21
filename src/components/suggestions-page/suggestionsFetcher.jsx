@@ -8,11 +8,19 @@ export default function SuggestionsFetcher(){
     const searchParams = useSearchParams();
     const {deckList} = useDeckListContext();
     const {commander} = useCommanderContext();
-    const {setSuggestion} = useSuggestionContext();
+    const {setSuggestions} = useSuggestionContext();
     useEffect(() => {
-        const suggestions = getSuggestions(deckList, commander, searchParams.get("numToAdd"), searchParams.get("numToRemove"));
-        console.log(suggestions)
+        const fetchSuggestion = async () => {
+            console.log("Getting suggestions")
+            const numToAdd = +searchParams.get("numToAdd");
+            const numToRemove = +searchParams.get("numToRemove")
+            const suggestions = await getSuggestions(deckList, commander, numToAdd, numToRemove)
+            console.log("Get Suggestion response")
+            setSuggestions(suggestions);
+            console.log("Set suggestions:", suggestions)
+        }
+
+        fetchSuggestion();
     }, [])
-    
     return null;
 }

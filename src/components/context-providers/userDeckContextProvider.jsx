@@ -54,6 +54,10 @@ export default function UserDeckContextProvider({ children }) {
 			//user is not signed in don't bother fetching
 			return;
 		}
+		if(!urlId){
+			console.log("You've reset the page");
+			return;
+		}
 		console.log('Fetching deck from backend');
 		fetchUserDeck().then((deck) => {
 			if (deck) {
