@@ -41,21 +41,63 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 			// THIS IS AN EXISTING DECK
 		}
 
-		// @b-smiley: Save the deck to the database if user is logged in
-		/*
-		"commander" has the commander name (string)
-		"deckName" has the deck name (string)
-		"deckList" has the JSON deck list in the format:
-		{
-		cards: [
-			{ quantity: 4, cardName: 'Name1' }, 
-			{ quantity: 1, cardName: 'Name2' }
-		]
+		// Save the deck to the database if user is logged in
+		console.log("Deck is valid, saving to database...");
+		try {
+			let response;
+			const isNewDeck = deckId === -1;
+			if (isNewDeck) {
+				response = fetch('/api/decks/new-deck', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						deckName: deckName,
+						commander: commander,
+						deckList: parsedDeck,
+					}),
+				});
+			} else {
+				response = fetch('/api/decks/update-deck', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						deckId: deckId,
+						deckName: deckName,
+						commander: commander,
+						deckList: parsedDeck,
+					}),
+				});
+			}
+			const backend_response = await response.json();
+			if (backend_response.status !== 200) {
+				addToast({
+					title: "Error Saving Deck",
+					description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+					color: "danger",
+				})
+				return false;
+			}
+			setDeckId(backend_response.data.deckId);
+			addToast({
+				title: "Deck Saved",
+				description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
+				color: "success",
+			})
 		}
-		*/
-
-		// IF LOGGED IN:
-		//   SAVE TO DATABASE
+		catch (error) {
+			console.error('Error saving deck:', error);
+			addToast({
+				title: "Error Saving Deck",
+				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+				color: "danger",
+			})
+			return false;
+		}
+		return true;
 
 		toggleIsEditMode();
 	}
@@ -70,7 +112,6 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
  * @returns {array} - The list of invalid fields.
  */
 async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckName) {
-
 	let invalidFields = [];
 
 	// Parse the deck input into a JSON object.
