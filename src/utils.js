@@ -22,3 +22,14 @@ export async function getAuthorizationHeader() {
   const session = await auth0.getSession();
   return { Authorization: `Bearer ${session.tokenSet.accessToken}` };
 }
+
+/**
+ * NOTE: This should not be trusted for secure processes. This is for convient
+ * client side interactions like displaying certain buttons for users who SHOULD
+ * currently be authenticated correctly
+ * @returns {boolean} - True if the user is authenticated, false otherwise.
+ */
+export async function isAuthenticated() {
+  const session = await auth0.getSession();
+  return session !== null;
+}

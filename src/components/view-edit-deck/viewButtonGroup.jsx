@@ -1,113 +1,173 @@
-'use client';
-import { useState } from "react";
-import { useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
+"use client";
+import { use, useState, useEffect } from "react";
+import {
+  useEditContext,
+  useLoadingContext,
+} from "../context-providers/viewDeckContextProvider";
 import SaveButton from "./saveButton";
 import SubmitSuggestionButton from "./submitSuggestionButton";
 import { Select, SelectItem } from "@heroui/select";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@heroui/modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@heroui/modal";
 import { Button } from "@heroui/button";
 import DeleteButton from "./deleteButton";
+import { useDeckIdContext } from "../context-providers/userDeckContextProvider";
 
 export default function ViewButtonGroup(props) {
-    //page context
-    const { isEditMode, toggleIsEditMode } = useEditContext();
-    const { isLoading } = useLoadingContext();
-    //modal context
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  // local use state
+  const [showButton, setShowButton] = useState(false);
 
-    const [numCardsToAdd, setNumCardsToAdd] = useState(3);
-    const [numCardsToRemove, setNumCardsToRemove] = useState(3);
+  //page context
+  const { isEditMode, toggleIsEditMode } = useEditContext();
+  const { isLoading } = useLoadingContext();
 
-    /** Function to save the current deck (to database if logged in) and exit edit mode.
-     *  @returns {void}
-     */
+  //modal context
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    return (
-        isEditMode ? (
-            <div className="flex">
-                <SaveButton />
-                <DeleteButton/>
-            </div>
-        ) : (
-            <div className="grid grid-rows-2 gap-2">
-                <>
-                    {createPageButton("Get Suggestions", onOpen, isLoading)}
-                    <Modal isOpen={isOpen} placement="top-center" hideCloseButton={true} onOpenChange={onOpenChange} size="sm">
-                        <ModalContent>
-                            {(onClose) => (
-                                <>
-                                    <ModalHeader className="flex flex-col p-2 m-2">Ready to Submit?</ModalHeader>
-                                    <ModalBody className="flex flex-col m-2 py-0">
-                                        {createSelect("Number of cards to add", numCardsToAdd, setNumCardsToAdd)}
-                                        {createSelect("Number of cards to remove", numCardsToRemove, setNumCardsToRemove)}
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="danger" variant="flat" onPress={onClose} >
-                                            Not yet!
-                                        </Button>
-                                        <SubmitSuggestionButton numToAdd={numCardsToAdd} numToRemove={numCardsToRemove} />
-                                    </ModalFooter>
-                                </>
-                            )}
-                        </ModalContent>
-                    </Modal>
-                </>
-                {createPageButton("Edit Deck", toggleIsEditMode, isLoading)}
-            </div>
-        )
-    )
+  // deck context
+  const { deckId } = useDeckIdContext();
+
+  const [numCardsToAdd, setNumCardsToAdd] = useState(3);
+  const [numCardsToRemove, setNumCardsToRemove] = useState(3);
+
+  /**
+   * If the user is authenticated and they are viewing an existing deck, they can delete it.
+   * If the user is authenticated and they are creating a new deck, they can verify and save it.
+   * If the user is a guest, they can ONLY verify it.
+   */
+  const handleButtonRenders = async () => {
+    fetch("/api/auth/authenticated/")
+      .then(async (res) => await res.json())
+      .then((data) => {
+        if (data.data.isAuthenticated && parseInt(deckId) !== -1) {
+          setShowButton(true);
+        } else {
+          setShowButton(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting user decks:", error);
+      });
+  };
+
+  /** The deckId may be updated from - 1 when deckId is returned on creation */
+  useEffect(() => {
+    handleButtonRenders();
+  }, [deckId]);
+
+  return isEditMode ? (
+    <div className="flex">
+      <SaveButton />
+      {showButton ? <DeleteButton /> : null}
+    </div>
+  ) : (
+    <div className="grid grid-rows-2 gap-2">
+      <>
+        {createPageButton("Get Suggestions", onOpen, isLoading)}
+        <Modal
+          isOpen={isOpen}
+          placement="top-center"
+          hideCloseButton={true}
+          onOpenChange={onOpenChange}
+          size="sm"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col p-2 m-2">
+                  Ready to Submit?
+                </ModalHeader>
+                <ModalBody className="flex flex-col m-2 py-0">
+                  {createSelect(
+                    "Number of cards to add",
+                    numCardsToAdd,
+                    setNumCardsToAdd
+                  )}
+                  {createSelect(
+                    "Number of cards to remove",
+                    numCardsToRemove,
+                    setNumCardsToRemove
+                  )}
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="flat" onPress={onClose}>
+                    Not yet!
+                  </Button>
+                  <SubmitSuggestionButton
+                    numToAdd={numCardsToAdd}
+                    numToRemove={numCardsToRemove}
+                  />
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </>
+      {createPageButton("Edit Deck", toggleIsEditMode, isLoading)}
+    </div>
+  );
 }
 
 const createPageButton = (label, onPressEvent, isLoading) => {
-    /**
-     * Helper function to standardize buttons on this page
-     */
-    return (
-        <Button
-            size={"md"}
-            onPress={onPressEvent}
-            isLoading={isLoading ? true : false}
-            color={"primary"}
-            variant={"faded"}
-            className=""
-        >{label}
-        </Button>
-    )
-}
+  /**
+   * Helper function to standardize buttons on this page
+   */
+  return (
+    <Button
+      size={"md"}
+      onPress={onPressEvent}
+      isLoading={isLoading ? true : false}
+      color={"primary"}
+      variant={"faded"}
+      className=""
+    >
+      {label}
+    </Button>
+  );
+};
 
 const createSelect = (label, value, setValue) => {
-    const maxCards = 5;
-    const numberArray = arrayFromRange(1, maxCards, 1);
+  const maxCards = 5;
+  const numberArray = arrayFromRange(1, maxCards, 1);
 
-    return (
-        <div>
-            <Select
-                label={label}
-                value={value}
-                onChange={(event) => setValue(+event.target.value + 1)}
-                classNames={{
-                    innerWrapper: "group-data-[has-label=true]:pt-0",
-                    label: "text-xs my-0 relative",
-                    popoverContent: "p-4 py-1"
-                }}
-                listboxProps={{
-                    classNames: { base: "w-full", list: "ps-0 w-max-fit" }
-                }}
-                labelPlacement={"inside"}>
-                {numberArray.map((item, index) => {
-                    return (
-                        <SelectItem key={index} textValue={item}>{item}</SelectItem> // add onSelect={function} to cause something to happen on select.
-                        //the event handler will use the key as an argument. change accordingly (must be unique to the list)
-                    )
-                })}
-            </Select>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Select
+        label={label}
+        value={value}
+        onChange={(event) => setValue(+event.target.value + 1)}
+        classNames={{
+          innerWrapper: "group-data-[has-label=true]:pt-0",
+          label: "text-xs my-0 relative",
+          popoverContent: "p-4 py-1",
+        }}
+        listboxProps={{
+          classNames: { base: "w-full", list: "ps-0 w-max-fit" },
+        }}
+        labelPlacement={"inside"}
+      >
+        {numberArray.map((item, index) => {
+          return (
+            <SelectItem key={index} textValue={item}>
+              {item}
+            </SelectItem> // add onSelect={function} to cause something to happen on select.
+            //the event handler will use the key as an argument. change accordingly (must be unique to the list)
+          );
+        })}
+      </Select>
+    </div>
+  );
+};
 
 const arrayFromRange = (start, stop, step) =>
-    /**Creates an array from start to stop with step */
-    Array.from(
-        { length: (stop - start) / step + 1 },
-        (value, index) => start + index * step
-    );
+  /**Creates an array from start to stop with step */
+  Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => start + index * step
+  );

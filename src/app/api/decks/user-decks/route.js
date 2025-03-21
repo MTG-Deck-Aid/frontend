@@ -1,6 +1,6 @@
 "use server";
 import { NextResponse } from "next/server";
-import { getAuthorizationHeader } from "@/utils";
+import { getAuthorizationHeader, isAuthenticated } from "@/utils";
 import { auth0 } from "@/lib/auth0";
 /**
  * Server Side Next.js route
@@ -9,7 +9,7 @@ import { auth0 } from "@/lib/auth0";
 export async function GET(request) {
   try {
     // Check if the user is signed in
-    const isAuthorized = await auth0.getSession() !== null;
+    const isAuthorized = await isAuthenticated();
     if (!isAuthorized) {
       return NextResponse.json({
         status: 401,
