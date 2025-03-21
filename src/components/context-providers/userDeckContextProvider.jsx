@@ -7,6 +7,7 @@ export default function UserDeckContextProvider({ children }) {
 	//useParams and useSearchParams are the ideal way for getting url parameters in nextJS
 	const urlId = useSearchParams().get('deckId');
 	/** States to be held */
+	const [deckId, setDeckId] = useState(urlId); //the id of the user's deck
 	const [deckInput, setDeckInput] = useState(''); //the current Input in the textBox
 	const [deckList, setDeckList] = useState(); //the user's deckList
 	const [deckName, setDeckName] = useState('New Deck'); //the name of the user's deck
@@ -86,6 +87,8 @@ export default function UserDeckContextProvider({ children }) {
 	return (
 		<UserDeckContext.Provider
 			value={{
+				deckId,
+				setDeckId,
 				deckInput,
 				setDeckInput,
 				deckList,

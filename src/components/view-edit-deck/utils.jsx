@@ -16,13 +16,8 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 	 * JUST LOAD THE CONTEXT INSTEAD
 	 */ // NO
 	// Runs the verifySave function to check if the deck is valid
-	const returnObject = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, deckList);
 
-	await new Promise((resolve) => setTimeout(resolve, 2000));
-
-	const invalidFields = returnObject.invalidFields;
-	const parsedDeck = returnObject.parsedDeck;
-	console.log('Returned ParseDeck:', parsedDeck);
+	const { invalidFields, parsedDeck } = await verifySave(deckInput, setDeckInput, setDeckList, commander, deckName, deckList);
 
 	// If there are invalid fields, do not save the deck.
 	const validSave = invalidFields.length === 0;
@@ -40,64 +35,69 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 		setDisplayName(deckName); //set the display name
 		// Stall for 0.1s so the deckName sets before the page title updates
 		await new Promise((resolve) => setTimeout(resolve, 100));
+		// Save the deck to the database if user is logged in
+		console.log("Deck is valid, saving to database...");
+		const isNewDeck = deckId === -1;
+		try {
+			let response;
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
 
-		/* 
-				// Save the deck to the database if user is logged in
-				console.log("Deck is valid, saving to database...");
-				try {
-					let response;
-					const isNewDeck = deckId === -1;
-					if (isNewDeck) {
-						response = fetch('/api/decks/new-deck', {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify({
-								deckName: deckName,
-								commander: commander,
-								deckList: deckList,
-							}),
-						});
-					} else {
-						response = fetch('/api/decks/update-deck', {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify({
-								deckId: deckId,
-								deckName: deckName,
-								commander: commander,
-								deckList: deckList,
-							}),
-						});
-					}
-					const backend_response = await response.json();
-					if (backend_response.status !== 200) {
-						addToast({
-							title: "Error Saving Deck",
-							description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
-							color: "danger",
-						})
-						return false;
-					}
-					setDeckId(backend_response.data.deckId);
-					addToast({
-						title: "Deck Saved",
-						description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
-						color: "success",
-					})
-				}
-				catch (error) {
-					console.error('Error saving deck:', error);
-					addToast({
-						title: "Error Saving Deck",
-						description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
-						color: "danger",
-					})
-					return false;
-				} */
+			if (isNewDeck) {
+				response = await fetch('/api/decks/new-deck', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						deckName: deckName,
+						commander: commander,
+						deckList: parsedDeck.cards,
+					}),
+					signal: controller.signal,
+				});
+			} else {
+				response = await fetch('/api/decks/update-deck', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						deckId: deckId,
+						deckName: deckName,
+						commander: commander,
+						deckList: parsedDeck.cards,
+					}),
+					signal: controller.signal,
+				});
+			}
+
+			const backend_response = await response.json();
+			clearTimeout(timeoutId);
+
+			if (backend_response.status !== 200) {
+				addToast({
+					title: "Error Saving Deck",
+					description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+					color: "danger",
+				});
+				return false;
+			}
+			setDeckId(backend_response.data.deckId);
+			addToast({
+				title: "Deck Saved",
+				description: `Your deck has been ${isNewDeck ? 'created' : 'updated'} successfully.`,
+				color: "success",
+			});
+		} catch (error) {
+			console.error('Error saving deck:', error);
+			addToast({
+				title: "Error Saving Deck",
+				description: `An error occurred while ${isNewDeck ? 'creating' : 'saving'} the deck. Please contact support if the issue persists.`,
+				color: "danger",
+			});
+			return false;
+		}
 		toggleIsEditMode();
 	}
 
@@ -107,66 +107,6 @@ export async function saveDeck(deckInput, setDeckInput, deckList, setDeckList, c
 
 export async function getSuggestions(deck, commander, numToAdd, numToRemove) {
 	// Convert the parsedDeck to the format required by the suggestion route
-
-	/* Decklist looks like this:
-	{
-  "cards": [
-	{
-	  "quantity": 1,
-	  "cardName": "Agent of Treachery"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "An Offer You Can't Refuse"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Arcane Signet"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Archaeomancer"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Avenger of Zendikar"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Baleful Strix"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Circuitous Route"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Clifftop Lookout"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Cloud of Faeries"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Coiling Oracle"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Command Tower"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Conjurer's Closet"
-	},
-	{
-	  "quantity": 1,
-	  "cardName": "Counterspell"
-	}
-  ]
-}
-	*/
-
 	console.log('Deck Inside Suggestions:', deck);
 
 	const mainboard = deck.cards.map((card) => {
@@ -258,13 +198,7 @@ async function verifySave(deckInput, setDeckInput, setDeckList, commander, deckN
 		invalidFields.push('Deck Name is required.');
 	}
 
-	// return invalid fields and parsedDeck
-	const returnObject = {
-		invalidFields: invalidFields,
-		parsedDeck: parsedDeck,
-	};
-	return returnObject;
-
+	return { invalidFields, parsedDeck };
 }
 
 /** Function to parse the deck input into a json object.

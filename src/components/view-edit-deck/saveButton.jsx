@@ -3,6 +3,8 @@ import { useDisplayNameContext, useEditContext, useLoadingContext } from "../con
 import { useUserDeckContext, useDeckListContext } from "../context-providers/userDeckContextProvider";
 import { saveDeck } from "./utils";
 import { Button } from "@heroui/button";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import SetPageTitle from "../header-components/setPageTitle";
 
 export default function SaveButton() {
@@ -19,6 +21,13 @@ export default function SaveButton() {
         await saveDeck(deckInput, setDeckInput, deckList, setDeckList, commander, deckName, deckId, setDeckId, toggleIsEditMode, setDisplayName);
         setIsLoading(false);
     }
+
+    let searchParams = useSearchParams();
+    /**OnLoad we want to set the page title based on what it was before */
+    useEffect(() => {
+        let initPageTitle = searchParams.get("title");
+        setDisplayName(initPageTitle);
+    }, [])
 
     return (
         <>
