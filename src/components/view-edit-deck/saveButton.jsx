@@ -1,11 +1,12 @@
 "use client";
 import { useDisplayNameContext, useEditContext, useLoadingContext } from "../context-providers/viewDeckContextProvider";
 import { useUserDeckContext, useDeckListContext } from "../context-providers/userDeckContextProvider";
-import { saveDeck } from "./utils";
-import { Button } from "@heroui/button";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import SetPageTitle from "../header-components/setPageTitle";
+import { useSearchParams } from "next/navigation";
+import { Button } from "@heroui/button";
+import { auth0 } from '@/lib/auth0.js';
+import { saveDeck } from "./utils";
+import { useEffect } from "react";
 
 export default function SaveButton() {
     //Page context
@@ -39,7 +40,7 @@ export default function SaveButton() {
                 color={"primary"}
                 variant={"faded"}
                 className=""
-            >Save
+            >{auth0.isAuthenticated ? "Save Deck" : "Verify Deck"}
             </Button>
         </>
     )
