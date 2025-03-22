@@ -72,13 +72,11 @@ export default function NameAutocomplete() {
             >Choose Your Commander
             </Button>
             <Modal
-                backdrop="blur"
                 isOpen={isOpen}
                 placement="top-center"
                 hideCloseButton={true}
                 onOpenChange={onOpenChange}
-                size="md"
-                shouldBlockScroll={true}
+                className="text-lg"
             >
                 <ModalContent>
                     {(onClose) => (
@@ -88,9 +86,10 @@ export default function NameAutocomplete() {
                                 <Autocomplete
                                     label="Select Commander"
                                     placeholder="Type to search..."
-                                    isClearable={false}
                                     inputProps={{
-                                        classNames: { label: "my-0 relative", }
+                                        classNames: { label: "my-0 relative text-xl",
+                                            input:"text-lg"
+                                         }
                                     }}
                                     items={list.items}
                                     inputValue={filterText}
@@ -100,7 +99,7 @@ export default function NameAutocomplete() {
                                 >
                                     {list.items.map((item) => {
                                         return (
-                                            <AutocompleteItem className="" key={item}>
+                                            <AutocompleteItem key={item}>
                                                 {item}
                                             </AutocompleteItem>
                                         )
