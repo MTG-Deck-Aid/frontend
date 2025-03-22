@@ -26,6 +26,8 @@ export default function SuggestionModal({ card, add }) {
           onPress={onOpen}
           className="min-w-fit min-h-fit"
           variant="shadow"
+          color={add?"success":"danger"} 
+          variant="ghost"
         >
           <Image
             alt={card.name}
@@ -71,6 +73,3 @@ export default function SuggestionModal({ card, add }) {
     </div>
   );
 }
-
-function addCard() {}
-function removeCard() {}
