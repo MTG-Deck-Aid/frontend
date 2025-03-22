@@ -23,7 +23,7 @@ import { useDeckIdContext } from "../context-providers/userDeckContextProvider";
 
 export default function ViewButtonGroup(props) {
   // local use state
-  const [showDeleteButton, setshowDeleteButton] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   //page context
   const { isEditMode, toggleIsEditMode } = useEditContext();
@@ -48,9 +48,9 @@ export default function ViewButtonGroup(props) {
       .then(async (res) => await res.json())
       .then((data) => {
         if (data.data.isAuthenticated && parseInt(deckId) !== -1) {
-          setShowButton(true);
+          setShowDeleteButton(true);
         } else {
-          setShowButton(false);
+          setShowDeleteButton(false);
         }
       })
       .catch((error) => {
