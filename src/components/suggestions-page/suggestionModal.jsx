@@ -25,9 +25,8 @@ export default function SuggestionModal({ card, add }) {
         <Button
           onPress={onOpen}
           className="min-w-fit min-h-fit"
-          variant="shadow"
-          color={add?"success":"danger"} 
           variant="ghost"
+          color={add?"success":"danger"} 
         >
           <Image
             alt={card.name}

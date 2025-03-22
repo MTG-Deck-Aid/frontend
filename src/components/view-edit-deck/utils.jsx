@@ -60,16 +60,6 @@ export async function saveDeck(
       let response;
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
-      let authenticated = false;
-      fetch("/api/auth/authenticated/").then(async (res) => {
-        const data = await res.json();
-        authenticated = data.data.isAuthenticated;
-      });
-
-      if (!authenticated) {
-        // Pass, validation only
-      } else {
-        console.log("Deck is valid, saving to database...");
         if (isNewDeck) {
           response = await fetch("/api/decks/new-deck", {
             method: "POST",
@@ -98,7 +88,6 @@ export async function saveDeck(
             signal: controller.signal,
           });
         }
-
         const backend_response = await response.json();
         clearTimeout(timeoutId);
 
@@ -116,7 +105,6 @@ export async function saveDeck(
           description: `Your deck has been ${isNewDeck ? "created" : "updated"} successfully.`,
           color: "success",
         });
-      }
     } catch (error) {
       console.error("Error saving deck:", error);
       addToast({

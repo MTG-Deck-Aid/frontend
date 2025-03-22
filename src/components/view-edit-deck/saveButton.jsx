@@ -25,7 +25,7 @@ export default function SaveButton() {
     const { toggleIsEditMode } = useEditContext();
     const { displayName, setDisplayName } = useDisplayNameContext();
     //Deck context
-    const { deckInput, setDeckInput, commander, deckName, deckId, setDeckId } =
+    const { deckInput, setDeckInput, commander, deckName, deckId, setDeckId, setIsReady } =
         useUserDeckContext();
     const { deckList, setDeckList } = useDeckListContext();
 
@@ -43,6 +43,7 @@ export default function SaveButton() {
             toggleIsEditMode,
             setDisplayName
         );
+        setIsReady(true);
         setIsLoading(false);
     };
 

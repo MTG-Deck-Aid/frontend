@@ -16,7 +16,6 @@ export default function SuggestionsFetcher(){
             const numToAdd = +searchParams.get("numToAdd");
             const numToRemove = +searchParams.get("numToRemove")
             const suggestions = await getSuggestions(deckList, commander, numToAdd, numToRemove)
-            console.log("Get Suggestion response")
             setSuggestions(suggestions);
             console.log("Set suggestions:", suggestions)
         }

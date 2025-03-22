@@ -47,9 +47,11 @@ export default function UserDeckContextProvider({ children }) {
 
   // On page load, fetch the deck from the backend
   useEffect(() => {
+    console.log("IsRead=False")
     setIsReady(false);
     if (urlId === -1) {
       //user is not signed in don't bother fetching
+      console.log("IsReady=True")
       setIsReady(true);
       return;
     }
@@ -67,6 +69,7 @@ export default function UserDeckContextProvider({ children }) {
         //setting the deckName
         setDeckName(deck.deck_name);
         //fields are ready for use
+        console.log("IsReady=TRue")
         setIsReady(true);
       }
     });
@@ -96,6 +99,7 @@ export default function UserDeckContextProvider({ children }) {
         deckName,
         setDeckName,
         isReady,
+        setIsReady,
       }}
     >
       {children}
