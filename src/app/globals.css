@@ -6,8 +6,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: linear-gradient(180deg,rgba(60,60,60,1) 50%, rgba(38,38,38,1) 100%);
+  --foreground: #FFF9F5;
 }
 
 @media (prefers-color-scheme: dark) {
