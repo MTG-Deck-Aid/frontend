@@ -5,7 +5,7 @@ export async function getSuggestions(deck, commander, numToAdd, numToRemove) {
 	const mainboard = deck.cards.map((card) => {
 		return {
 			quantity: card.quantity,
-			name: card.cardName,
+			name: (card.cardName || card.name)
 		};
 	});
 
