@@ -12,6 +12,7 @@ export default function UserDeckContextProvider({ children }) {
   const [deckList, setDeckList] = useState(); //the user's deckList
   const [deckName, setDeckName] = useState("New Deck"); //the name of the user's deck
   const [commander, setCommander] = useState(""); //the current commander?
+  const [isReady, setIsReady] = useState(false); //whether the data is fetched and ready
 
   async function fetchUserDeck() {
     //Fetches the user's deck information given the url parameter
@@ -50,25 +51,27 @@ export default function UserDeckContextProvider({ children }) {
 
   // On page load, fetch the deck from the backend
   useEffect(() => {
+    setIsReady(false);
     if (urlId === -1) {
       //user is not signed in don't bother fetching
+      setIsReady(true);
       return;
     }
     console.log("Fetching deck from backend");
     fetchUserDeck().then((deck) => {
       if (deck) {
         console.log("Received deck from backend");
-        console.log(deck);
+        //setting deckInput
+        setDeckList(deck);
         //setting deckInput
         let fetchedDeckInput = populateDeckList(deck.cards);
         setDeckInput(fetchedDeckInput);
-
         //setting the commander
         setCommander(deck.commander);
-        console.log("Commander: ", commander);
-
         //setting the deckName
         setDeckName(deck.deck_name);
+        //fields are ready for use
+        setIsReady(true);
       }
     });
   }, []);
@@ -96,6 +99,7 @@ export default function UserDeckContextProvider({ children }) {
         setCommander,
         deckName,
         setDeckName,
+        isReady
       }}
     >
       {children}

@@ -1,15 +1,16 @@
 "use client"
-import { useDeckListContext, useCommanderContext } from "../context-providers/userDeckContextProvider";
+import { useUserDeckContext } from "../context-providers/userDeckContextProvider";
 import { useSuggestionContext } from "../context-providers/suggestionContextProvider";
 import { useSearchParams } from "next/navigation";
 import { getSuggestions } from "./utills";
 import { useEffect } from "react";
+
 export default function SuggestionsFetcher(){
     const searchParams = useSearchParams();
-    const {deckList} = useDeckListContext();
-    const {commander} = useCommanderContext();
+    const {deckList, commander, isReady} = useUserDeckContext();
     const {setSuggestions} = useSuggestionContext();
     useEffect(() => {
+        if(!isReady) return;
         const fetchSuggestion = async () => {
             console.log("Getting suggestions")
             const numToAdd = +searchParams.get("numToAdd");
@@ -19,8 +20,7 @@ export default function SuggestionsFetcher(){
             setSuggestions(suggestions);
             console.log("Set suggestions:", suggestions)
         }
-
         fetchSuggestion();
-    }, [])
+    }, [isReady]) //should only run when isReady is true
     return null;
 }
