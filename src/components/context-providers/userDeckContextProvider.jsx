@@ -34,11 +34,7 @@ export default function UserDeckContextProvider({ children }) {
       let cardIndex = formattedDeckList.findIndex(
         (element) => element.name === card.name
       );
-      if (cardIndex === -1) {
-        formattedDeckList.push({ name: card.name, quantity: 1 });
-      } else {
-        formattedDeckList[cardIndex].quantity += 1;
-      }
+      formattedDeckList.push({ name: card.name, quantity: card.quantity });
     });
 
     // Convert the deck list into "quantity name" string
@@ -99,7 +95,7 @@ export default function UserDeckContextProvider({ children }) {
         setCommander,
         deckName,
         setDeckName,
-        isReady
+        isReady,
       }}
     >
       {children}
@@ -152,7 +148,7 @@ export function useDeckNameContext() {
   return { deckName, setDeckName };
 }
 
-export function useDeckIDContext(){
-	const {deckId, setDeckId} = useUserDeckContext();
-	return {deckId, setDeckId};
+export function useDeckIDContext() {
+  const { deckId, setDeckId } = useUserDeckContext();
+  return { deckId, setDeckId };
 }
