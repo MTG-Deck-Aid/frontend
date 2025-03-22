@@ -4,7 +4,7 @@ import { Button } from "@heroui/button";
 import Image from "next/image";
 
 
-export default function SuggestionModal(props){
+export default function SuggestionModal({card, add}){
     /**
      * SuggestionModal is a window that pops up with generated suggestions for certain cards.
      * props: card={at least card.name, card.image_uris.normal} <- card data, 
@@ -13,8 +13,6 @@ export default function SuggestionModal(props){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const cardHeight = 375;
     const cardWidth = Math.round(0.75 * cardHeight);
-    const card = props.card
-    const textContent = props.textContent
     return(
         <div>
         <>
@@ -23,7 +21,7 @@ export default function SuggestionModal(props){
                 alt={card.name}
                 height={cardHeight}
                 width={cardWidth}
-                src={card.image_uris.normal}
+                src={card.imageURL.normal}
                 className="rounded-2xl"
             />
         </Button>
@@ -35,7 +33,7 @@ export default function SuggestionModal(props){
                     <ModalBody className="flex flex-col m-2 py-0">
                     <div>
                         <p>
-                            {textContent} {/**gemini response */}
+                            {card.reason}
                         </p>
                     </div>
                     </ModalBody>
@@ -44,7 +42,7 @@ export default function SuggestionModal(props){
                             Close
                         </Button>
                         <Button color="primary" onPress={onClose}>
-                            Action
+                            {(add?"Add To Deck":"Remove From Deck")} {/**If we want to do adding/removing */}
                         </Button>
                     </ModalFooter>
                     </>
@@ -54,4 +52,11 @@ export default function SuggestionModal(props){
         </>
         </div>
     )
+  }
+
+  function addCard(){
+
+  }
+  function removeCard(){
+
   }
