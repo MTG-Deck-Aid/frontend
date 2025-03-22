@@ -35,12 +35,6 @@ export default function LoginDropdown(props) {
             type: "label",
           },
           {
-            key: "view-user-decks",
-            label: "Your Decks",
-            type: "link",
-            link: "/",
-          },
-          {
             key: "logout",
             label: "Sign Out",
             type: "link",

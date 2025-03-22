@@ -16,7 +16,7 @@ export default function SuggestionModal({card, add}){
     return(
         <div>
         <>
-        <Button onPress={onOpen} className="min-w-fit min-h-fit" variant="shadow">
+        <Button onPress={onOpen} className="min-w-fit min-h-fit" color={add?"success":"danger"} variant="ghost">
             <Image 
                 alt={card.name}
                 height={cardHeight}
@@ -32,17 +32,17 @@ export default function SuggestionModal({card, add}){
                     <ModalHeader className="flex flex-col gap-1">Mystic Suggestions</ModalHeader>
                     <ModalBody className="flex flex-col m-2 py-0">
                     <div>
+                        <p className="font-bold italic text-xl">
+                            Why {add?"add":"remove"} {card.name}?
+                        </p>
                         <p>
                             {card.reason}
                         </p>
                     </div>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" onPress={onClose}>
-                            Close
-                        </Button>
-                        <Button color="primary" onPress={onClose}>
-                            {(add?"Add To Deck":"Remove From Deck")} {/**If we want to do adding/removing */}
+                        <Button color="primary" variant="ghost" onPress={onClose}>
+                            Dismiss
                         </Button>
                     </ModalFooter>
                     </>

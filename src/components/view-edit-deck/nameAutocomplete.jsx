@@ -64,7 +64,7 @@ export default function NameAutocomplete() {
     return (
         <>
             <Button
-                className="text-xl"
+                className="text-xl m-2"
                 onPress={onOpen}
                 color={"primary"}
                 variant={"faded"}
@@ -107,7 +107,7 @@ export default function NameAutocomplete() {
                                 </Autocomplete>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="success" variant="flat" onPress={onSuccess} >
+                                <Button color="success" variant="ghost" onPress={onSuccess} >
                                     Commander Found!
                                 </Button>
                             </ModalFooter>

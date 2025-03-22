@@ -37,7 +37,7 @@ export default function SuggestionGrid({add}){
                         {(displayedCards)?
                         <>
                             {displayedCards.map((card, index) => (
-                                <SuggestionModal card={card} key={index}/>
+                                <SuggestionModal card={card} add={add} key={index}/>
                             ))}
                         </>:
                             <div className="flex w-full h-[350px] justify-start items-center p-10">

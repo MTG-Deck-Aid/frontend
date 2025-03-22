@@ -98,13 +98,14 @@ export default function ViewButtonGroup(props) {
                   )}
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="flat" onPress={onClose}>
+                  <Button color="danger" variant="ghost" onPress={onClose}>
                     Not yet!
                   </Button>
                   <Button
-                    color={"primary"}
+                    color="primary"
                     isLoading={isLoading ? true : false}
-                    className="no-underline"
+                    variant="ghost"
+                    className="no-underline border-solid"
                     as={Link}
                     href={{
                       pathname: `./card-suggestions`,
