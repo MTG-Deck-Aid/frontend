@@ -13,7 +13,7 @@ export default async function Home() {
 	const newTitle = "Deck Tuning Assistant"
 	
 	return (
-		<main className="m-2 mb-10 min-h-screen p-2 sm:m-8 sm:mb-20 sm:p-8">
+		<main className="m-2 mb-10 min-h-full p-2 sm:m-8 sm:mb-20 sm:p-8">
 			<SetPageTitle title={newTitle}/>
 			<div className="flex basis-full flex-col gap-4">
 				<div className="flex flex-shrink justify-center">
