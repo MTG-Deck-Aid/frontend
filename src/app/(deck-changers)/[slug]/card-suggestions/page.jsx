@@ -7,12 +7,12 @@ export default async function CardSuggestions({searchParams}){
     const pageTitle = "The Tuner"
     
     return(
-        <div className="w-full min-h-screen flex flex-col lg:grid lg:auto-rows-min gap-5">   
+        <div className="w-full h-min-full flex flex-col lg:grid lg:grid-rows-[1fr_minmax(0,1px)_1fr]">   
             <SuggestionsFetcher /> 
                 <SetPageTitle title={pageTitle}/>
                 <SuggestionGrid add={true}/> {/**cards to be added */}
-                <div>
-                    <Divider />
+                <div className="h-min">
+                    <Divider/>
                 </div>
                 <SuggestionGrid add={false}/>{/** card to be removed */}
         </div>
