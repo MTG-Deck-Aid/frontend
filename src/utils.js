@@ -20,6 +20,9 @@ import { NextResponse } from "next/server";
  */
 export async function getAuthorizationHeader() {
   const session = await auth0.getSession();
+  if (!session) {
+    return null;
+  }
   return { Authorization: `Bearer ${session.tokenSet.accessToken}` };
 }
 
